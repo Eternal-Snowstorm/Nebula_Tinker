@@ -65,11 +65,20 @@ public class SimpleTConUtils {
 	}
 
 	public static ToolStack castToolStack(IToolStackView view) {
-		return (ToolStack)view;
+		return (ToolStack) view;
 	}
 
 	public static int getMaterialsInTool(IToolStackView tool, String materialId) {
-		return (int)tool.getMaterials().getList().stream().filter((variant) -> variant.get().getIdentifier().toString().equals(materialId)).count();
+		return (int) tool.getMaterials()
+				.getList()
+				.stream()
+				.filter((variant) -> {
+					return variant.get()
+							.getIdentifier()
+							.toString()
+							.equals(materialId);
+				})
+				.count();
 	}
 
 	public static boolean hasMaterialInTool(IToolStackView tool, String materialId) {
