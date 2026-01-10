@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.nebula_tinker.NebulaTinker;
-import top.nebula.utils.compat.tconstruct.util.SimpleTConUtils;
+import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
