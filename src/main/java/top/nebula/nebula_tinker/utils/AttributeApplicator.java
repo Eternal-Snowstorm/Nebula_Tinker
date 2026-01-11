@@ -1,4 +1,4 @@
-package top.nebula.nebula_tinker.common.modifier;
+package top.nebula.nebula_tinker.utils;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -9,8 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
-import top.nebula.nebula_tinker.utils.AttributeType;
-import top.nebula.nebula_tinker.utils.SimpleTConUtils;
+import top.nebula.nebula_tinker.common.modifier.DemonizationModifier;
+import top.nebula.nebula_tinker.common.modifier.DivinizationModifier;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -305,16 +305,36 @@ public class AttributeApplicator {
 				return "护甲韧性";
 			default:
 				// 负面属性
-				if (type.name().contains("HEALTH_REDUCTION")) return "生命值减少";
-				if (type.name().contains("ARMOR_REDUCTION")) return "护甲减少";
-				if (type.name().contains("MOVEMENT_SLOW")) return "移动减速";
-				if (type.name().contains("ATTACK_DAMAGE_REDUCTION")) return "攻击伤害减少";
-				if (type.name().contains("ATTACK_SPEED_REDUCTION")) return "攻击速度减慢";
-				if (type.name().contains("CRITICAL_REDUCTION")) return "暴击率减少";
-				if (type.name().contains("CRITICAL_DAMAGE_REDUCTION")) return "暴击伤害减少";
-				if (type.name().contains("MINING_SPEED_REDUCTION")) return "挖掘速度减慢";
-				if (type.name().contains("DURABILITY_REDUCTION")) return "耐久减少";
-				if (type.name().contains("HARVEST_LEVEL_REDUCTION")) return "挖掘等级降低";
+				if (type.name().contains("HEALTH_REDUCTION")) {
+					return "生命值减少";
+				}
+				if (type.name().contains("ARMOR_REDUCTION")) {
+					return "护甲减少";
+				}
+				if (type.name().contains("MOVEMENT_SLOW")) {
+					return "移动减速";
+				}
+				if (type.name().contains("ATTACK_DAMAGE_REDUCTION")) {
+					return "攻击伤害减少";
+				}
+				if (type.name().contains("ATTACK_SPEED_REDUCTION")) {
+					return "攻击速度减慢";
+				}
+				if (type.name().contains("CRITICAL_REDUCTION")) {
+					return "暴击率减少";
+				}
+				if (type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
+					return "暴击伤害减少";
+				}
+				if (type.name().contains("MINING_SPEED_REDUCTION")) {
+					return "挖掘速度减慢";
+				}
+				if (type.name().contains("DURABILITY_REDUCTION")) {
+					return "耐久减少";
+				}
+				if (type.name().contains("HARVEST_LEVEL_REDUCTION")) {
+					return "挖掘等级降低";
+				}
 				return type.name().toLowerCase().replace("_", " ");
 		}
 	}

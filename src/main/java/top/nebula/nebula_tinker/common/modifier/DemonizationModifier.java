@@ -26,6 +26,7 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.nebula.nebula_tinker.NebulaTinker;
+import top.nebula.nebula_tinker.utils.AttributeApplicator;
 import top.nebula.nebula_tinker.utils.AttributeType;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 

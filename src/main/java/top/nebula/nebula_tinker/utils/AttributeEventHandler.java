@@ -6,7 +6,6 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.nebula_tinker.NebulaTinker;
-import top.nebula.nebula_tinker.common.modifier.AttributeApplicator;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID)
 public class AttributeEventHandler {

@@ -9,6 +9,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.nebula_tinker.NebulaTinker;
+import top.nebula.nebula_tinker.utils.AttributeApplicator;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 import java.util.List;
