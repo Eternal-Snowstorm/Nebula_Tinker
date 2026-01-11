@@ -141,9 +141,7 @@ public class AttributeApplicator {
 		lastAccessTime.remove(playerId);
 	}
 
-	/**
-	 * 检查指定槽位是否有特定修饰符的属性
-	 */
+	// 检查指定槽位是否有特定修饰符的属性
 	public static boolean hasModifierAttributesInSlot(Player player, EquipmentSlot slot, String modifierId) {
 		UUID playerId = player.getUUID();
 		if (!appliedModifiers.containsKey(playerId)) {

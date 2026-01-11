@@ -1,5 +1,6 @@
 package top.nebula.nebula_tinker.utils;
 
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.player.Player;
@@ -23,7 +24,6 @@ public class ItemTooltipHandler {
 			return;
 		}
 
-		// 检查是否有魔化或神化修饰符
 		boolean hasDemonization = SimpleTConUtils.hasModifier(
 				stack,
 				NebulaTinker.loadResource("demonization").toString()
@@ -37,24 +37,29 @@ public class ItemTooltipHandler {
 			return;
 		}
 
-		// 获取当前工具提示列表
 		List<Component> tooltips = event.getToolTip();
-
-		// 在合适的位置插入属性信息
 		int insertIndex = findInsertIndex(tooltips);
 
-		// 获取属性工具提示
+		// 是否按住 Alt
+		boolean altDown = Screen.hasAltDown();
+		if (!altDown) {
+			MutableComponent hint = Component.literal("按住")
+					.append(Component.literal("Alt")
+							.withStyle(ChatFormatting.RED)
+							.withStyle(ChatFormatting.ITALIC))
+					.append(Component.literal("查看"))
+					.append(Component.literal("神魔化")
+							.withStyle(ChatFormatting.GOLD)
+							.withStyle(ChatFormatting.BOLD))
+					.append(Component.literal("属性"));
+
+			tooltips.add(insertIndex, hint);
+			return;
+		}
+
+		// 按住 Alt → 显示真实属性
 		List<Component> attributeTooltips = AttributeApplicator.getAttributeTooltips(stack, player);
-
-		// 插入属性信息
 		if (!attributeTooltips.isEmpty()) {
-			// 添加空行分隔
-			if (insertIndex < tooltips.size()) {
-				tooltips.add(insertIndex, Component.empty());
-				insertIndex++;
-			}
-
-			// 添加属性信息
 			for (int i = attributeTooltips.size() - 1; i >= 0; i--) {
 				tooltips.add(insertIndex, attributeTooltips.get(i));
 			}
