@@ -358,8 +358,7 @@ public class Demonization extends Modifier {
 	/**
 	 * 保存属性到物品NBT
 	 */
-	private static void saveAttributes(ItemStack stack, List<AttributeEntry> positiveAttributes,
-	                                   List<AttributeEntry> negativeAttributes) {
+	private static void saveAttributes(ItemStack stack, List<AttributeEntry> positiveAttributes, List<AttributeEntry> negativeAttributes) {
 		CompoundTag tag = stack.getOrCreateTag();
 		tag.put(POSITIVE_ATTRIBUTES_KEY.toString(), serializeAttributes(positiveAttributes));
 		tag.put(NEGATIVE_ATTRIBUTES_KEY.toString(), serializeAttributes(negativeAttributes));
