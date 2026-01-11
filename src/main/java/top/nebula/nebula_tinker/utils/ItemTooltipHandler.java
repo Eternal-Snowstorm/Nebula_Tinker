@@ -58,14 +58,6 @@ public class ItemTooltipHandler {
 			for (int i = attributeTooltips.size() - 1; i >= 0; i--) {
 				tooltips.add(insertIndex, attributeTooltips.get(i));
 			}
-
-			// 如果是魔化物品，添加警告提示
-			MutableComponent demonizationTranKey = Component.literal("⚠ 魔化物品会带来负面效果")
-					.withStyle(ChatFormatting.DARK_RED);
-
-			if (hasDemonization) {
-				tooltips.add(insertIndex + attributeTooltips.size(), demonizationTranKey);
-			}
 		}
 	}
 
