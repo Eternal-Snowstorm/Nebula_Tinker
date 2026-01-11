@@ -12,8 +12,7 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class ModItem {
-	public static final DeferredRegister<Item> ITEMS =
-			DeferredRegister.create(ForgeRegistries.ITEMS, NebulaTinker.MODID);
+	public static final DeferredRegister<Item> ITEMS;
 
 	public static final List<Supplier<Item>> CREATIVE_TAB_ITEMS = new ArrayList<>();
 
@@ -21,6 +20,8 @@ public class ModItem {
 	public static final Supplier<Item> DIVINIZATION_STONE;
 
 	static {
+		ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NebulaTinker.MODID);
+
 		DEMONIZATION_STONE = registerItem("demonization_stone", () -> {
 			return new DemonizationStoneItem(new Item.Properties());
 		});
