@@ -10,7 +10,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.nebula.nebula_tinker.common.command.ModifierDebugCommand;
+import top.nebula.nebula_tinker.common.config.ClientConfig;
 import top.nebula.nebula_tinker.common.config.CommonConfig;
+import top.nebula.nebula_tinker.common.config.ServerConfig;
 import top.nebula.nebula_tinker.common.register.ModAttributes;
 import top.nebula.nebula_tinker.common.register.ModCreativeTab;
 import top.nebula.nebula_tinker.common.register.ModItem;
@@ -45,8 +47,12 @@ public class NebulaTinker {
 		ModAttributes.ATTRIBUTES.register(bus);
 		// 标签页注册(一定要在最后)
 		ModCreativeTab.TABS.register(bus);
-
-		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/nebula_tinker_common.toml");
+		// 普通配置文件
+		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/tinker/common.toml");
+		// 客户端配置文件
+		context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "nebula/tinker/client.toml");
+		// 服务端配置文件
+		context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, "nebula/tinker/server.toml");
 
 		LOGGER.info("Nebula Tinker mod initialized!");
 	}
