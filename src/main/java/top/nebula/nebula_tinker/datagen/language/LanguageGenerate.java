@@ -102,8 +102,8 @@ public class LanguageGenerate {
 		addLanguage(
 				"modifier",
 				"swift_blade.description",
-				"Always critical hit while having speed effect\n§7Higher speed level increases critical damage",
-				"拥有速度效果时，攻击必定暴击\n§7速度等级越高，暴击伤害越高"
+				"§7Always critical hit while having speed effect (Higher speed level increases critical damage)",
+				"§7拥有速度效果时，攻击必定暴击 (速度等级越高，暴击伤害越高)"
 		);
 		addLanguage(
 				"modifier",
