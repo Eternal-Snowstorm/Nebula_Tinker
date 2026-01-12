@@ -96,8 +96,8 @@ public class LanguageGenerate {
 		addLanguage(
 				"modifier",
 				"swift_blade.flavor",
-				"Face the wind!",
-				"面对疾风吧！"
+				"I AM THE STORM THAT IS APPROOOOOOOOOOOOOOOOOOOOOOOACHING",
+				"我就是即将到来的风风风风风风风风风风风风风风风暴"
 		);
 		addLanguage(
 				"modifier",
