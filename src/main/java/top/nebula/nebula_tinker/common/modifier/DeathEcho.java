@@ -37,8 +37,8 @@ public class DeathEcho extends Modifier {
 				NebulaTinker.loadResource("death_echo").toString()
 		);
 
-		if (player.getHealth() <= LIFE_THRESHOLD && hasModifier) {
-			if(Math.random() < TRIGGER_PROBABILITY){
+		if (player.getHealth() <= player.getMaxHealth() * LIFE_THRESHOLD && hasModifier) {
+			if (Math.random() < TRIGGER_PROBABILITY) {
 				// 暴击
 				AttackFeedback.spawnAbuserCritEffect(player);
 				event.setResult(Event.Result.ALLOW);
