@@ -32,6 +32,11 @@ public class DeathEcho extends Modifier {
 			return;
 		}
 
+		// 攻击冷却检查(防止连触发)
+		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+			return;
+		}
+
 		boolean hasModifier = SimpleTConUtils.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
 				NebulaTinker.loadResource("death_echo").toString()
