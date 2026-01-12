@@ -33,7 +33,6 @@ public class SwiftBlade extends Modifier {
 			return;
 		}
 
-		// 检查玩家主手武器是否有此修饰符
 		boolean hasModifier = SimpleTConUtils.hasModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
 				NebulaTinker.loadResource("swift_blade").toString()

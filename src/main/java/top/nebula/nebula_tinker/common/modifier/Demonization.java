@@ -534,9 +534,17 @@ public class Demonization extends Modifier {
 
 				// 显示副作用粒子
 				if (player.level() instanceof ServerLevel level) {
-					level.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
-							player.getX(), player.getY() + 1.5, player.getZ(),
-							(int) damageAmount, 0, 0, 0, 0);
+					level.sendParticles(
+							ParticleTypes.DAMAGE_INDICATOR,
+							player.getX(),
+							player.getY() + 1.5,
+							player.getZ(),
+							(int) damageAmount,
+							0,
+							0,
+							0,
+							0
+					);
 
 					// 添加随机负面效果
 					if (player.getRandom().nextFloat() < 0.3f) {
@@ -641,11 +649,17 @@ public class Demonization extends Modifier {
 
 				// 恶魔暴击视觉反馈
 				if (player.level() instanceof ServerLevel level) {
-					level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME,
+					level.sendParticles(
+							ParticleTypes.SOUL_FIRE_FLAME,
 							event.getEntity().getX(),
 							event.getEntity().getY() + event.getEntity().getBbHeight() / 2,
 							event.getEntity().getZ(),
-							15, 0.4, 0.4, 0.4, 0);
+							15,
+							0.4,
+							0.4,
+							0.4,
+							0
+					);
 
 					// 播放恶魔暴击音效
 					level.playSound(null, player.blockPosition(),
@@ -662,7 +676,12 @@ public class Demonization extends Modifier {
 					event.getEntity().getX(),
 					event.getEntity().getY() + event.getEntity().getBbHeight(),
 					event.getEntity().getZ(),
-					(int) (finalDamage - event.getAmount()), 0, 0, 0, 0);
+					(int) (finalDamage - event.getAmount()),
+					0,
+					0,
+					0,
+					0
+			);
 		}
 
 		// 魔化副作用：攻击时也会对自己造成轻微伤害

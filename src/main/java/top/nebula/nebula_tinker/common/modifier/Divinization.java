@@ -46,8 +46,7 @@ public class Divinization extends Modifier {
 	// 计数器，减少tick处理频率
 	private static final Map<UUID, Integer> tickCounter = new ConcurrentHashMap<>();
 	// 粒子效果冷却时间
-	private static final int PARTICLE_COOLDOWN = 100; // 5秒（20 ticks/秒 * 5 = 100 ticks）
-
+	private static final int PARTICLE_COOLDOWN = 20 * 5;
 	// 神化效果生成标识
 	private static final String GENERATED_KEY = "divinization_generated";
 
