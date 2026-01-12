@@ -14,6 +14,7 @@ public class ModModifier {
     public static final StaticModifier<Abuser> ABUSER;
     public static final StaticModifier<Divinization> DIVINIZATION;
     public static final StaticModifier<Demonization> DEMONIZATION;
+    public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
 
     static {
         MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
@@ -25,5 +26,6 @@ public class ModModifier {
         ABUSER = MODIFIERS.register("abuser", Abuser::new);
         DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
         DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
+        SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
     }
 }

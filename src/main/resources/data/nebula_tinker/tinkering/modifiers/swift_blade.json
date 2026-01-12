@@ -1,0 +1,14 @@
+{
+  "type": "nebula_tinker:swift_blade",
+  "allow_crystal": true,
+  "level_display": {
+    "color": "aqua",
+    "border_color": "dark_aqua"
+  },
+  "slots": {
+    "upgrades": 2
+  },
+  "tools": {
+    "tag": "tconstruct:modifiable"
+  }
+}

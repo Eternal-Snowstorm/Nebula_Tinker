@@ -120,9 +120,9 @@ dependencies {
     // Mantle
     implementation fg.deobf("slimeknights.mantle:Mantle:${minecraft_version}-${mantle_build}")
     // Jei
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:15.0.0.12")
-    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:15.0.0.12")
-    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.0.0.12")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:15.20.0.103")
+    compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:15.20.0.103")
+    runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.20.0.103")
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 }
 

@@ -208,7 +208,7 @@ public class AttributeApplicator {
 
 			// 添加正面属性
 			if (attributes.positive() != null && !attributes.positive().isEmpty()) {
-				tooltips.add(Component.literal("§6§l魔化属性:").withStyle(ChatFormatting.GOLD));
+				tooltips.add(Component.translatable("tooltip.nebula_tinker.demonization.title").withStyle(ChatFormatting.GOLD));
 				for (Demonization.AttributeEntry entry : attributes.positive()) {
 					tooltips.add(Component.literal("  §a" + getAttributeDisplay(entry)).withStyle(ChatFormatting.GREEN));
 				}
@@ -216,7 +216,7 @@ public class AttributeApplicator {
 
 			// 添加负面属性
 			if (attributes.negative() != null && !attributes.negative().isEmpty()) {
-				tooltips.add(Component.literal("§c§l负面效果:").withStyle(ChatFormatting.RED));
+				tooltips.add(Component.translatable("tooltip.nebula_tinker.negative.title").withStyle(ChatFormatting.RED));
 				for (Demonization.AttributeEntry entry : attributes.negative()) {
 					tooltips.add(Component.literal("  §c" + getAttributeDisplay(entry)).withStyle(ChatFormatting.RED));
 				}
@@ -225,7 +225,7 @@ public class AttributeApplicator {
 			List<Divinization.AttributeEntry> attributes = Divinization.getOrGenerateAttributes(stack, player);
 
 			if (!attributes.isEmpty()) {
-				tooltips.add(Component.literal("§b§l神化属性:").withStyle(ChatFormatting.AQUA));
+				tooltips.add(Component.translatable("tooltip.nebula_tinker.divinization.title").withStyle(ChatFormatting.AQUA));
 				for (Divinization.AttributeEntry entry : attributes) {
 					tooltips.add(Component.literal("  §b" + getAttributeDisplay(entry)).withStyle(ChatFormatting.AQUA));
 				}
@@ -254,87 +254,8 @@ public class AttributeApplicator {
 	 * 获取属性显示名称
 	 */
 	private static String getAttributeDisplayName(AttributeType type) {
-		switch (type) {
-			case ARMOR:
-				return "护甲值";
-			case MAX_HEALTH:
-				return "生命值";
-			case MOVEMENT_SPEED_SMALL:
-			case MOVEMENT_SPEED_MEDIUM:
-			case MOVEMENT_SPEED_LARGE:
-				return "移动速度";
-			case FEATHER_FALLING:
-				return "安全摔落高度";
-			case PROTECTION:
-				return "保护";
-			case ATTACK_DAMAGE:
-				return "攻击伤害";
-			case ATTACK_SPEED:
-				return "攻击速度";
-			case CRITICAL_CHANCE:
-				return "暴击率";
-			case CRITICAL_DAMAGE:
-				return "暴击伤害";
-			case FIRE_ASPECT:
-				return "火焰附加";
-			case FROST_ASPECT:
-				return "冰霜附加";
-			case LIGHTNING_ASPECT:
-				return "闪电附加";
-			case MINING_SPEED:
-				return "挖掘速度";
-			case DURABILITY:
-				return "耐久度";
-			case HARVEST_LEVEL:
-				return "挖掘等级";
-			case EFFICIENCY:
-				return "效率";
-			case KNOCKBACK_RESISTANCE:
-				return "击退抗性";
-			case DRAW_SPEED:
-				return "拉弓速度";
-			case ARROW_SPEED:
-				return "箭矢速度";
-			case ARROW_ACCURACY:
-				return "箭矢精度";
-			case PROJECTILE_DAMAGE:
-				return "远程伤害";
-			case ARMOR_TOUGHNESS:
-				return "护甲韧性";
-			default:
-				// 负面属性
-				if (type.name().contains("HEALTH_REDUCTION")) {
-					return "生命值减少";
-				}
-				if (type.name().contains("ARMOR_REDUCTION")) {
-					return "护甲减少";
-				}
-				if (type.name().contains("MOVEMENT_SLOW")) {
-					return "移动减速";
-				}
-				if (type.name().contains("ATTACK_DAMAGE_REDUCTION")) {
-					return "攻击伤害减少";
-				}
-				if (type.name().contains("ATTACK_SPEED_REDUCTION")) {
-					return "攻击速度减慢";
-				}
-				if (type.name().contains("CRITICAL_REDUCTION")) {
-					return "暴击率减少";
-				}
-				if (type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
-					return "暴击伤害减少";
-				}
-				if (type.name().contains("MINING_SPEED_REDUCTION")) {
-					return "挖掘速度减慢";
-				}
-				if (type.name().contains("DURABILITY_REDUCTION")) {
-					return "耐久减少";
-				}
-				if (type.name().contains("HARVEST_LEVEL_REDUCTION")) {
-					return "挖掘等级降低";
-				}
-				return type.name().toLowerCase().replace("_", " ");
-		}
+		String key = "attribute.nebula_tinker." + type.name().toLowerCase();
+		return Component.translatable(key).getString();
 	}
 
 	/**
@@ -350,10 +271,10 @@ public class AttributeApplicator {
 		} else if (type == AttributeType.CRITICAL_DAMAGE ||
 				type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
 			// 暴击伤害倍数显示
-			return String.format("%+.1f倍", value);
+			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.multiplier").getString(), value);
 		} else if (type == AttributeType.FEATHER_FALLING) {
 			// 整数值
-			return String.format("+%.0f格", value);
+			return String.format("+%.0f" + Component.translatable("format.nebula_tinker.blocks").getString(), value);
 		} else if (type == AttributeType.DURABILITY ||
 				type.name().contains("DURABILITY_REDUCTION")) {
 			// 整数值
@@ -372,7 +293,7 @@ public class AttributeApplicator {
 			return String.format("%+.2f", value);
 		} else if (type.getCategory() == AttributeType.AttributeCategory.ELEMENTAL) {
 			// 元素伤害：显示秒数
-			return String.format("%+.1f秒", Math.abs(value) / 2);
+			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.seconds").getString(), Math.abs(value) / 2);
 		} else if (type == AttributeType.PROTECTION) {
 			// 保护
 			return String.format("+%.1f", value);
