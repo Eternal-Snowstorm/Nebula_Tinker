@@ -15,12 +15,18 @@ public class ModParticle {
 	static {
 		PARTICLE_TYPES = DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, NebulaTinker.MODID);
 
-		CROSS_CHOP = register("cross_chop", false);
+		CROSS_CHOP = register("cross_chop");
 	}
 
 	private static Supplier<SimpleParticleType> register(String name, boolean overrideLimiter) {
 		return PARTICLE_TYPES.register(name, () -> {
 			return new SimpleParticleType(overrideLimiter);
+		});
+	}
+
+	private static Supplier<SimpleParticleType> register(String name) {
+		return PARTICLE_TYPES.register(name, () -> {
+			return new SimpleParticleType(false);
 		});
 	}
 }
