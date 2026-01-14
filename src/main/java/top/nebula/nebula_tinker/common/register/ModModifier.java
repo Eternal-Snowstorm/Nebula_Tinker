@@ -1,5 +1,6 @@
 package top.nebula.nebula_tinker.common.register;
 
+import net.minecraftforge.eventbus.api.IEventBus;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import top.nebula.nebula_tinker.NebulaTinker;
@@ -33,5 +34,11 @@ public class ModModifier {
 		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
 		DEATH_ECHO = MODIFIERS.register("death_echo", DeathEcho::new);
 		CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
+	}
+
+
+	public static void register(IEventBus bus) {
+		NebulaTinker.LOGGER.info("Nebula Tinker TCon Modifiers Registered!");
+		MODIFIERS.register(bus);
 	}
 }

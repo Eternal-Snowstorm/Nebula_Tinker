@@ -1,6 +1,7 @@
 package top.nebula.nebula_tinker.common.register;
 
 import net.minecraft.world.item.Item;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.nebula_tinker.NebulaTinker;
@@ -34,5 +35,10 @@ public class ModItem {
 		Supplier<Item> item = ITEMS.register(id, supplier);
 		CREATIVE_TAB_ITEMS.add(item);
 		return item;
+	}
+
+	public static void register(IEventBus bus) {
+		NebulaTinker.LOGGER.info("Nebula Tinker Items Registered!");
+		ITEMS.register(bus);
 	}
 }

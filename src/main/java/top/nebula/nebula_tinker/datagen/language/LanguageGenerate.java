@@ -28,6 +28,12 @@ public class LanguageGenerate {
 				"星云工匠"
 		);
 		addLanguage(
+				"effect",
+				"curse_of_war_god",
+				"Curse Of War God",
+				"战神的诅咒"
+		);
+		addLanguage(
 				"message",
 				"modifier.acupoint",
 				"Deadly Acupoint activated",
