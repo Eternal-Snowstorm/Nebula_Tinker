@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
-import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem;
-import slimeknights.tconstruct.tools.data.ModifierIds;
+import top.nebula.nebula_tinker.NebulaTinker;
+import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 @Mixin(ModifiableBowItem.class)
 public class ModifiableBowItemMixin {
@@ -29,11 +29,9 @@ public class ModifiableBowItemMixin {
 	}
 
 	private boolean isRapidShot(ItemStack stack) {
-		int level = ModifierUtil.getModifierLevel(stack, ModifierIds.trueshot);
-		if (level > 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return SimpleTConUtils.hasModifier(
+				stack,
+				NebulaTinker.loadResource("rapid_shot").toString()
+		);
 	}
 }

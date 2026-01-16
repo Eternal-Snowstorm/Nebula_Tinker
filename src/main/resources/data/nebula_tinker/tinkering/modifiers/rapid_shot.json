@@ -1,0 +1,13 @@
+{
+	"allow_crystal": true,
+	"level_display": {
+		"color": "light_gray",
+		"border_color": "dark_gray"
+	},
+	"slots": {
+		"upgrades": 1
+	},
+	"tools": {
+		"tag": "tconstruct:modifiable/ranged/bows"
+	}
+}
