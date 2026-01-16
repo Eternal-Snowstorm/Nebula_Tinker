@@ -175,7 +175,7 @@ public class LanguageGenerate {
 				"modifier",
 				"rapid_shot",
 				"Rapid Shot",
-				"快速射击"
+				"连射"
 		);
 		addLanguage(
 				"modifier",
@@ -187,7 +187,7 @@ public class LanguageGenerate {
 				"modifier",
 				"rapid_shot.description",
 				"Increase ranged weapon firing speed and accuracy",
-				"提升远程武器的射速和精准度"
+				"收束带有多重射击强化的箭矢散布"
 		);
 		addLanguage(
 				"modifier",
