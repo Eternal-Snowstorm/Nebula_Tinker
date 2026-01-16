@@ -5,6 +5,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "nebula_tinker.refmap.json",
 	"mixins": [
+		"ModifiableBowItemMixin"
 	],
 	"client": [
 	],
