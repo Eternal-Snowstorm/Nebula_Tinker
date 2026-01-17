@@ -24,10 +24,10 @@ public class ModModifier {
 	public static final StaticModifier<Modifier> RAPID_SHOT;
 	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
-
+	
 	static {
 		MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
-
+		
 		ABUSER = MODIFIERS.register("abuser", Abuser::new);
 		ACUPOINT = MODIFIERS.register("acupoint", Acupoint::new);
 		CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
@@ -40,7 +40,7 @@ public class ModModifier {
 		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
 		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
 	}
-
+	
 	public static void register(IEventBus bus) {
 		NebulaTinker.LOGGER.info("Nebula Tinker TCon Modifiers Registered!");
 		MODIFIERS.register(bus);

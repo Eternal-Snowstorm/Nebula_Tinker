@@ -14,41 +14,69 @@ public class AttributeEventHandler {
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-
+	
 	@SubscribeEvent
 	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-		// 玩家重生时移除所有属性，新的装备会重新应用属性
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-
+	
 	@SubscribeEvent
 	public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
-		// 维度切换时，属性会被自动清除，这里确保清理缓存
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-
+	
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone event) {
-		// 玩家死亡后克隆时，移除原版玩家的属性
 		Player original = event.getOriginal();
 		AttributeApplicator.removeAllAttributes(original);
-		// 同时需要移除新玩家的属性（因为它们会被重新应用）
 		Player newPlayer = event.getEntity();
 		AttributeApplicator.removeAllAttributes(newPlayer);
 	}
-
-	/**
-	 * 监听服务器tick，用于调试和监控属性系统
-	 */
+	
 	@SubscribeEvent
 	public static void onServerTick(TickEvent.ServerTickEvent event) {
-		// 可以添加调试逻辑，但非必需
 		if (event.phase == TickEvent.Phase.END) {
 			if (event.getServer().getTickCount() % 400 == 0) {
 				AttributeApplicator.cleanupExpiredCache();
 			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+		if (event.phase == TickEvent.Phase.END) {
+			Player player = event.player;
+			
+			if (player.level().getGameTime() % 20 == 0) {
+				checkAndRemoveOrphanedEffects(player);
+			}
+		}
+	}
+	
+	private static void checkAndRemoveOrphanedEffects(Player player) {
+		boolean hasDemonization = false;
+		boolean hasDivinization = false;
+		
+		for (var hand : new net.minecraft.world.InteractionHand[]{net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.InteractionHand.OFF_HAND}) {
+			var stack = player.getItemInHand(hand);
+			if (SimpleTConUtils.hasModifier(stack, NebulaTinker.loadResource("demonization").toString())) {
+				hasDemonization = true;
+			}
+			if (SimpleTConUtils.hasModifier(stack, NebulaTinker.loadResource("divinization").toString())) {
+				hasDivinization = true;
+			}
+		}
+		
+		if (!hasDemonization) {
+			player.removeEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN);
+			player.removeEffect(net.minecraft.world.effect.MobEffects.WEAKNESS);
+			player.removeEffect(net.minecraft.world.effect.MobEffects.WITHER);
+		}
+		
+		if (!hasDivinization) {
+			player.removeEffect(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN);
 		}
 	}
 }

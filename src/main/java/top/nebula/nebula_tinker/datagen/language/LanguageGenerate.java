@@ -472,6 +472,18 @@ public class LanguageGenerate {
 				"Harvest Level -%s",
 				"采集等级 -%s"
 		);
+		addLanguage(
+				"attribute.modifier",
+				"health_reduction",
+				"health_reduction -%s",
+				"扣除最大生命值 -%s"
+		);
+		addLanguage(
+				"attribute.modifier",
+				"movement_speed",
+				"movement speed",
+				"移动速度 +%s"
+		);
 	}
 
 	/**

@@ -264,31 +264,31 @@ public class AttributeApplicator {
 	private static String formatAttributeValue(EAttributeType type, double value) {
 		// 根据属性类型格式化显示
 		if (type == EAttributeType.CRITICAL_CHANCE ||
-				type.name().contains("CRITICAL_REDUCTION") ||
-				type == EAttributeType.ARROW_ACCURACY) {
+				    type.name().contains("CRITICAL_REDUCTION") ||
+				    type == EAttributeType.ARROW_ACCURACY) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.CRITICAL_DAMAGE ||
-				type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
+				           type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
 			// 暴击伤害倍数显示
 			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.multiplier").getString(), value);
 		} else if (type == EAttributeType.FEATHER_FALLING) {
 			// 整数值
 			return String.format("+%.0f" + Component.translatable("format.nebula_tinker.blocks").getString(), value);
 		} else if (type == EAttributeType.DURABILITY ||
-				type.name().contains("DURABILITY_REDUCTION")) {
+				           type.name().contains("DURABILITY_REDUCTION")) {
 			// 整数值
 			return String.format("%+.0f", value);
 		} else if (type == EAttributeType.HARVEST_LEVEL ||
-				type.name().contains("HARVEST_LEVEL_REDUCTION")) {
+				           type.name().contains("HARVEST_LEVEL_REDUCTION")) {
 			// 整数值
 			return String.format("%+.0f", value);
-		} else if (type.name().contains("MOVEMENT_SPEED") ||
-				type.name().contains("MOVEMENT_SLOW")) {
+		} else if (type == EAttributeType.MOVEMENT_SPEED ||
+				           type.name().contains("MOVEMENT_SLOW")) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.ATTACK_SPEED ||
-				type.name().contains("ATTACK_SPEED_REDUCTION")) {
+				           type.name().contains("ATTACK_SPEED_REDUCTION")) {
 			// 攻击速度特殊格式
 			return String.format("%+.2f", value);
 		} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
@@ -298,13 +298,13 @@ public class AttributeApplicator {
 			// 保护
 			return String.format("+%.1f", value);
 		} else if (type == EAttributeType.DRAW_SPEED ||
-				type == EAttributeType.ARROW_SPEED ||
-				type == EAttributeType.PROJECTILE_DAMAGE ||
-				type == EAttributeType.EFFICIENCY) {
+				           type == EAttributeType.ARROW_SPEED ||
+				           type == EAttributeType.PROJECTILE_DAMAGE ||
+				           type == EAttributeType.EFFICIENCY) {
 			// 远程属性
 			return String.format("%+.1f", value);
 		} else if (type == EAttributeType.ARMOR_TOUGHNESS ||
-				type == EAttributeType.KNOCKBACK_RESISTANCE) {
+				           type == EAttributeType.KNOCKBACK_RESISTANCE) {
 			// 护甲韧性和击退抗性
 			return String.format("%+.1f", value);
 		} else {

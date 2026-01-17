@@ -36,112 +36,120 @@ import java.util.concurrent.ConcurrentHashMap;
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Divinization extends Modifier {
 	private static final ResourceLocation ATTRIBUTES_KEY = NebulaTinker.loadResource("divinization_attributes");
-	private static final int MAX_LEVEL = 9;
-	private static final double BASE_MULTIPLIER = 1.0;
-	private static final double PER_LEVEL_BONUS = 0.1;
+	private static final String LEVEL_KEY = "divinization_level";
+	private static final double BASE_MULTIPLIER = 1.2;
+	private static final double PER_LEVEL_BONUS = 0.15;
 	private static final int ATTRIBUTES_COUNT = 3;
-
-	// 缓存修饰符物品的属性，避免重复计算
+	
 	private static final Map<UUID, Map<ItemStack, List<AttributeEntry>>> attributeCache = new ConcurrentHashMap<>();
-	// 计数器，减少tick处理频率
 	private static final Map<UUID, Integer> tickCounter = new ConcurrentHashMap<>();
-	// 粒子效果冷却时间
 	private static final int PARTICLE_COOLDOWN = 20 * 5;
-	// 神化效果生成标识
 	private static final String GENERATED_KEY = "divinization_generated";
-
-	/**
-	 * 获取或生成神化属性
-	 */
+	
 	public static List<AttributeEntry> getOrGenerateAttributes(ItemStack stack, Player player) {
 		if (stack.isEmpty() || player == null) {
 			return Collections.emptyList();
 		}
-
-		// 尝试从缓存获取
+		
 		UUID playerId = player.getUUID();
 		Map<ItemStack, List<AttributeEntry>> playerCache = attributeCache.computeIfAbsent(playerId, k -> new ConcurrentHashMap<>());
+		
+		// 获取当前等级
+		int currentLevel = SimpleTConUtils.getModifierLevel(stack, NebulaTinker.loadResource("divinization").toString());
+		
+		// 检查缓存中是否存在，并且等级是否匹配
 		if (playerCache.containsKey(stack)) {
-			return playerCache.get(stack);
+			List<AttributeEntry> cachedAttributes = playerCache.get(stack);
+			CompoundTag tag = stack.getOrCreateTag();
+			
+			// 检查等级是否变化
+			int savedLevel = tag.getInt(LEVEL_KEY);
+			if (savedLevel == currentLevel && tag.contains(GENERATED_KEY) && tag.contains(ATTRIBUTES_KEY.toString())) {
+				return cachedAttributes;
+			} else {
+				// 等级变化，清除缓存并重新生成
+				playerCache.remove(stack);
+				tag.remove(ATTRIBUTES_KEY.toString());
+				tag.remove(GENERATED_KEY);
+				tag.remove(LEVEL_KEY);
+			}
 		}
-
+		
 		CompoundTag tag = stack.getOrCreateTag();
-
-		// 检查是否已生成属性
-		if (tag.contains(GENERATED_KEY) && tag.contains(ATTRIBUTES_KEY.toString())) {
-			List<AttributeEntry> attributes = deserializeAttributes(tag.getCompound(ATTRIBUTES_KEY.toString()));
-			playerCache.put(stack, attributes);
-			return attributes;
+		
+		// 检查是否有保存的属性，并且等级匹配
+		if (tag.contains(LEVEL_KEY)) {
+			int savedLevel = tag.getInt(LEVEL_KEY);
+			if (savedLevel == currentLevel && tag.contains(GENERATED_KEY) && tag.contains(ATTRIBUTES_KEY.toString())) {
+				List<AttributeEntry> attributes = deserializeAttributes(tag.getCompound(ATTRIBUTES_KEY.toString()));
+				playerCache.put(stack, attributes);
+				return attributes;
+			} else {
+				// 等级不匹配，清除旧属性
+				tag.remove(ATTRIBUTES_KEY.toString());
+				tag.remove(GENERATED_KEY);
+				tag.remove(LEVEL_KEY);
+			}
 		}
-
-		// 生成新属性
+		
 		ToolStack tool = ToolStack.from(stack);
 		if (tool.isBroken()) {
 			return Collections.emptyList();
 		}
-
-		int level = SimpleTConUtils.getModifierLevel(stack, NebulaTinker.loadResource("divinization").toString());
-		if (level <= 0) {
+		
+		if (currentLevel <= 0) {
 			return Collections.emptyList();
 		}
-
-		// 确定装备槽位
+		
 		EquipmentSlot slot = determineEquipmentSlot(stack, player);
-		List<AttributeEntry> attributes = generateAttributes(tool, level, slot);
-
+		List<AttributeEntry> attributes = generateAttributes(tool, currentLevel, slot);
+		
 		if (!attributes.isEmpty()) {
-			saveAttributes(stack, attributes);
+			saveAttributes(stack, attributes, currentLevel);
 			tag.putBoolean(GENERATED_KEY, true);
-
-			// 缓存结果
+			
 			playerCache.put(stack, attributes);
-
-			// 显示生成信息
-			MutableComponent message = Component.translatable("message.nebula_tinker.divinization.generate").withStyle(ChatFormatting.GOLD);
-			player.displayClientMessage(message, true);
-
-			// 播放音效
-			if (!player.level().isClientSide()) {
+			
+			if (player.level() != null && !player.level().isClientSide()) {
+				MutableComponent message = Component.translatable("message.nebula_tinker.divinization.generate").withStyle(ChatFormatting.GOLD);
+				player.displayClientMessage(message, true);
+				
 				player.level().playSound(null, player.blockPosition(),
 						SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.5f, 1.0f);
 			}
 		}
-
+		
 		return attributes;
 	}
-
-	/**
-	 * 应用神化属性到玩家
-	 */
-	private static void applyDivinizationAttributes(Player player, ItemStack stack, EquipmentSlot slot) {
+	
+	private static void saveAttributes(ItemStack stack, List<AttributeEntry> attributes, int level) {
+		CompoundTag tag = stack.getOrCreateTag();
+		tag.put(ATTRIBUTES_KEY.toString(), serializeAttributes(attributes));
+		tag.putInt(LEVEL_KEY, level);
+	}
+	
+	private static void applyDivinizationAttributes(Player player, ItemStack stack) {
 		List<AttributeEntry> attributes = getOrGenerateAttributes(stack, player);
-
+		
 		if (attributes != null && !attributes.isEmpty()) {
-			// 转换AttributeEntry列表为DemonizationModifier.AttributeEntry列表
 			List<Demonization.AttributeEntry> convertedAttributes = new ArrayList<>();
 			for (AttributeEntry entry : attributes) {
 				convertedAttributes.add(new Demonization.AttributeEntry(
 						entry.type, entry.value, entry.slot
 				));
 			}
-
+			
 			AttributeApplicator.applyAttributes(player, convertedAttributes, stack, "divinization");
 		}
 	}
-
-	/**
-	 * 移除神化属性
-	 */
+	
 	private static void removeDivinizationAttributes(Player player, EquipmentSlot slot) {
 		AttributeApplicator.removeAttributes(player, slot);
 	}
-
-	/**
-	 * 确定装备槽位
-	 */
+	
 	private static EquipmentSlot determineEquipmentSlot(ItemStack stack, Player player) {
 		String itemName = stack.getItem().toString().toLowerCase();
-
+		
 		if (itemName.contains("helmet") || itemName.contains("head")) {
 			return EquipmentSlot.HEAD;
 		} else if (itemName.contains("chestplate") || itemName.contains("chest")) {
@@ -155,30 +163,24 @@ public class Divinization extends Modifier {
 		}
 		return EquipmentSlot.MAINHAND;
 	}
-
-	/**
-	 * 生成随机神化属性
-	 */
+	
 	private static List<AttributeEntry> generateAttributes(ToolStack tool, int level, EquipmentSlot slot) {
 		List<AttributeEntry> attributes = new ArrayList<>();
 		Random random = new Random();
-
-		// 获取可用的属性池
+		
 		List<EAttributeType> attributePool = getAttributePoolForSlot(tool, slot);
 		if (attributePool.isEmpty()) {
 			return attributes;
 		}
-
-		// 随机选择ATTRIBUTES_COUNT个不同的正面属性
+		
 		Set<EAttributeType> selectedTypes = new HashSet<>();
-		int maxAttempts = attributePool.size() * 2; // 防止死循环的最大尝试次数
+		int maxAttempts = attributePool.size() * 2;
 		int attempts = 0;
-
+		
 		while (selectedTypes.size() < Math.min(ATTRIBUTES_COUNT, attributePool.size()) && attempts < maxAttempts) {
 			attempts++;
 			EAttributeType type = attributePool.get(random.nextInt(attributePool.size()));
-
-			// 检查属性是否适用于该槽位
+			
 			if (isAttributeApplicable(type, slot) && !selectedTypes.contains(type)) {
 				selectedTypes.add(type);
 				double baseValue = type.getBaseValue();
@@ -187,21 +189,16 @@ public class Divinization extends Modifier {
 				attributes.add(new AttributeEntry(type, finalValue, slot));
 			}
 		}
-
+		
 		return attributes;
 	}
-
-	/**
-	 * 获取适用于特定槽位的属性池
-	 */
+	
 	private static List<EAttributeType> getAttributePoolForSlot(ToolStack tool, EquipmentSlot slot) {
 		List<EAttributeType> attributePool = new ArrayList<>();
 		String toolName = tool.getItem().toString().toLowerCase();
-
+		
 		if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
-			// 根据工具/武器类型选择不同的属性
 			if (toolName.contains("bow") || toolName.contains("crossbow")) {
-				// 远程武器
 				attributePool.addAll(Arrays.asList(
 						EAttributeType.DRAW_SPEED,
 						EAttributeType.ARROW_SPEED,
@@ -209,7 +206,6 @@ public class Divinization extends Modifier {
 						EAttributeType.PROJECTILE_DAMAGE
 				));
 			} else if (toolName.contains("sword") || toolName.contains("axe") || toolName.contains("mace")) {
-				// 近战武器
 				attributePool.addAll(Arrays.asList(
 						EAttributeType.ATTACK_DAMAGE,
 						EAttributeType.ATTACK_SPEED,
@@ -220,7 +216,6 @@ public class Divinization extends Modifier {
 						EAttributeType.LIGHTNING_ASPECT
 				));
 			} else if (toolName.contains("pickaxe") || toolName.contains("shovel") || toolName.contains("mattock")) {
-				// 工具
 				attributePool.addAll(Arrays.asList(
 						EAttributeType.MINING_SPEED,
 						EAttributeType.DURABILITY,
@@ -228,7 +223,6 @@ public class Divinization extends Modifier {
 						EAttributeType.EFFICIENCY
 				));
 			} else {
-				// 默认添加战斗属性
 				attributePool.addAll(Arrays.asList(
 						EAttributeType.ATTACK_DAMAGE,
 						EAttributeType.ATTACK_SPEED,
@@ -237,24 +231,20 @@ public class Divinization extends Modifier {
 				));
 			}
 		} else {
-			// 盔甲
 			attributePool.addAll(Arrays.asList(
 					EAttributeType.ARMOR,
 					EAttributeType.MAX_HEALTH,
 					EAttributeType.ARMOR_TOUGHNESS,
-					EAttributeType.MOVEMENT_SPEED_SMALL,
+					EAttributeType.MOVEMENT_SPEED,
 					EAttributeType.KNOCKBACK_RESISTANCE,
 					EAttributeType.FEATHER_FALLING,
 					EAttributeType.PROTECTION
 			));
 		}
-
+		
 		return attributePool;
 	}
-
-	/**
-	 * 检查属性是否适用于该槽位
-	 */
+	
 	private static boolean isAttributeApplicable(EAttributeType type, EquipmentSlot slot) {
 		for (EquipmentSlot applicableSlot : type.getApplicableSlots()) {
 			if (applicableSlot == slot || slot.getType() == EquipmentSlot.Type.ARMOR && type.getApplicableSlots().contains(slot)) {
@@ -263,18 +253,7 @@ public class Divinization extends Modifier {
 		}
 		return false;
 	}
-
-	/**
-	 * 保存属性到物品NBT
-	 */
-	private static void saveAttributes(ItemStack stack, List<AttributeEntry> attributes) {
-		CompoundTag tag = stack.getOrCreateTag();
-		tag.put(ATTRIBUTES_KEY.toString(), serializeAttributes(attributes));
-	}
-
-	/**
-	 * 序列化属性列表
-	 */
+	
 	private static CompoundTag serializeAttributes(List<AttributeEntry> attributes) {
 		CompoundTag tag = new CompoundTag();
 		ListTag list = new ListTag();
@@ -282,23 +261,19 @@ public class Divinization extends Modifier {
 			CompoundTag entryTag = new CompoundTag();
 			entryTag.putString("type", entry.type.name());
 			entryTag.putDouble("value", entry.value);
-			// 存储槽位的小写名称，避免解析问题
 			entryTag.putString("slot", entry.slot.getName().toLowerCase(Locale.ROOT));
 			list.add(entryTag);
 		}
 		tag.put("attributes", list);
 		return tag;
 	}
-
-	/**
-	 * 反序列化属性列表
-	 */
+	
 	private static List<AttributeEntry> deserializeAttributes(CompoundTag tag) {
 		List<AttributeEntry> attributes = new ArrayList<>();
 		if (!tag.contains("attributes", CompoundTag.TAG_LIST)) {
 			return attributes;
 		}
-
+		
 		ListTag list = tag.getList("attributes", CompoundTag.TAG_COMPOUND);
 		for (int i = 0; i < list.size(); i++) {
 			CompoundTag entryTag = list.getCompound(i);
@@ -307,80 +282,65 @@ public class Divinization extends Modifier {
 				double value = entryTag.getDouble("value");
 				String slotName = entryTag.getString("slot").toUpperCase(Locale.ROOT);
 				EquipmentSlot slot;
-
+				
 				try {
 					slot = EquipmentSlot.valueOf(slotName);
 				} catch (IllegalArgumentException e) {
-					// 尝试其他可能的槽位名称
 					if (slotName.contains("HAND")) {
 						slot = slotName.contains("MAIN") ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
 					} else if (slotName.contains("ARMOR")) {
-						slot = EquipmentSlot.CHEST; // 默认为胸甲
+						slot = EquipmentSlot.CHEST;
 					} else {
-						// 无法解析槽位，使用主手
 						slot = EquipmentSlot.MAINHAND;
 					}
 				}
 				attributes.add(new AttributeEntry(type, value, slot));
 			} catch (Exception e) {
-				// 跳过无法解析的属性
-				continue;
+				// 忽略无效的属性条目
 			}
 		}
 		return attributes;
 	}
-
-	// ========== 事件处理器 ==========
-
-	/**
-	 * 处理玩家tick事件
-	 * 每10个tick处理一次，减少性能负担
-	 */
+	
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase != TickEvent.Phase.END) return;
-
+		
 		Player player = event.player;
 		UUID playerId = player.getUUID();
-
-		// 更新玩家计数器
+		
 		int counter = tickCounter.getOrDefault(playerId, 0);
 		tickCounter.put(playerId, counter + 1);
-
-		// 每10个tick处理一次
+		
 		if (counter % 10 != 0) {
 			return;
 		}
-
-		// 处理主手武器
+		
 		ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("divinization").toString())) {
-			applyDivinizationAttributes(player, mainHand, EquipmentSlot.MAINHAND);
+			applyDivinizationAttributes(player, mainHand);
 			handleDivinizedItem(player, mainHand, true);
 		} else {
-			// 如果主手没有神化修饰符，但之前可能有属性，则移除
 			if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.MAINHAND, "divinization")) {
 				removeDivinizationAttributes(player, EquipmentSlot.MAINHAND);
 			}
 		}
-
-		// 处理副手武器
+		
 		ItemStack offHand = player.getItemInHand(InteractionHand.OFF_HAND);
 		if (SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("divinization").toString())) {
-			applyDivinizationAttributes(player, offHand, EquipmentSlot.OFFHAND);
+			applyDivinizationAttributes(player, offHand);
 			handleDivinizedItem(player, offHand, false);
 		} else {
 			if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.OFFHAND, "divinization")) {
 				removeDivinizationAttributes(player, EquipmentSlot.OFFHAND);
 			}
 		}
-
-		// 处理盔甲
+		
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot.getType() == EquipmentSlot.Type.ARMOR) {
 				ItemStack armor = player.getItemBySlot(slot);
 				if (SimpleTConUtils.hasModifier(armor, NebulaTinker.loadResource("divinization").toString())) {
-					applyDivinizationAttributes(player, armor, slot);
+					applyDivinizationAttributes(player, armor);
 					getOrGenerateAttributes(armor, player);
 				} else {
 					if (AttributeApplicator.hasModifierAttributesInSlot(player, slot, "divinization")) {
@@ -390,31 +350,24 @@ public class Divinization extends Modifier {
 			}
 		}
 	}
-
-	/**
-	 * 处理神化物品的周期性效果
-	 */
+	
 	private static void handleDivinizedItem(Player player, ItemStack item, boolean isMainHand) {
-		// 确保属性已生成
 		List<AttributeEntry> attributes = getOrGenerateAttributes(item, player);
-
+		
 		if (attributes.isEmpty()) {
 			return;
 		}
-
-		// 生成粒子效果（每5秒一次）
+		
 		long gameTime = player.level().getGameTime();
-		if (gameTime % PARTICLE_COOLDOWN == 0 && player.level() instanceof ServerLevel level) {
-			// 生成金色粒子
+		if (gameTime % PARTICLE_COOLDOWN == 0 && player.level() instanceof ServerLevel serverLevel) {
 			int particleCount = Math.min(3, attributes.size());
 			for (int i = 0; i < particleCount; i++) {
 				double offsetX = player.getRandom().nextDouble() - 0.5;
 				double offsetY = player.getRandom().nextDouble() * 2.0;
 				double offsetZ = player.getRandom().nextDouble() - 0.5;
-
-				// 根据主副手调整粒子位置
+				
 				double handOffset = isMainHand ? -0.5 : 0.5;
-				level.sendParticles(ParticleTypes.ENCHANT,
+				serverLevel.sendParticles(ParticleTypes.ENCHANT,
 						player.getX() + offsetX + handOffset,
 						player.getY() + offsetY,
 						player.getZ() + offsetZ,
@@ -422,124 +375,110 @@ public class Divinization extends Modifier {
 			}
 		}
 	}
-
+	
 	@SubscribeEvent
 	public static void onLivingHurt(LivingHurtEvent event) {
 		DamageSource source = event.getSource();
 		if (!(source.getEntity() instanceof Player player)) {
 			return;
 		}
-
-		// 检查主手和副手武器
+		
 		ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
 		ItemStack offHand = player.getItemInHand(InteractionHand.OFF_HAND);
-
+		
 		boolean hasDivinizationMain = SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("divinization").toString());
 		boolean hasDivinizationOff = SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("divinization").toString());
-
+		
 		if (!hasDivinizationMain && !hasDivinizationOff) {
 			return;
 		}
-
-		// 优先使用主手，如果主手没有则使用副手
+		
 		ItemStack weapon = hasDivinizationMain ? mainHand : offHand;
 		List<AttributeEntry> attributes = getOrGenerateAttributes(weapon, player);
-
+		
 		if (attributes.isEmpty()) {
 			return;
 		}
-
-		// 计算额外伤害
+		
+		int level = SimpleTConUtils.getModifierLevel(weapon, NebulaTinker.loadResource("divinization").toString());
 		float extraDamage = 0.0f;
 		boolean hasCriticalChance = false;
 		boolean hasCriticalDamage = false;
 		double criticalChanceValue = 0;
 		double criticalDamageValue = 0;
-
+		
 		for (AttributeEntry attribute : attributes) {
 			EAttributeType type = attribute.type;
 			if (type == EAttributeType.ATTACK_DAMAGE) {
-				extraDamage += (float) attribute.value;
+				extraDamage += (float) (attribute.value * (1.0f + level * 0.1f));
 			} else if (type == EAttributeType.CRITICAL_CHANCE) {
 				hasCriticalChance = true;
-				criticalChanceValue = attribute.value;
+				criticalChanceValue = attribute.value * (1.0f + level * 0.05f);
 			} else if (type == EAttributeType.CRITICAL_DAMAGE) {
 				hasCriticalDamage = true;
-				criticalDamageValue = attribute.value;
+				criticalDamageValue = attribute.value * (1.0f + level * 0.05f);
 			} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
 				applyElementalEffects(event.getEntity(), attribute, player);
 			}
 		}
-
-		// 处理暴击
-		float finalDamage = event.getAmount() + extraDamage;
+		
+		float baseDamageBonus = level * 1.5f + 0.5f;
+		float finalDamage = event.getAmount() + extraDamage + baseDamageBonus;
+		
 		if (hasCriticalChance) {
-			// 检查是否跳劈（原版暴击）
 			boolean isJumpCritical = player.fallDistance > 0.0F && !player.onGround() && !player.onClimbable() &&
-					!player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger();
-
-			// 计算额外暴击率
+					                         !player.isInWater() && !player.hasEffect(MobEffects.BLINDNESS) && !player.isPassenger();
+			
 			double totalCriticalChance = criticalChanceValue;
 			if (isJumpCritical) {
-				totalCriticalChance += 1.0; // 跳劈100%暴击
+				totalCriticalChance += 1.0;
 			}
-
-			// 判断是否暴击
+			
 			if (player.getRandom().nextDouble() < totalCriticalChance) {
-				// 计算暴击伤害倍数
-				float criticalMultiplier = 1.5f; // 基础暴击伤害
+				float criticalMultiplier = 1.5f;
 				if (hasCriticalDamage) {
 					criticalMultiplier += (float) criticalDamageValue;
 				}
-
+				
 				finalDamage *= criticalMultiplier;
-
-				// 暴击视觉反馈
-				if (player.level() instanceof ServerLevel level) {
-					level.sendParticles(ParticleTypes.CRIT,
+				
+				if (player.level() instanceof ServerLevel serverLevel) {
+					serverLevel.sendParticles(ParticleTypes.CRIT,
 							event.getEntity().getX(),
 							event.getEntity().getY() + event.getEntity().getBbHeight() / 2,
 							event.getEntity().getZ(),
 							10, 0.3, 0.3, 0.3, 0);
-
-					// 播放暴击音效
-					level.playSound(null, player.blockPosition(),
+					
+					serverLevel.playSound(null, player.blockPosition(),
 							SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.PLAYERS, 1.0f, 1.0f);
 				}
 			}
 		}
-
+		
 		event.setAmount(finalDamage);
-
-		// 显示伤害数字（视觉反馈）
-		if (player.level() instanceof ServerLevel level && finalDamage > event.getAmount()) {
-			level.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
+		
+		if (player.level() instanceof ServerLevel serverLevel && finalDamage > event.getAmount()) {
+			serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR,
 					event.getEntity().getX(),
 					event.getEntity().getY() + event.getEntity().getBbHeight(),
 					event.getEntity().getZ(),
 					(int) (finalDamage - event.getAmount()), 0, 0, 0, 0);
-
-			// 播放神化攻击音效
-			level.playSound(null, player.blockPosition(),
+			
+			serverLevel.playSound(null, player.blockPosition(),
 					SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.PLAYERS, 0.3f, 1.5f);
 		}
 	}
-
-	/**
-	 * 应用元素效果
-	 */
+	
 	private static void applyElementalEffects(LivingEntity target, AttributeEntry attribute, Player attacker) {
 		EAttributeType type = attribute.type;
 		double value = attribute.value;
-
+		
 		switch (type) {
 			case FIRE_ASPECT:
-				// 火焰效果
 				target.setSecondsOnFire((int) (value / 2));
 				spawnParticles(target, ParticleTypes.FLAME, 10);
 				break;
 			case FROST_ASPECT:
-				// 寒冷效果：减速和挖掘疲劳
 				target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN,
 						(int) (value * 20), (int) (value / 2)));
 				target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,
@@ -547,35 +486,29 @@ public class Divinization extends Modifier {
 				spawnParticles(target, ParticleTypes.SNOWFLAKE, 12);
 				break;
 			case LIGHTNING_ASPECT:
-				// 闪电效果：有概率召唤闪电
 				spawnParticles(target, ParticleTypes.ELECTRIC_SPARK, 15);
-				// 10%概率召唤闪电
 				if (!target.level().isClientSide() && attacker.getRandom().nextFloat() < 0.1f) {
-					// 召唤小型闪电伤害
 					target.hurt(target.damageSources().lightningBolt(), (float) value);
 					spawnParticles(target, ParticleTypes.ELECTRIC_SPARK, 30);
-
+					
 					target.level().playSound(null, target.blockPosition(),
 							SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 0.5f, 0.8f);
 				}
 				break;
 		}
 	}
-
-	/**
-	 * 生成粒子效果
-	 */
+	
 	private static void spawnParticles(LivingEntity entity, ParticleOptions particle, int count) {
-		if (!(entity.level() instanceof ServerLevel level)) {
+		if (!(entity.level() instanceof ServerLevel serverLevel)) {
 			return;
 		}
-
+		
 		for (int i = 0; i < count; i++) {
 			double offsetX = entity.getRandom().nextDouble() - 0.5;
 			double offsetY = entity.getRandom().nextDouble() * entity.getBbHeight();
 			double offsetZ = entity.getRandom().nextDouble() - 0.5;
-
-			level.sendParticles(
+			
+			serverLevel.sendParticles(
 					particle,
 					entity.getX() + offsetX,
 					entity.getY() + offsetY,
@@ -588,12 +521,7 @@ public class Divinization extends Modifier {
 			);
 		}
 	}
-
-	// ========== 内部类 ==========
-
-	/**
-	 * 属性条目类
-	 */
+	
 	public record AttributeEntry(EAttributeType type, double value, EquipmentSlot slot) {
 		public Component getDescription() {
 			String key = type.getTranslationKey();
