@@ -12,15 +12,14 @@ import slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
-@Mixin(value = ModifiableBowItem.class, remap = true)
+@Mixin(ModifiableBowItem.class)
 public class ModifiableBowItemMixin {
 	@Redirect(
 			method = "releaseUsing",
 			at = @At(
 					value = "INVOKE",
 					target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V"
-			),
-			remap = true
+			)
 	)
 	private void nebulaTinker$redirectShootFromRotation(
 			AbstractArrow arrow,
