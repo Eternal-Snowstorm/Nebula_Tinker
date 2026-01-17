@@ -48,8 +48,8 @@ public class ModifiableBowItemMixin {
 			float originalDirection = xRot - living.getXRot();
 
 			int actualConvergence = Math.max(mainHandConvergeLevel, offhandConvergeLevel);
-			float convergedResult = 4 - actualConvergence;
-			float direction = convergedResult * originalDirection / 4;
+			float convergedResult = 5 - actualConvergence;
+			float direction = convergedResult * originalDirection / 5;
 			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
 		}
 	}
