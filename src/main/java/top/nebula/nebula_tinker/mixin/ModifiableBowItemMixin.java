@@ -62,9 +62,9 @@ public class ModifiableBowItemMixin {
 
 	@Unique
 	private int nebulaTinker$getConvergeLevel(ItemStack stack) {
-		return ModifierUtil.getModifierLevel(
+		return SimpleTConUtils.getModifierLevel(
 				stack,
-				new ModifierId(NebulaTinker.loadResource("converge").toString())
+				NebulaTinker.loadResource("converge").toString()
 		);
 	}
 }
