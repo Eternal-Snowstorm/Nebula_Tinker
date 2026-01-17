@@ -3,6 +3,7 @@ package top.nebula.nebula_tinker.mixin;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
@@ -10,15 +11,20 @@ import slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
-@Mixin(ModifiableBowItem.class)
+@Mixin(value = ModifiableBowItem.class, remap = false)
 public class ModifiableBowItemMixin {
-
-	@ModifyArgs(method = "releaseUsing", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V"))
+	@ModifyArgs(
+			method = "releaseUsing",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/entity/projectile/AbstractArrow;shootFromRotation(Lnet/minecraft/world/entity/Entity;FFFFF)V"
+			)
+	)
 	public void releaseUsing(Args args) {
 		LivingEntity living = args.get(0);
 		ItemStack bowInMainHand = living.getMainHandItem();
 		ItemStack bowInOffhand = living.getOffhandItem();
-		if (isRapidShot(bowInMainHand) || isRapidShot(bowInOffhand)) {
+		if (nebulaTinker$isRapidShot(bowInMainHand) || nebulaTinker$isRapidShot(bowInOffhand)) {
 			args.set(1, living.getXRot());
 		} else {
 			float spread = args.get(1);
@@ -28,7 +34,8 @@ public class ModifiableBowItemMixin {
 		}
 	}
 
-	private boolean isRapidShot(ItemStack stack) {
+	@Unique
+	private boolean nebulaTinker$isRapidShot(ItemStack stack) {
 		return SimpleTConUtils.hasModifier(
 				stack,
 				NebulaTinker.loadResource("rapid_shot").toString()
