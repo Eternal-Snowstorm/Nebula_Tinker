@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import slimeknights.tconstruct.library.modifiers.ModifierId;
+import slimeknights.tconstruct.library.tools.helper.ModifierUtil;
 import slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
@@ -38,8 +40,20 @@ public class ModifiableBowItemMixin {
 		ItemStack main = living.getMainHandItem();
 		ItemStack off = living.getOffhandItem();
 
-		if (nebulaTinker$isRapidShot(main) || nebulaTinker$isRapidShot(off)) {
+		if (nebulaTinker$getConvergeLevel(main) > 3 || nebulaTinker$getConvergeLevel(off) > 3) {
 			arrow.shootFromRotation(entity, living.getXRot(), yRot, roll, velocity, inaccuracy);
+		} else if (nebulaTinker$getConvergeLevel(main) == 3 || nebulaTinker$getConvergeLevel(off) == 3) {
+			float originalDirection = xRot - living.getXRot();
+			float direction = originalDirection / 4;
+			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
+		} else if (nebulaTinker$getConvergeLevel(main) == 2 || nebulaTinker$getConvergeLevel(off) == 2) {
+			float originalDirection = xRot - living.getXRot();
+			float direction = originalDirection / 2;
+			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
+		} else if (nebulaTinker$getConvergeLevel(main) == 1 || nebulaTinker$getConvergeLevel(off) == 1) {
+			float originalDirection = xRot - living.getXRot();
+			float direction = 3 * originalDirection / 4;
+			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
 		} else {
 			float direction = xRot - living.getXRot();
 			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
@@ -47,10 +61,10 @@ public class ModifiableBowItemMixin {
 	}
 
 	@Unique
-	private boolean nebulaTinker$isRapidShot(ItemStack stack) {
-		return SimpleTConUtils.hasModifier(
+	private int nebulaTinker$getConvergeLevel(ItemStack stack) {
+		return ModifierUtil.getModifierLevel(
 				stack,
-				NebulaTinker.loadResource("rapid_shot").toString()
+				new ModifierId(NebulaTinker.loadResource("converge").toString())
 		);
 	}
 }
