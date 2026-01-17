@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.shared.TinkerEffects;
 import top.nebula.nebula_tinker.NebulaTinker;
-import top.nebula.nebula_tinker.common.register.ModModifier;
 import top.nebula.nebula_tinker.utils.AttackFeedback;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 

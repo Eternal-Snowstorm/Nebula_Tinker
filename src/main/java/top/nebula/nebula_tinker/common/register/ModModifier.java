@@ -17,11 +17,11 @@ public class ModModifier {
 	public static final StaticModifier<Acupoint> ACUPOINT;
 	public static final StaticModifier<CaptureKing> CAPTURE_KING;
 	public static final StaticModifier<CausalTruncation> CAUSAL_TRUNCATION;
+	public static final StaticModifier<Modifier> CONVERGE;
 	public static final StaticModifier<DeathEcho> DEATH_ECHO;
 	public static final StaticModifier<Demonization> DEMONIZATION;
 	public static final StaticModifier<Divinization> DIVINIZATION;
 	public static final StaticModifier<Frenzy> FRENZY;
-	public static final StaticModifier<Modifier> RAPID_SHOT;
 	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
 	
@@ -32,11 +32,11 @@ public class ModModifier {
 		ACUPOINT = MODIFIERS.register("acupoint", Acupoint::new);
 		CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
 		CAUSAL_TRUNCATION = MODIFIERS.register("causal_truncation", CausalTruncation::new);
+		CONVERGE = MODIFIERS.register("converge", Modifier::new);
 		DEATH_ECHO = MODIFIERS.register("death_echo", DeathEcho::new);
 		DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
 		DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
 		FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
-		RAPID_SHOT = MODIFIERS.register("rapid_shot", Modifier::new);
 		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
 		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
 	}

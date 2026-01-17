@@ -46,7 +46,6 @@ public class InvincibleFrameEgregatorItem extends Item {
 
 		// 清除无敌帧
 		target.invulnerableTime = 0;
-//		target.invulnerableDuration = 0;
 	}
 
 	private static boolean hasItem(Player player) {

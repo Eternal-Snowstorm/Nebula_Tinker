@@ -203,21 +203,21 @@ public class LanguageGenerate {
 		);
 		addLanguage(
 				"modifier",
-				"rapid_shot",
-				"Rapid Shot",
-				"连射"
+				"converge",
+				"Converge",
+				"收束"
 		);
 		addLanguage(
 				"modifier",
-				"rapid_shot.flavor",
+				"converge.flavor",
 				"Arrows like rain",
 				"箭如雨下"
 		);
 		addLanguage(
 				"modifier",
-				"rapid_shot.description",
+				"converge.description",
 				"Converging arrow trajectory of bows with Multishot",
-				"收束带有\"多重射击\"强化的箭矢散布"
+				"使带有\"多重射击\"强化的弓箭矢散布更加密集"
 		);
 		addLanguage(
 				"modifier",
