@@ -40,11 +40,10 @@ public class ModifiableBowItemMixin {
 		ItemStack off = living.getOffhandItem();
 
 		if (nebulaTinker$isRapidShot(main) || nebulaTinker$isRapidShot(off)) {
-			// 你想要的快速射击逻辑
 			arrow.shootFromRotation(entity, living.getXRot(), yRot, roll, velocity, inaccuracy);
 		} else {
 			float direction = xRot - living.getXRot();
-			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction / 2, roll, velocity, inaccuracy);
+			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
 		}
 	}
 
