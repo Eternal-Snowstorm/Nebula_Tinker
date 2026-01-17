@@ -35,15 +35,17 @@ public class NebulaTinker {
 		IEventBus bus = context.getModEventBus();
 
 		// 注册修饰器
-		ModModifier.MODIFIERS.register(bus);
+		ModModifier.register(bus);
 		// 注册物品
-		ModItem.ITEMS.register(bus);
+		ModItem.register(bus);
 		// 注册自定义属性
-		ModAttributes.ATTRIBUTES.register(bus);
+		ModAttributes.register(bus);
 		// 粒子效果
-		ModParticle.PARTICLE_TYPES.register(bus);
+		ModParticle.register(bus);
+		// 生物状态
+		ModEffect.register(bus);
 		// 标签页注册(一定要在最后)
-		ModCreativeTab.TABS.register(bus);
+		ModCreativeTab.register(bus);
 		// 普通配置文件
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/tinker/common.toml");
 		// 客户端配置文件
@@ -59,7 +61,7 @@ public class NebulaTinker {
 		@SubscribeEvent
 		public static void onRegisterCommands(RegisterCommandsEvent event) {
 			ModifierDebugCommand.register(event.getDispatcher());
-			LOGGER.info("Registered Nebula Tinker debug commands");
+			LOGGER.info("Nebula Tinker Debug Commands Registered!");
 		}
 	}
 }

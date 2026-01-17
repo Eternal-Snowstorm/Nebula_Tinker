@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import top.nebula.nebula_tinker.NebulaTinker;
 
@@ -26,4 +27,9 @@ public class ModCreativeTab {
 						})
 						.build();
 			});
+
+	public static void register(IEventBus bus) {
+		NebulaTinker.LOGGER.info("Nebula Tinker Creative Item Tab Registered!");
+		TABS.register(bus);
+	}
 }

@@ -1,5 +1,8 @@
 package top.nebula.nebula_tinker.common.modifier;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -48,6 +51,8 @@ public class CaptureKing extends Modifier {
 				NebulaTinker.loadResource("capture_king").toString()
 		);
 
+		boolean isBoss = entity.getType().is(Tags.EntityTypes.BOSSES);
+
 		if (level <= 0) {
 			return;
 		}
@@ -61,10 +66,17 @@ public class CaptureKing extends Modifier {
 		}
 
 		// 只对 BOSS 生效
-		if (entity.getType().is(Tags.EntityTypes.BOSSES) && hasModfier) {
-			AttackFeedback.spawnAbuserCritEffect(player);
-			event.setResult(Event.Result.ALLOW);
-			event.setDamageModifier(CRIT_MULTIPLIER - 1.0F);
+		if (!isBoss && hasModfier) {
+			return;
 		}
+
+		MutableComponent tranKey = Component.translatable("message.nebula_tinker.modifier.capture_king")
+				.withStyle(ChatFormatting.RED)
+				.withStyle(ChatFormatting.BOLD);
+
+		player.displayClientMessage(tranKey, true);
+		AttackFeedback.spawnAbuserCritEffect(player);
+		event.setResult(Event.Result.ALLOW);
+		event.setDamageModifier(CRIT_MULTIPLIER);
 	}
 }

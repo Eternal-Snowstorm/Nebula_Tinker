@@ -2,6 +2,7 @@ package top.nebula.nebula_tinker.common.register;
 
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import top.nebula.nebula_tinker.NebulaTinker;
@@ -28,5 +29,10 @@ public class ModParticle {
 		return PARTICLE_TYPES.register(name, () -> {
 			return new SimpleParticleType(false);
 		});
+	}
+
+	public static void register(IEventBus bus) {
+		NebulaTinker.LOGGER.info("Nebula Tinker Particles Registered!");
+		PARTICLE_TYPES.register(bus);
 	}
 }

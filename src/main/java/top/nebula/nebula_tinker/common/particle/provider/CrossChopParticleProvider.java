@@ -25,7 +25,7 @@ public class CrossChopParticleProvider implements ParticleProvider<SimpleParticl
 			double x,
 			double y,
 			double z,
-			double rot, // 用 xSpeed 传旋转角
+			double rot,
 			double unusedY,
 			double unusedZ
 	) {

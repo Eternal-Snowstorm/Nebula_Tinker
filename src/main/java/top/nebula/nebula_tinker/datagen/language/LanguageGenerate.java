@@ -28,10 +28,40 @@ public class LanguageGenerate {
 				"星云工匠"
 		);
 		addLanguage(
+				"effect",
+				"curse_of_war_god",
+				"Curse Of War God",
+				"战神的诅咒"
+		);
+		addLanguage(
 				"message",
 				"modifier.acupoint",
 				"Deadly Acupoint activated",
 				"<死穴>效果发动"
+		);
+		addLanguage(
+				"message",
+				"modifier.capture_king",
+				"Capture King activated",
+				"<擒王>效果发动"
+		);
+		addLanguage(
+				"modifier",
+				"capture_king",
+				"Capture King",
+				"擒王"
+		);
+		addLanguage(
+				"modifier",
+				"capture_king.flavor",
+				"King and King's Fight",
+				"王与王的战斗! "
+		);
+		addLanguage(
+				"modifier",
+				"capture_king.description",
+				"When attacking, the probability will directly cause a critical strike to the BOSS. The higher the level, the higher the critical strike rate.",
+				"攻击时概率对BOSS直接造成暴击, 等级越高暴击率越高"
 		);
 		addLanguage(
 				"modifier",
@@ -145,7 +175,7 @@ public class LanguageGenerate {
 				"modifier",
 				"rapid_shot",
 				"Rapid Shot",
-				"快速射击"
+				"连射"
 		);
 		addLanguage(
 				"modifier",
@@ -156,8 +186,8 @@ public class LanguageGenerate {
 		addLanguage(
 				"modifier",
 				"rapid_shot.description",
-				"Increase ranged weapon firing speed and accuracy",
-				"提升远程武器的射速和精准度"
+				"Converging arrow trajectory of bows with Multishot",
+				"收束带有\"多重射击\"强化的箭矢散布"
 		);
 		addLanguage(
 				"modifier",
@@ -175,7 +205,7 @@ public class LanguageGenerate {
 				"modifier",
 				"divinization.description",
 				"Grants 3 random divine attributes when applied\n§7• Weapons: Attack, speed, elemental damage\n• Tools: Efficiency, durability, tier\n• Armor: Defense, health, resistance\n§6Total 9 levels, each level enhances effects",
-				"每次应用时随机赋予3种神圣属性\n§7• 武器：攻击、速度、元素伤害\n• 工具：效率、耐久、等级\n• 盔甲：防御、生命、抗性\n§6共9级，每级提升属性效果"
+				"每次应用时随机赋予3种神圣属性\n§7• 武器: 攻击、速度、元素伤害\n• 工具: 效率、耐久、等级\n• 盔甲: 防御、生命、抗性\n§6共9级，每级提升属性效果"
 		);
 		addLanguage(
 				"modifier",
@@ -193,7 +223,7 @@ public class LanguageGenerate {
 				"modifier",
 				"demonization.description",
 				"Grants 3 powerful attributes with 1 negative effect\n§7• Weapons: High attack boost, but weaker survival\n• Tools: Extreme efficiency, but lower durability\n• Armor: Maximum defense, but weaker offense\n§cSide effect: Periodically takes damage",
-				"赋予3种强力属性，但附带1个负面效果\n§7• 武器：高额攻击加成，但削弱生存\n• 工具：超强效率，但降低耐久\n• 盔甲：极致防御，但削弱攻击\n§c副作用：周期性受到伤害"
+				"赋予3种强力属性，但附带1个负面效果\n§7• 武器: 高额攻击加成，但削弱生存\n• 工具: 超强效率，但降低耐久\n• 盔甲: 极致防御，但削弱攻击\n§c副作用: 周期性受到伤害"
 		);
 		addLanguage(
 				"message",
@@ -211,45 +241,45 @@ public class LanguageGenerate {
 		addLanguage(
 				"modifier",
 				"divinization.tooltip.title",
-				"§6§lDivinization Attributes:",
-				"§6§l神化属性："
+				"§6§lDivinization Attributes: ",
+				"§6§l神化属性: "
 		);
 		addLanguage(
 				"modifier",
 				"demonization.tooltip.title",
-				"§4§lDemonization Attributes:",
-				"§4§l魔化属性："
+				"§4§lDemonization Attributes: ",
+				"§4§l魔化属性: "
 		);
 		addLanguage(
 				"modifier",
 				"demonization.positive",
-				"§aPositive Effects:",
-				"§a正面效果："
+				"§aPositive Effects: ",
+				"§a正面效果: "
 		);
 		addLanguage(
 				"modifier",
 				"demonization.negative",
-				"§cNegative Effects:",
-				"§c负面效果："
+				"§cNegative Effects: ",
+				"§c负面效果: "
 		);
 
 		addLanguage(
 				"tooltip",
 				"demonization.title",
-				"§6§lDemonization Attributes:",
-				"§6§l魔化属性:"
+				"§6§lDemonization Attributes: ",
+				"§6§l魔化属性: "
 		);
 		addLanguage(
 				"tooltip",
 				"divinization.title",
-				"§b§lDivinization Attributes:",
-				"§b§l神化属性:"
+				"§b§lDivinization Attributes: ",
+				"§b§l神化属性: "
 		);
 		addLanguage(
 				"tooltip",
 				"negative.title",
-				"§c§lNegative Effects:",
-				"§c§l负面效果:"
+				"§c§lNegative Effects: ",
+				"§c§l负面效果: "
 		);
 		addLanguage(
 				"tooltip",
