@@ -40,8 +40,7 @@ public class InvincibleFrameEgregatorItem extends Item {
 			return;
 		}
 
-		// 判断玩家是否有智能机构
-		if (!hasSmartMechanism(player)) {
+		if (!hasItem(player)) {
 			return;
 		}
 
@@ -50,7 +49,7 @@ public class InvincibleFrameEgregatorItem extends Item {
 //		target.invulnerableDuration = 0;
 	}
 
-	private static boolean hasSmartMechanism(Player player) {
+	private static boolean hasItem(Player player) {
 		return CuriosApi.getCuriosInventory(player)
 				.map((handler) -> {
 					return handler.findFirstCurio((stack) -> {
