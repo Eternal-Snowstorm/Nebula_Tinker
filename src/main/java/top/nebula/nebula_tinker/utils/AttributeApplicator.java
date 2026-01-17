@@ -37,7 +37,7 @@ public class AttributeApplicator {
 				});
 
 		for (Demonization.AttributeEntry entry : attributes) {
-			AttributeType type = entry.type();
+			EAttributeType type = entry.type();
 			double value = entry.value();
 			EquipmentSlot slot = entry.slot();
 
@@ -253,7 +253,7 @@ public class AttributeApplicator {
 	/**
 	 * 获取属性显示名称
 	 */
-	private static String getAttributeDisplayName(AttributeType type) {
+	private static String getAttributeDisplayName(EAttributeType type) {
 		String key = "attribute.nebula_tinker." + type.name().toLowerCase();
 		return Component.translatable(key).getString();
 	}
@@ -261,25 +261,25 @@ public class AttributeApplicator {
 	/**
 	 * 格式化属性值
 	 */
-	private static String formatAttributeValue(AttributeType type, double value) {
+	private static String formatAttributeValue(EAttributeType type, double value) {
 		// 根据属性类型格式化显示
-		if (type == AttributeType.CRITICAL_CHANCE ||
+		if (type == EAttributeType.CRITICAL_CHANCE ||
 				type.name().contains("CRITICAL_REDUCTION") ||
-				type == AttributeType.ARROW_ACCURACY) {
+				type == EAttributeType.ARROW_ACCURACY) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
-		} else if (type == AttributeType.CRITICAL_DAMAGE ||
+		} else if (type == EAttributeType.CRITICAL_DAMAGE ||
 				type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
 			// 暴击伤害倍数显示
 			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.multiplier").getString(), value);
-		} else if (type == AttributeType.FEATHER_FALLING) {
+		} else if (type == EAttributeType.FEATHER_FALLING) {
 			// 整数值
 			return String.format("+%.0f" + Component.translatable("format.nebula_tinker.blocks").getString(), value);
-		} else if (type == AttributeType.DURABILITY ||
+		} else if (type == EAttributeType.DURABILITY ||
 				type.name().contains("DURABILITY_REDUCTION")) {
 			// 整数值
 			return String.format("%+.0f", value);
-		} else if (type == AttributeType.HARVEST_LEVEL ||
+		} else if (type == EAttributeType.HARVEST_LEVEL ||
 				type.name().contains("HARVEST_LEVEL_REDUCTION")) {
 			// 整数值
 			return String.format("%+.0f", value);
@@ -287,24 +287,24 @@ public class AttributeApplicator {
 				type.name().contains("MOVEMENT_SLOW")) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
-		} else if (type == AttributeType.ATTACK_SPEED ||
+		} else if (type == EAttributeType.ATTACK_SPEED ||
 				type.name().contains("ATTACK_SPEED_REDUCTION")) {
 			// 攻击速度特殊格式
 			return String.format("%+.2f", value);
-		} else if (type.getCategory() == AttributeType.AttributeCategory.ELEMENTAL) {
+		} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
 			// 元素伤害：显示秒数
 			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.seconds").getString(), Math.abs(value) / 2);
-		} else if (type == AttributeType.PROTECTION) {
+		} else if (type == EAttributeType.PROTECTION) {
 			// 保护
 			return String.format("+%.1f", value);
-		} else if (type == AttributeType.DRAW_SPEED ||
-				type == AttributeType.ARROW_SPEED ||
-				type == AttributeType.PROJECTILE_DAMAGE ||
-				type == AttributeType.EFFICIENCY) {
+		} else if (type == EAttributeType.DRAW_SPEED ||
+				type == EAttributeType.ARROW_SPEED ||
+				type == EAttributeType.PROJECTILE_DAMAGE ||
+				type == EAttributeType.EFFICIENCY) {
 			// 远程属性
 			return String.format("%+.1f", value);
-		} else if (type == AttributeType.ARMOR_TOUGHNESS ||
-				type == AttributeType.KNOCKBACK_RESISTANCE) {
+		} else if (type == EAttributeType.ARMOR_TOUGHNESS ||
+				type == EAttributeType.KNOCKBACK_RESISTANCE) {
 			// 护甲韧性和击退抗性
 			return String.format("%+.1f", value);
 		} else {
@@ -320,7 +320,7 @@ public class AttributeApplicator {
 			UUID uuid, Attribute attribute,
 			EquipmentSlot slot,
 			String modifierId,
-			AttributeType attributeType,
+			EAttributeType EAttributeType,
 			double value
 	) {
 	}

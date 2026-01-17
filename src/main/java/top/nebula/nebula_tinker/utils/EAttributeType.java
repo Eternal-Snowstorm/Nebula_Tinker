@@ -12,7 +12,7 @@ import java.util.*;
  * 神魔化效果属性类型枚举
  * 定义所有可用的正面和负面属性
  */
-public enum AttributeType {
+public enum EAttributeType {
 	// 正面属性
 
 	// 通用战斗属性
@@ -474,11 +474,11 @@ public enum AttributeType {
 	// 分级，用于稀有度系统
 	private final int tier;
 
-	AttributeType(Attribute attribute, double baseValue, String translationKey, Set<EquipmentSlot> applicableSlots, AttributeCategory category) {
+	EAttributeType(Attribute attribute, double baseValue, String translationKey, Set<EquipmentSlot> applicableSlots, AttributeCategory category) {
 		this(attribute, baseValue, translationKey, applicableSlots, category, 10, 1);
 	}
 
-	AttributeType(Attribute attribute, double baseValue, String translationKey, Set<EquipmentSlot> applicableSlots, AttributeCategory category, int weight, int tier) {
+	EAttributeType(Attribute attribute, double baseValue, String translationKey, Set<EquipmentSlot> applicableSlots, AttributeCategory category, int weight, int tier) {
 		this.attribute = attribute;
 		this.baseValue = baseValue;
 		this.translationKey = translationKey;
@@ -546,9 +546,9 @@ public enum AttributeType {
 	/**
 	 * 获取适用于指定装备槽位的属性类型
 	 */
-	public static List<AttributeType> getApplicableAttributes(EquipmentSlot slot, boolean includeNegative) {
-		List<AttributeType> result = new ArrayList<>();
-		for (AttributeType type : values()) {
+	public static List<EAttributeType> getApplicableAttributes(EquipmentSlot slot, boolean includeNegative) {
+		List<EAttributeType> result = new ArrayList<>();
+		for (EAttributeType type : values()) {
 			if (type.applicableSlots.contains(slot) && (includeNegative || !type.isNegative())) {
 				result.add(type);
 			}
@@ -559,7 +559,7 @@ public enum AttributeType {
 	/**
 	 * 检查两个属性是否冲突
 	 */
-	public static boolean areConflicting(AttributeType type1, AttributeType type2) {
+	public static boolean areConflicting(EAttributeType type1, EAttributeType type2) {
 		// 相同的基础属性冲突（如增加攻击力和减少攻击力）
 		if (type1.getAttribute() != null && type1.getAttribute().equals(type2.getAttribute())) {
 			// 如果都是负面的或都是正面的，则不冲突（允许叠加）

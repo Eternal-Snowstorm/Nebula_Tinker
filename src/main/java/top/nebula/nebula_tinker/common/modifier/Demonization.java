@@ -27,7 +27,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.utils.AttributeApplicator;
-import top.nebula.nebula_tinker.utils.AttributeType;
+import top.nebula.nebula_tinker.utils.EAttributeType;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 import java.util.*;
@@ -167,19 +167,19 @@ public class Demonization extends Modifier {
 		Random random = new Random();
 
 		// 获取可用的属性池
-		List<AttributeType> attributePool = getAttributePoolForSlot(tool, slot, true);
+		List<EAttributeType> attributePool = getAttributePoolForSlot(tool, slot, true);
 		if (attributePool.isEmpty()) {
 			return attributes;
 		}
 
 		// 随机选择ATTRIBUTES_COUNT个不同的正面属性
-		Set<AttributeType> selectedTypes = new HashSet<>();
+		Set<EAttributeType> selectedTypes = new HashSet<>();
 		int maxAttempts = attributePool.size() * 2; // 防止死循环的最大尝试次数
 		int attempts = 0;
 
 		while (selectedTypes.size() < Math.min(POSITIVE_ATTRIBUTES_COUNT, attributePool.size()) && attempts < maxAttempts) {
 			attempts++;
-			AttributeType type = attributePool.get(random.nextInt(attributePool.size()));
+			EAttributeType type = attributePool.get(random.nextInt(attributePool.size()));
 
 			// 检查属性是否适用于该槽位
 			if (isAttributeApplicable(type, slot) && !selectedTypes.contains(type)) {
@@ -202,19 +202,19 @@ public class Demonization extends Modifier {
 		Random random = new Random();
 
 		// 获取负面属性池
-		List<AttributeType> negativePool = getAttributePoolForSlot(tool, slot, false);
+		List<EAttributeType> negativePool = getAttributePoolForSlot(tool, slot, false);
 		if (negativePool.isEmpty()) {
 			return attributes;
 		}
 
 		// 随机选择一个负面属性
-		Set<AttributeType> selectedTypes = new HashSet<>();
+		Set<EAttributeType> selectedTypes = new HashSet<>();
 		int maxAttempts = negativePool.size() * 2;
 		int attempts = 0;
 
 		while (selectedTypes.size() < Math.min(NEGATIVE_ATTRIBUTES_COUNT, negativePool.size()) && attempts < maxAttempts) {
 			attempts++;
-			AttributeType type = negativePool.get(random.nextInt(negativePool.size()));
+			EAttributeType type = negativePool.get(random.nextInt(negativePool.size()));
 
 			// 检查属性是否适用于该槽位
 			if (isAttributeApplicable(type, slot)) {
@@ -232,8 +232,8 @@ public class Demonization extends Modifier {
 	/**
 	 * 获取适用于特定槽位的属性池
 	 */
-	private static List<AttributeType> getAttributePoolForSlot(ToolStack tool, EquipmentSlot slot, boolean positive) {
-		List<AttributeType> attributePool = new ArrayList<>();
+	private static List<EAttributeType> getAttributePoolForSlot(ToolStack tool, EquipmentSlot slot, boolean positive) {
+		List<EAttributeType> attributePool = new ArrayList<>();
 		String toolName = tool.getItem().toString().toLowerCase();
 
 		if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
@@ -241,75 +241,75 @@ public class Demonization extends Modifier {
 				// 远程武器
 				if (positive) {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.DRAW_SPEED,
-							AttributeType.ARROW_SPEED,
-							AttributeType.ARROW_ACCURACY,
-							AttributeType.PROJECTILE_DAMAGE
+							EAttributeType.DRAW_SPEED,
+							EAttributeType.ARROW_SPEED,
+							EAttributeType.ARROW_ACCURACY,
+							EAttributeType.PROJECTILE_DAMAGE
 					));
 				} else {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.HEALTH_REDUCTION_SMALL,
-							AttributeType.HEALTH_REDUCTION_MEDIUM,
-							AttributeType.ARMOR_REDUCTION_SMALL,
-							AttributeType.ARMOR_REDUCTION_MEDIUM
+							EAttributeType.HEALTH_REDUCTION_SMALL,
+							EAttributeType.HEALTH_REDUCTION_MEDIUM,
+							EAttributeType.ARMOR_REDUCTION_SMALL,
+							EAttributeType.ARMOR_REDUCTION_MEDIUM
 					));
 				}
 			} else if (toolName.contains("sword") || toolName.contains("axe") || toolName.contains("mace")) {
 				// 近战武器
 				if (positive) {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.ATTACK_DAMAGE,
-							AttributeType.ATTACK_SPEED,
-							AttributeType.CRITICAL_CHANCE,
-							AttributeType.CRITICAL_DAMAGE,
-							AttributeType.FIRE_ASPECT,
-							AttributeType.FROST_ASPECT,
-							AttributeType.LIGHTNING_ASPECT
+							EAttributeType.ATTACK_DAMAGE,
+							EAttributeType.ATTACK_SPEED,
+							EAttributeType.CRITICAL_CHANCE,
+							EAttributeType.CRITICAL_DAMAGE,
+							EAttributeType.FIRE_ASPECT,
+							EAttributeType.FROST_ASPECT,
+							EAttributeType.LIGHTNING_ASPECT
 					));
 				} else {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.HEALTH_REDUCTION_SMALL,
-							AttributeType.HEALTH_REDUCTION_MEDIUM,
-							AttributeType.ARMOR_REDUCTION_SMALL,
-							AttributeType.ARMOR_REDUCTION_MEDIUM,
-							AttributeType.MOVEMENT_SLOW_SMALL,
-							AttributeType.MOVEMENT_SLOW_MEDIUM
+							EAttributeType.HEALTH_REDUCTION_SMALL,
+							EAttributeType.HEALTH_REDUCTION_MEDIUM,
+							EAttributeType.ARMOR_REDUCTION_SMALL,
+							EAttributeType.ARMOR_REDUCTION_MEDIUM,
+							EAttributeType.MOVEMENT_SLOW_SMALL,
+							EAttributeType.MOVEMENT_SLOW_MEDIUM
 					));
 				}
 			} else if (toolName.contains("pickaxe") || toolName.contains("shovel") || toolName.contains("mattock")) {
 				// 工具
 				if (positive) {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.MINING_SPEED,
-							AttributeType.DURABILITY,
-							AttributeType.HARVEST_LEVEL,
-							AttributeType.EFFICIENCY
+							EAttributeType.MINING_SPEED,
+							EAttributeType.DURABILITY,
+							EAttributeType.HARVEST_LEVEL,
+							EAttributeType.EFFICIENCY
 					));
 				} else {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.DURABILITY_REDUCTION_SMALL,
-							AttributeType.DURABILITY_REDUCTION_MEDIUM,
-							AttributeType.HARVEST_LEVEL_REDUCTION_SMALL,
-							AttributeType.HARVEST_LEVEL_REDUCTION_MEDIUM,
-							AttributeType.MINING_SPEED_REDUCTION_SMALL,
-							AttributeType.MINING_SPEED_REDUCTION_MEDIUM
+							EAttributeType.DURABILITY_REDUCTION_SMALL,
+							EAttributeType.DURABILITY_REDUCTION_MEDIUM,
+							EAttributeType.HARVEST_LEVEL_REDUCTION_SMALL,
+							EAttributeType.HARVEST_LEVEL_REDUCTION_MEDIUM,
+							EAttributeType.MINING_SPEED_REDUCTION_SMALL,
+							EAttributeType.MINING_SPEED_REDUCTION_MEDIUM
 					));
 				}
 			} else {
 				// 默认
 				if (positive) {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.ATTACK_DAMAGE,
-							AttributeType.ATTACK_SPEED,
-							AttributeType.CRITICAL_CHANCE,
-							AttributeType.CRITICAL_DAMAGE
+							EAttributeType.ATTACK_DAMAGE,
+							EAttributeType.ATTACK_SPEED,
+							EAttributeType.CRITICAL_CHANCE,
+							EAttributeType.CRITICAL_DAMAGE
 					));
 				} else {
 					attributePool.addAll(Arrays.asList(
-							AttributeType.HEALTH_REDUCTION_SMALL,
-							AttributeType.HEALTH_REDUCTION_MEDIUM,
-							AttributeType.ARMOR_REDUCTION_SMALL,
-							AttributeType.ARMOR_REDUCTION_MEDIUM
+							EAttributeType.HEALTH_REDUCTION_SMALL,
+							EAttributeType.HEALTH_REDUCTION_MEDIUM,
+							EAttributeType.ARMOR_REDUCTION_SMALL,
+							EAttributeType.ARMOR_REDUCTION_MEDIUM
 					));
 				}
 			}
@@ -317,25 +317,25 @@ public class Demonization extends Modifier {
 			// 盔甲
 			if (positive) {
 				attributePool.addAll(Arrays.asList(
-						AttributeType.ARMOR,
-						AttributeType.MAX_HEALTH,
-						AttributeType.ARMOR_TOUGHNESS,
-						AttributeType.MOVEMENT_SPEED_SMALL,
-						AttributeType.KNOCKBACK_RESISTANCE,
-						AttributeType.FEATHER_FALLING,
-						AttributeType.PROTECTION
+						EAttributeType.ARMOR,
+						EAttributeType.MAX_HEALTH,
+						EAttributeType.ARMOR_TOUGHNESS,
+						EAttributeType.MOVEMENT_SPEED_SMALL,
+						EAttributeType.KNOCKBACK_RESISTANCE,
+						EAttributeType.FEATHER_FALLING,
+						EAttributeType.PROTECTION
 				));
 			} else {
 				// 负面属性
 				attributePool.addAll(Arrays.asList(
-						AttributeType.ATTACK_DAMAGE_REDUCTION_SMALL,
-						AttributeType.ATTACK_DAMAGE_REDUCTION_MEDIUM,
-						AttributeType.ATTACK_SPEED_REDUCTION_SMALL,
-						AttributeType.ATTACK_SPEED_REDUCTION_MEDIUM,
-						AttributeType.CRITICAL_REDUCTION_SMALL,
-						AttributeType.CRITICAL_REDUCTION_MEDIUM,
-						AttributeType.CRITICAL_DAMAGE_REDUCTION_SMALL,
-						AttributeType.CRITICAL_DAMAGE_REDUCTION_MEDIUM
+						EAttributeType.ATTACK_DAMAGE_REDUCTION_SMALL,
+						EAttributeType.ATTACK_DAMAGE_REDUCTION_MEDIUM,
+						EAttributeType.ATTACK_SPEED_REDUCTION_SMALL,
+						EAttributeType.ATTACK_SPEED_REDUCTION_MEDIUM,
+						EAttributeType.CRITICAL_REDUCTION_SMALL,
+						EAttributeType.CRITICAL_REDUCTION_MEDIUM,
+						EAttributeType.CRITICAL_DAMAGE_REDUCTION_SMALL,
+						EAttributeType.CRITICAL_DAMAGE_REDUCTION_MEDIUM
 				));
 			}
 		}
@@ -346,7 +346,7 @@ public class Demonization extends Modifier {
 	/**
 	 * 检查属性是否适用于该槽位
 	 */
-	private static boolean isAttributeApplicable(AttributeType type, EquipmentSlot slot) {
+	private static boolean isAttributeApplicable(EAttributeType type, EquipmentSlot slot) {
 		for (EquipmentSlot applicableSlot : type.getApplicableSlots()) {
 			if (applicableSlot == slot || slot.getType() == EquipmentSlot.Type.ARMOR && type.getApplicableSlots().contains(slot)) {
 				return true;
@@ -395,7 +395,7 @@ public class Demonization extends Modifier {
 		for (int i = 0; i < list.size(); i++) {
 			CompoundTag entryTag = list.getCompound(i);
 			try {
-				AttributeType type = AttributeType.valueOf(entryTag.getString("type"));
+				EAttributeType type = EAttributeType.valueOf(entryTag.getString("type"));
 				double value = entryTag.getDouble("value");
 				String slotName = entryTag.getString("slot").toUpperCase(Locale.ROOT);
 				EquipmentSlot slot;
@@ -610,16 +610,16 @@ public class Demonization extends Modifier {
 		double criticalDamageValue = 0;
 
 		for (AttributeEntry attribute : attributes.positive) {
-			AttributeType type = attribute.type;
-			if (type == AttributeType.ATTACK_DAMAGE) {
+			EAttributeType type = attribute.type;
+			if (type == EAttributeType.ATTACK_DAMAGE) {
 				extraDamage += (float) (attribute.value * 1.2f); // 比神化高20%
-			} else if (type == AttributeType.CRITICAL_CHANCE) {
+			} else if (type == EAttributeType.CRITICAL_CHANCE) {
 				hasCriticalChance = true;
 				criticalChanceValue = attribute.value * 1.3f; // 暴击率更高
-			} else if (type == AttributeType.CRITICAL_DAMAGE) {
+			} else if (type == EAttributeType.CRITICAL_DAMAGE) {
 				hasCriticalDamage = true;
 				criticalDamageValue = attribute.value * 1.3f; // 暴击伤害更高
-			} else if (type.getCategory() == AttributeType.AttributeCategory.ELEMENTAL) {
+			} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
 				applyDemonicEffects(event.getEntity(), attribute, player);
 			}
 		}
@@ -688,8 +688,8 @@ public class Demonization extends Modifier {
 		if (!attributes.negative.isEmpty()) {
 			float selfDamage = 0.0f;
 			for (AttributeEntry negative : attributes.negative) {
-				if (negative.type == AttributeType.HEALTH_REDUCTION_SMALL ||
-						negative.type == AttributeType.HEALTH_REDUCTION_MEDIUM) {
+				if (negative.type == EAttributeType.HEALTH_REDUCTION_SMALL ||
+						negative.type == EAttributeType.HEALTH_REDUCTION_MEDIUM) {
 					selfDamage += (float) (-negative.value * 0.1f); // 造成10%的负面属性值作为反伤
 				}
 			}
@@ -710,7 +710,7 @@ public class Demonization extends Modifier {
 	 * 应用恶魔元素效果
 	 */
 	private static void applyDemonicEffects(LivingEntity target, AttributeEntry attribute, Player player) {
-		AttributeType type = attribute.type;
+		EAttributeType type = attribute.type;
 		double value = attribute.value;
 
 		switch (type) {
@@ -771,12 +771,12 @@ public class Demonization extends Modifier {
 	/**
 	 * 属性条目类
 	 */
-	public record AttributeEntry(AttributeType type, double value, EquipmentSlot slot) {
+	public record AttributeEntry(EAttributeType type, double value, EquipmentSlot slot) {
 
 		public Component getDescription() {
 			String key = type.getTranslationKey();
 			return Component.translatable(key, String.format("+%.1f", value))
-					.withStyle(type.getCategory() == AttributeType.AttributeCategory.ELEMENTAL ?
+					.withStyle(type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL ?
 							ChatFormatting.DARK_RED : ChatFormatting.RED);
 		}
 	}

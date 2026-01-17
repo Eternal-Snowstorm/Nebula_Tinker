@@ -27,7 +27,7 @@ import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.utils.AttributeApplicator;
-import top.nebula.nebula_tinker.utils.AttributeType;
+import top.nebula.nebula_tinker.utils.EAttributeType;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 import java.util.*;
@@ -164,19 +164,19 @@ public class Divinization extends Modifier {
 		Random random = new Random();
 
 		// 获取可用的属性池
-		List<AttributeType> attributePool = getAttributePoolForSlot(tool, slot);
+		List<EAttributeType> attributePool = getAttributePoolForSlot(tool, slot);
 		if (attributePool.isEmpty()) {
 			return attributes;
 		}
 
 		// 随机选择ATTRIBUTES_COUNT个不同的正面属性
-		Set<AttributeType> selectedTypes = new HashSet<>();
+		Set<EAttributeType> selectedTypes = new HashSet<>();
 		int maxAttempts = attributePool.size() * 2; // 防止死循环的最大尝试次数
 		int attempts = 0;
 
 		while (selectedTypes.size() < Math.min(ATTRIBUTES_COUNT, attributePool.size()) && attempts < maxAttempts) {
 			attempts++;
-			AttributeType type = attributePool.get(random.nextInt(attributePool.size()));
+			EAttributeType type = attributePool.get(random.nextInt(attributePool.size()));
 
 			// 检查属性是否适用于该槽位
 			if (isAttributeApplicable(type, slot) && !selectedTypes.contains(type)) {
@@ -194,8 +194,8 @@ public class Divinization extends Modifier {
 	/**
 	 * 获取适用于特定槽位的属性池
 	 */
-	private static List<AttributeType> getAttributePoolForSlot(ToolStack tool, EquipmentSlot slot) {
-		List<AttributeType> attributePool = new ArrayList<>();
+	private static List<EAttributeType> getAttributePoolForSlot(ToolStack tool, EquipmentSlot slot) {
+		List<EAttributeType> attributePool = new ArrayList<>();
 		String toolName = tool.getItem().toString().toLowerCase();
 
 		if (slot == EquipmentSlot.MAINHAND || slot == EquipmentSlot.OFFHAND) {
@@ -203,49 +203,49 @@ public class Divinization extends Modifier {
 			if (toolName.contains("bow") || toolName.contains("crossbow")) {
 				// 远程武器
 				attributePool.addAll(Arrays.asList(
-						AttributeType.DRAW_SPEED,
-						AttributeType.ARROW_SPEED,
-						AttributeType.ARROW_ACCURACY,
-						AttributeType.PROJECTILE_DAMAGE
+						EAttributeType.DRAW_SPEED,
+						EAttributeType.ARROW_SPEED,
+						EAttributeType.ARROW_ACCURACY,
+						EAttributeType.PROJECTILE_DAMAGE
 				));
 			} else if (toolName.contains("sword") || toolName.contains("axe") || toolName.contains("mace")) {
 				// 近战武器
 				attributePool.addAll(Arrays.asList(
-						AttributeType.ATTACK_DAMAGE,
-						AttributeType.ATTACK_SPEED,
-						AttributeType.CRITICAL_CHANCE,
-						AttributeType.CRITICAL_DAMAGE,
-						AttributeType.FIRE_ASPECT,
-						AttributeType.FROST_ASPECT,
-						AttributeType.LIGHTNING_ASPECT
+						EAttributeType.ATTACK_DAMAGE,
+						EAttributeType.ATTACK_SPEED,
+						EAttributeType.CRITICAL_CHANCE,
+						EAttributeType.CRITICAL_DAMAGE,
+						EAttributeType.FIRE_ASPECT,
+						EAttributeType.FROST_ASPECT,
+						EAttributeType.LIGHTNING_ASPECT
 				));
 			} else if (toolName.contains("pickaxe") || toolName.contains("shovel") || toolName.contains("mattock")) {
 				// 工具
 				attributePool.addAll(Arrays.asList(
-						AttributeType.MINING_SPEED,
-						AttributeType.DURABILITY,
-						AttributeType.HARVEST_LEVEL,
-						AttributeType.EFFICIENCY
+						EAttributeType.MINING_SPEED,
+						EAttributeType.DURABILITY,
+						EAttributeType.HARVEST_LEVEL,
+						EAttributeType.EFFICIENCY
 				));
 			} else {
 				// 默认添加战斗属性
 				attributePool.addAll(Arrays.asList(
-						AttributeType.ATTACK_DAMAGE,
-						AttributeType.ATTACK_SPEED,
-						AttributeType.CRITICAL_CHANCE,
-						AttributeType.CRITICAL_DAMAGE
+						EAttributeType.ATTACK_DAMAGE,
+						EAttributeType.ATTACK_SPEED,
+						EAttributeType.CRITICAL_CHANCE,
+						EAttributeType.CRITICAL_DAMAGE
 				));
 			}
 		} else {
 			// 盔甲
 			attributePool.addAll(Arrays.asList(
-					AttributeType.ARMOR,
-					AttributeType.MAX_HEALTH,
-					AttributeType.ARMOR_TOUGHNESS,
-					AttributeType.MOVEMENT_SPEED_SMALL,
-					AttributeType.KNOCKBACK_RESISTANCE,
-					AttributeType.FEATHER_FALLING,
-					AttributeType.PROTECTION
+					EAttributeType.ARMOR,
+					EAttributeType.MAX_HEALTH,
+					EAttributeType.ARMOR_TOUGHNESS,
+					EAttributeType.MOVEMENT_SPEED_SMALL,
+					EAttributeType.KNOCKBACK_RESISTANCE,
+					EAttributeType.FEATHER_FALLING,
+					EAttributeType.PROTECTION
 			));
 		}
 
@@ -255,7 +255,7 @@ public class Divinization extends Modifier {
 	/**
 	 * 检查属性是否适用于该槽位
 	 */
-	private static boolean isAttributeApplicable(AttributeType type, EquipmentSlot slot) {
+	private static boolean isAttributeApplicable(EAttributeType type, EquipmentSlot slot) {
 		for (EquipmentSlot applicableSlot : type.getApplicableSlots()) {
 			if (applicableSlot == slot || slot.getType() == EquipmentSlot.Type.ARMOR && type.getApplicableSlots().contains(slot)) {
 				return true;
@@ -303,7 +303,7 @@ public class Divinization extends Modifier {
 		for (int i = 0; i < list.size(); i++) {
 			CompoundTag entryTag = list.getCompound(i);
 			try {
-				AttributeType type = AttributeType.valueOf(entryTag.getString("type"));
+				EAttributeType type = EAttributeType.valueOf(entryTag.getString("type"));
 				double value = entryTag.getDouble("value");
 				String slotName = entryTag.getString("slot").toUpperCase(Locale.ROOT);
 				EquipmentSlot slot;
@@ -457,16 +457,16 @@ public class Divinization extends Modifier {
 		double criticalDamageValue = 0;
 
 		for (AttributeEntry attribute : attributes) {
-			AttributeType type = attribute.type;
-			if (type == AttributeType.ATTACK_DAMAGE) {
+			EAttributeType type = attribute.type;
+			if (type == EAttributeType.ATTACK_DAMAGE) {
 				extraDamage += (float) attribute.value;
-			} else if (type == AttributeType.CRITICAL_CHANCE) {
+			} else if (type == EAttributeType.CRITICAL_CHANCE) {
 				hasCriticalChance = true;
 				criticalChanceValue = attribute.value;
-			} else if (type == AttributeType.CRITICAL_DAMAGE) {
+			} else if (type == EAttributeType.CRITICAL_DAMAGE) {
 				hasCriticalDamage = true;
 				criticalDamageValue = attribute.value;
-			} else if (type.getCategory() == AttributeType.AttributeCategory.ELEMENTAL) {
+			} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
 				applyElementalEffects(event.getEntity(), attribute, player);
 			}
 		}
@@ -529,7 +529,7 @@ public class Divinization extends Modifier {
 	 * 应用元素效果
 	 */
 	private static void applyElementalEffects(LivingEntity target, AttributeEntry attribute, Player attacker) {
-		AttributeType type = attribute.type;
+		EAttributeType type = attribute.type;
 		double value = attribute.value;
 
 		switch (type) {
@@ -594,7 +594,7 @@ public class Divinization extends Modifier {
 	/**
 	 * 属性条目类
 	 */
-	public record AttributeEntry(AttributeType type, double value, EquipmentSlot slot) {
+	public record AttributeEntry(EAttributeType type, double value, EquipmentSlot slot) {
 		public Component getDescription() {
 			String key = type.getTranslationKey();
 			return Component.translatable(key, String.format("+%.1f", value));
