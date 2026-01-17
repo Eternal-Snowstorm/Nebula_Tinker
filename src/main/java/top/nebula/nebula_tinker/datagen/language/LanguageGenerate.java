@@ -46,6 +46,36 @@ public class LanguageGenerate {
 				"<擒王>效果发动"
 		);
 		addLanguage(
+				"message",
+				"modifier.killing_rhythm",
+				"§6Killing Rhythm activated! %s%% crit chance!",
+				"§6<杀戮节奏>效果发动！%s%%暴击率！"
+		);
+		addLanguage(
+				"message",
+				"modifier.killing_rhythm.stack",
+				"§e+Kill! Crit: %s%% | Duration: %ss",
+				"§e+击杀！暴击率: %s%% | 持续: %s秒"
+		);
+		addLanguage(
+				"modifier",
+				"killing_rhythm",
+				"Killing Rhythm",
+				"杀戮节奏"
+		);
+		addLanguage(
+				"modifier",
+				"killing_rhythm.flavor",
+				"Fast Fast Fast！",
+				"Fast Fast Fast！"
+		);
+		addLanguage(
+				"modifier",
+				"killing_rhythm.description",
+				"Quickly kill 2 enemies to gain 25%% crit chance for 6s. Each extra kill: +5%% crit, +1s duration",
+				"迅速杀死2名敌人后获得25%暴击率，持续6秒。每多杀1个: +5%暴击率, +1秒持续时间"
+		);
+		addLanguage(
 				"modifier",
 				"capture_king",
 				"Capture King",

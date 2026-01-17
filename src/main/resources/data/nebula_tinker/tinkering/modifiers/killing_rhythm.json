@@ -1,9 +1,9 @@
 {
-	"type": "nebula_tinker:acupoint",
+	"type": "nebula_tinker:killing_rhythm",
 	"allow_crystal": true,
 	"level_display": {
-		"color": "light_purple",
-		"border_color": "dark_purple"
+		"color": "gold",
+		"border_color": "dark_red"
 	},
 	"slots": {
 		"upgrades": 2
