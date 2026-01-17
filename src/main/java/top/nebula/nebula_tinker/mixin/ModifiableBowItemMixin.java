@@ -24,15 +24,15 @@ public class ModifiableBowItemMixin {
 	)
 	private void nebulaTinker$redirectShootFromRotation(
 			AbstractArrow arrow,
-			Entity shooter,
+			Entity entity,
 			float xRot,
 			float yRot,
 			float roll,
 			float velocity,
 			float inaccuracy
 	) {
-		if (!(shooter instanceof LivingEntity living)) {
-			arrow.shootFromRotation(shooter, xRot, yRot, roll, velocity, inaccuracy);
+		if (!(entity instanceof LivingEntity living)) {
+			arrow.shootFromRotation(entity, xRot, yRot, roll, velocity, inaccuracy);
 			return;
 		}
 
@@ -41,10 +41,10 @@ public class ModifiableBowItemMixin {
 
 		if (nebulaTinker$isRapidShot(main) || nebulaTinker$isRapidShot(off)) {
 			// 你想要的快速射击逻辑
-			arrow.shootFromRotation(shooter, living.getXRot(), yRot, roll, velocity, inaccuracy);
+			arrow.shootFromRotation(entity, living.getXRot(), yRot, roll, velocity, inaccuracy);
 		} else {
 			float direction = xRot - living.getXRot();
-			arrow.shootFromRotation(shooter, living.getXRot(), living.getYRot() + direction, roll, velocity, inaccuracy);
+			arrow.shootFromRotation(entity, living.getXRot(), living.getYRot() + direction / 2, roll, velocity, inaccuracy);
 		}
 	}
 
