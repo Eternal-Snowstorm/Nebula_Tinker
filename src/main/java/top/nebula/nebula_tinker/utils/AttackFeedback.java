@@ -1,5 +1,6 @@
 package top.nebula.nebula_tinker.utils;
 
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -46,5 +47,55 @@ public class AttackFeedback {
 				1.0F,
 				1.5F
 		);
+	}
+
+	/**
+	 * 杀戮节奏激活效果
+	 *
+	 * @param player      玩家
+	 * @param critPercent 暴击百分比
+	 */
+	public static void playKillingRhythmActivate(Player player, int critPercent) {
+		Component message = Component.translatable(
+				"message.nebula_tinker.modifier.killing_rhythm",
+				critPercent
+		);
+		player.displayClientMessage(message, true);
+		if (player.level() instanceof ServerLevel level) {
+			level.playSound(
+					null,
+					player.blockPosition(),
+					SoundEvents.PLAYER_LEVELUP,
+					SoundSource.PLAYERS,
+					1.0F,
+					1.5F
+			);
+		}
+	}
+
+	/**
+	 * 杀戮节奏叠加效果
+	 *
+	 * @param player           玩家
+	 * @param critPercent      暴击百分比
+	 * @param remainingSeconds 剩余秒数
+	 */
+	public static void playKillingRhythmStack(Player player, int critPercent, int remainingSeconds) {
+		Component message = Component.translatable(
+				"message.nebula_tinker.modifier.killing_rhythm.stack",
+				critPercent,
+				remainingSeconds
+		);
+		player.displayClientMessage(message, true);
+		if (player.level() instanceof ServerLevel level) {
+			level.playSound(
+					null,
+					player.blockPosition(),
+					SoundEvents.EXPERIENCE_ORB_PICKUP,
+					SoundSource.PLAYERS,
+					1.0F,
+					1.2F
+			);
+		}
 	}
 }
