@@ -48,7 +48,6 @@ public class ModItem {
 		return registerItem(id, supplier, true);
 	}
 
-
 	public static void register(IEventBus bus) {
 		NebulaTinker.LOGGER.info("Nebula Tinker Items Registered!");
 		ITEMS.register(bus);
