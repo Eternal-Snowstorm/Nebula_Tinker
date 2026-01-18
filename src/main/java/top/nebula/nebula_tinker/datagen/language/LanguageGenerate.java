@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LanguageGenerate {
-	public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
+public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
 
 	public static void register() {
 		addLanguage(
@@ -235,7 +235,7 @@ public class LanguageGenerate {
 				"modifier",
 				"divinization.description",
 				"Grants 3 random divine attributes when applied\n§7• Weapons: Attack, speed, elemental damage\n• Tools: Efficiency, durability, tier\n• Armor: Defense, health, resistance\n§6Total 9 levels, each level enhances effects",
-				"每次应用时随机赋予3种神圣属性\n§7• 武器: 攻击、速度、元素伤害\n• 工具: 效率、耐久、等级\n• 盔甲: 防御、生命、抗性\n§6共9级，每级提升属性效果"
+				"每次应用时随机赋予3种神圣属性"
 		);
 		addLanguage(
 				"modifier",
@@ -253,7 +253,7 @@ public class LanguageGenerate {
 				"modifier",
 				"demonization.description",
 				"Grants 3 powerful attributes with 1 negative effect\n§7• Weapons: High attack boost, but weaker survival\n• Tools: Extreme efficiency, but lower durability\n• Armor: Maximum defense, but weaker offense\n§cSide effect: Periodically takes damage",
-				"赋予3种强力属性，但附带1个负面效果\n§7• 武器: 高额攻击加成，但削弱生存\n• 工具: 超强效率，但降低耐久\n• 盔甲: 极致防御，但削弱攻击\n§c副作用: 周期性受到伤害"
+				"赋予3种强力属性，但附带1个负面效果"
 		);
 		addLanguage(
 				"message",
@@ -267,7 +267,25 @@ public class LanguageGenerate {
 				"Demonic energy corrupts your weapon!",
 				"恶魔能量腐蚀了你的武器！"
 		);
-
+		addLanguage(
+				"message",
+				"divine_demonic_harmony.damage",
+				"§dDivine-Demonic Harmony deals §c%s damage§d to you!",
+				"§d归一对你造成§c%s伤害§d！"
+		);
+		addLanguage(
+				"message",
+				"divine_demonic_harmony.health_reduction",
+				"§4Your maximum health has been reduced by %s!",
+				"§4你的最大生命值已被降低%s点！"
+		);
+		addLanguage(
+				"message",
+				"divine_demonic_harmony.health_restored",
+				"§aYour maximum health has been restored!",
+				"§a你的最大生命值已恢复！"
+		);
+		
 		addLanguage(
 				"modifier",
 				"divinization.tooltip.title",
@@ -292,7 +310,13 @@ public class LanguageGenerate {
 				"§cNegative Effects: ",
 				"§c负面效果: "
 		);
-
+		addLanguage(
+				"modifier",
+				"divine_demonic_harmony.tooltip.title",
+				"§5§lDivine-Demonic Harmony: ",
+				"§5§l归一: "
+		);
+		
 		addLanguage(
 				"tooltip",
 				"demonization.title",
@@ -335,7 +359,25 @@ public class LanguageGenerate {
 				" attributes",
 				"属性"
 		);
-
+		addLanguage(
+				"tooltip",
+				"divine_demonic_harmony.damage_interval",
+				"§7Damage Interval: §f%s seconds",
+				"§7伤害间隔: §f%s秒"
+		);
+		addLanguage(
+				"tooltip",
+				"divine_demonic_harmony.damage_factor",
+				"§7Damage Factor: §f%s%% of max health",
+				"§7伤害系数: §f%s%%最大生命值"
+		);
+		addLanguage(
+				"tooltip",
+				"divine_demonic_harmony.level_diff",
+				"§7Level Difference: §f%s",
+				"§7等级差: §f%s"
+		);
+		
 		addLanguage(
 				"format",
 				"multiplier",
@@ -354,7 +396,7 @@ public class LanguageGenerate {
 				"s",
 				"秒"
 		);
-
+		
 		addLanguage(
 				"command",
 				"player_only",
@@ -379,7 +421,7 @@ public class LanguageGenerate {
 				"Main hand or off hand item has no Divinization modifier",
 				"主手或副手物品没有神化修饰器"
 		);
-
+		
 		addLanguage(
 				"command",
 				"debug.title",
@@ -422,7 +464,7 @@ public class LanguageGenerate {
 				"Off hand item has Divinization modifier",
 				"副手物品有神化修饰器"
 		);
-
+		
 		addLanguage(
 				"command",
 				"modifier.demonization",
@@ -435,7 +477,13 @@ public class LanguageGenerate {
 				"Divinization",
 				"神化"
 		);
-
+		addLanguage(
+				"command",
+				"modifier.divine_demonic_harmony",
+				"Divine-Demonic Harmony",
+				"归一"
+		);
+		
 		addLanguage(
 				"attribute.modifier",
 				"attack_damage",
@@ -484,8 +532,26 @@ public class LanguageGenerate {
 				"movement speed",
 				"移动速度 +%s"
 		);
+		addLanguage(
+				"modifier",
+				"divine_demonic_harmony",
+				"Divine-Demonic Harmony",
+				"归一"
+		);
+		addLanguage(
+				"modifier",
+				"divine_demonic_harmony.description",
+				"§7Allows Divine and Demonic powers to coexist in harmony\n§7• Both Divinization and Demonization must be present\n§7• At least one must be level 9 or higher\n§7• Damage scales inversely with level difference\n§7• At level difference 0: Reduces max health by 50%, deals 60% max health damage\n§cWarning: Periodically deals damage based on level difference",
+				"§7让神圣与恶魔之力和谐共存"
+		);
+		addLanguage(
+				"modifier",
+				"divine_demonic_harmony.flavor",
+				"The balance between light and darkness...",
+				"光与暗的平衡..."
+		);
 	}
-
+	
 	/**
 	 * 添加翻译
 	 *

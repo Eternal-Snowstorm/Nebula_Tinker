@@ -317,34 +317,53 @@ public class Divinization extends Modifier {
 		}
 		
 		ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
-		if (SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("divinization").toString())) {
+		boolean hasDivinizationMain = SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("divinization").toString());
+		boolean hasDemonizationMain = SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("demonization").toString());
+		boolean hasHarmonyMain = SimpleTConUtils.hasModifier(mainHand, NebulaTinker.loadResource("divine_demonic_harmony").toString());
+		
+		if (hasDivinizationMain) {
 			applyDivinizationAttributes(player, mainHand);
 			handleDivinizedItem(player, mainHand, true);
 		} else {
-			if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.MAINHAND, "divinization")) {
-				removeDivinizationAttributes(player, EquipmentSlot.MAINHAND);
+			// 检查是否有共存强化且是否有另一个强化
+			if (!(hasHarmonyMain && hasDemonizationMain)) {
+				if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.MAINHAND, "divinization")) {
+					removeDivinizationAttributes(player, EquipmentSlot.MAINHAND);
+				}
 			}
 		}
 		
 		ItemStack offHand = player.getItemInHand(InteractionHand.OFF_HAND);
-		if (SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("divinization").toString())) {
+		boolean hasDivinizationOff = SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("divinization").toString());
+		boolean hasDemonizationOff = SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("demonization").toString());
+		boolean hasHarmonyOff = SimpleTConUtils.hasModifier(offHand, NebulaTinker.loadResource("divine_demonic_harmony").toString());
+		
+		if (hasDivinizationOff) {
 			applyDivinizationAttributes(player, offHand);
 			handleDivinizedItem(player, offHand, false);
 		} else {
-			if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.OFFHAND, "divinization")) {
-				removeDivinizationAttributes(player, EquipmentSlot.OFFHAND);
+			if (!(hasHarmonyOff && hasDemonizationOff)) {
+				if (AttributeApplicator.hasModifierAttributesInSlot(player, EquipmentSlot.OFFHAND, "divinization")) {
+					removeDivinizationAttributes(player, EquipmentSlot.OFFHAND);
+				}
 			}
 		}
 		
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			if (slot.getType() == EquipmentSlot.Type.ARMOR) {
 				ItemStack armor = player.getItemBySlot(slot);
-				if (SimpleTConUtils.hasModifier(armor, NebulaTinker.loadResource("divinization").toString())) {
+				boolean hasDivinizationArmor = SimpleTConUtils.hasModifier(armor, NebulaTinker.loadResource("divinization").toString());
+				boolean hasDemonizationArmor = SimpleTConUtils.hasModifier(armor, NebulaTinker.loadResource("demonization").toString());
+				boolean hasHarmonyArmor = SimpleTConUtils.hasModifier(armor, NebulaTinker.loadResource("divine_demonic_harmony").toString());
+				
+				if (hasDivinizationArmor) {
 					applyDivinizationAttributes(player, armor);
 					getOrGenerateAttributes(armor, player);
 				} else {
-					if (AttributeApplicator.hasModifierAttributesInSlot(player, slot, "divinization")) {
-						removeDivinizationAttributes(player, slot);
+					if (!(hasHarmonyArmor && hasDemonizationArmor)) {
+						if (AttributeApplicator.hasModifierAttributesInSlot(player, slot, "divinization")) {
+							removeDivinizationAttributes(player, slot);
+						}
 					}
 				}
 			}
