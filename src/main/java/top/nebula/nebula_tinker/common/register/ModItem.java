@@ -33,14 +33,21 @@ public class ModItem {
 		});
 		INVINCIBLE_FRAME_EGREGATOR = registerItem("invincible_frame_egregator", () -> {
 			return new InvincibleFrameEgregatorItem(new Item.Properties());
-		});
+		}, false);
+	}
+
+	private static Supplier<Item> registerItem(String id, Supplier<Item> supplier, boolean addToCreativeTab) {
+		Supplier<Item> item = ITEMS.register(id, supplier);
+		if (addToCreativeTab) {
+			CREATIVE_TAB_ITEMS.add(item);
+		}
+		return item;
 	}
 
 	private static Supplier<Item> registerItem(String id, Supplier<Item> supplier) {
-		Supplier<Item> item = ITEMS.register(id, supplier);
-		CREATIVE_TAB_ITEMS.add(item);
-		return item;
+		return registerItem(id, supplier, true);
 	}
+
 
 	public static void register(IEventBus bus) {
 		NebulaTinker.LOGGER.info("Nebula Tinker Items Registered!");
