@@ -15,8 +15,6 @@ public class LanguageGenerate {
 		EffectLanguage.register();
 		MessageLanguage.register();
 		ModifierLanguage.register();
-		ModifierLanguage.ModifierFlavor.register();
-		ModifierLanguage.ModifierDescription.register();
 		TooltipLanguage.register();
 		CommandLanguage.register();
 		AttributeLanguage.register();

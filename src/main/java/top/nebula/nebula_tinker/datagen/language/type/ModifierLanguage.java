@@ -4,6 +4,9 @@ import top.nebula.nebula_tinker.datagen.language.LanguageGenerate;
 
 public class ModifierLanguage extends LanguageGenerate {
 	public static void register() {
+		ModifierFlavor.register();
+		ModifierDescription.register();
+
 		addLanguage(
 				"modifier",
 				"killing_rhythm",
