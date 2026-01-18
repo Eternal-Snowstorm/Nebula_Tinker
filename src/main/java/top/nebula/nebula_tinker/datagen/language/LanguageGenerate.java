@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LanguageGenerate {
-public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
+	public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
 
 	public static void register() {
 		ItemLanguage.register();
@@ -21,12 +21,12 @@ public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
 		CommandLanguage.register();
 		AttributeLanguage.register();
 	}
-	
+
 	/**
 	 * 添加翻译
 	 *
-	 * @param type 类型
-	 * @param key key
+	 * @param type    类型
+	 * @param key     key
 	 * @param english 英文
 	 * @param chinese 中文
 	 */
