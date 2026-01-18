@@ -25,7 +25,7 @@ public class SwiftBlade extends Modifier {
 	public static void onCriticalHit(CriticalHitEvent event) {
 		Player player = event.getEntity();
 
-		// 攻击冷却检查, 防止粒子小姑以及音效连续触发
+		// 攻击冷却检查, 防止粒子效果以及音效连续触发
 		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
 			return;
 		}
