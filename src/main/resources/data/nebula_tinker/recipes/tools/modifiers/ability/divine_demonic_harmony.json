@@ -1,0 +1,21 @@
+{
+	"type": "tconstruct:modifier",
+	"allow_crystal": true,
+	"check_trait_level": true,
+	"inputs": [
+		{
+			"item": "nebula_tinker:demonization_stone"
+		},
+		{
+			"item": "nebula_tinker:divinization_stone"
+		}
+	],
+	"level": 1,
+	"result": "nebula_tinker:divine_demonic_harmony",
+	"slots": {
+		"abilities": 1
+	},
+	"tools": {
+		"tag": "tconstruct:modifiable/durability"
+	}
+}
