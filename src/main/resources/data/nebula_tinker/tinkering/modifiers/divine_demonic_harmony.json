@@ -39,7 +39,8 @@
             }
           }
         ]
-      }
+      },
+      "translation_key": "modifier.nebula_tinker.divine_demonic_harmony.requirements"
     }
   ],
   "tooltip_display": "always"

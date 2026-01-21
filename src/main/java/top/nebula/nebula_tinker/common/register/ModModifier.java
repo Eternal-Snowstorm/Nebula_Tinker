@@ -12,39 +12,39 @@ import top.nebula.nebula_tinker.common.modifier.*;
  * 每个强化的暴击效果不可叠加, 例如施虐者和迅捷之刃不能叠加
  */
 public class ModModifier {
-public static final ModifierDeferredRegister MODIFIERS;
-public static final StaticModifier<Abuser> ABUSER;
-public static final StaticModifier<Acupoint> ACUPOINT;
-public static final StaticModifier<CaptureKing> CAPTURE_KING;
-public static final StaticModifier<CausalTruncation> CAUSAL_TRUNCATION;
-public static final StaticModifier<Modifier> CONVERGE;
-public static final StaticModifier<DeathEcho> DEATH_ECHO;
-public static final StaticModifier<Demonization> DEMONIZATION;
-public static final StaticModifier<Divinization> DIVINIZATION;
-public static final StaticModifier<DivineDemonicHarmony> DIVINE_DEMONIC_HARMONY;
-public static final StaticModifier<Frenzy> FRENZY;
-public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
-public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
+	public static final ModifierDeferredRegister MODIFIERS;
+	public static final StaticModifier<Abuser> ABUSER;
+	public static final StaticModifier<Acupoint> ACUPOINT;
+	public static final StaticModifier<CaptureKing> CAPTURE_KING;
+	public static final StaticModifier<CausalTruncation> CAUSAL_TRUNCATION;
+	public static final StaticModifier<Modifier> CONVERGE;
+	public static final StaticModifier<DeathEcho> DEATH_ECHO;
+	public static final StaticModifier<Demonization> DEMONIZATION;
+	public static final StaticModifier<Divinization> DIVINIZATION;
+	public static final StaticModifier<DivineDemonicHarmony> DIVINE_DEMONIC_HARMONY;
+	public static final StaticModifier<Frenzy> FRENZY;
+	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
+	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
 
-static {
-	MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
-	
-	ABUSER = MODIFIERS.register("abuser", Abuser::new);
-	ACUPOINT = MODIFIERS.register("acupoint", Acupoint::new);
-	CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
-	CAUSAL_TRUNCATION = MODIFIERS.register("causal_truncation", CausalTruncation::new);
-	CONVERGE = MODIFIERS.register("converge", Modifier::new);
-	DEATH_ECHO = MODIFIERS.register("death_echo", DeathEcho::new);
-	DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
-	DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
-	DIVINE_DEMONIC_HARMONY = MODIFIERS.register("divine_demonic_harmony", DivineDemonicHarmony::new);
-	FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
-	SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
-	KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
-}
+	static {
+		MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
 
-public static void register(IEventBus bus) {
-	NebulaTinker.LOGGER.info("Nebula Tinker TCon Modifiers Registered!");
-	MODIFIERS.register(bus);
-}
+		ABUSER = MODIFIERS.register("abuser", Abuser::new);
+		ACUPOINT = MODIFIERS.register("acupoint", Acupoint::new);
+		CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
+		CAUSAL_TRUNCATION = MODIFIERS.register("causal_truncation", CausalTruncation::new);
+		CONVERGE = MODIFIERS.register("converge", Modifier::new);
+		DEATH_ECHO = MODIFIERS.register("death_echo", DeathEcho::new);
+		DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
+		DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
+		DIVINE_DEMONIC_HARMONY = MODIFIERS.register("divine_demonic_harmony", DivineDemonicHarmony::new);
+		FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
+		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
+		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
+	}
+
+	public static void register(IEventBus bus) {
+		NebulaTinker.LOGGER.info("Nebula Tinker TCon Modifiers Registered!");
+		MODIFIERS.register(bus);
+	}
 }
