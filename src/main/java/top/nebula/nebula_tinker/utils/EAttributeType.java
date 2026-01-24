@@ -5,6 +5,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.common.register.ModAttributes;
+import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
 
 import java.util.*;
 
@@ -20,7 +21,8 @@ public enum EAttributeType {
 				Attributes.ATTACK_DAMAGE,
 				0.5,
 				setTranKey("attack_damage"),
-				EnumSet.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND), AttributeCategory.COMBAT,
+				EnumSet.of(EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND),
+				AttributeCategory.COMBAT,
 				10,
 				2
 		),
@@ -228,6 +230,47 @@ public enum EAttributeType {
 				2
 		),
 		
+		// 全局暴击属性（新增）
+		GLOBAL_CRITICAL_CHANCE(
+				null,
+				0.05,
+				setTranKey("global_critical_chance"),
+				EnumSet.allOf(EquipmentSlot.class),
+				AttributeCategory.COMBAT,
+				5,
+				3
+		),
+		
+		GLOBAL_CRITICAL_DAMAGE(
+				null,
+				0.5,
+				setTranKey("global_critical_damage"),
+				EnumSet.allOf(EquipmentSlot.class),
+				AttributeCategory.COMBAT,
+				4,
+				3
+		),
+		
+		CRITICAL_RESISTANCE(
+				null,
+				0.05,
+				setTranKey("critical_resistance"),
+				EnumSet.allOf(EquipmentSlot.class),
+				AttributeCategory.DEFENSE,
+				6,
+				2
+		),
+		
+		CRITICAL_DAMAGE_REDUCTION(
+				null,
+				0.1,
+				setTranKey("critical_damage_reduction"),
+				EnumSet.allOf(EquipmentSlot.class),
+				AttributeCategory.DEFENSE,
+				5,
+				2
+		),
+		
 		// ========== 负面属性 ==========
 		
 		// 血量降低（整合为一个）
@@ -293,17 +336,6 @@ public enum EAttributeType {
 				EnumSet.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET),
 				AttributeCategory.NEGATIVE,
 				3,
-				2
-		),
-		
-		// 暴击伤害降低（整合为一个）
-		CRITICAL_DAMAGE_REDUCTION(
-				null,
-				-0.15,
-				setTranKey("critical_damage_reduction"),
-				EnumSet.of(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET),
-				AttributeCategory.NEGATIVE,
-				2,
 				2
 		),
 		
@@ -385,11 +417,23 @@ public enum EAttributeType {
 			return this.attribute;
 		}
 		
-		// 对于自定义属性，从CustomAttributes获取
+		// 对于自定义属性，从ModAttributes获取
 		try {
 			Attribute customAttr = ModAttributes.getCustomAttribute(this.name());
 			if (customAttr != null) {
 				return customAttr;
+			}
+			
+			// 检查是否是全局暴击属性
+			switch (this) {
+				case GLOBAL_CRITICAL_CHANCE:
+					return GlobalCritAttributes.GLOBAL_CRITICAL_CHANCE.get();
+				case GLOBAL_CRITICAL_DAMAGE:
+					return GlobalCritAttributes.GLOBAL_CRITICAL_DAMAGE.get();
+				case CRITICAL_RESISTANCE:
+					return GlobalCritAttributes.CRITICAL_RESISTANCE.get();
+				case CRITICAL_DAMAGE_REDUCTION:
+					return GlobalCritAttributes.CRITICAL_DAMAGE_REDUCTION.get();
 			}
 			
 			// 如果获取失败，记录警告并返回一个安全的占位符属性
@@ -472,6 +516,18 @@ public enum EAttributeType {
 		// 攻击速度增加和减少冲突
 		if ((type1 == ATTACK_SPEED && type2 == ATTACK_SPEED_REDUCTION) ||
 				    (type1 == ATTACK_SPEED_REDUCTION && type2 == ATTACK_SPEED)) {
+			return true;
+		}
+		
+		// 暴击几率增加和减少冲突
+		if ((type1 == CRITICAL_CHANCE && type2 == CRITICAL_REDUCTION) ||
+				    (type1 == CRITICAL_REDUCTION && type2 == CRITICAL_CHANCE)) {
+			return true;
+		}
+		
+		// 暴击伤害增加和减少冲突
+		if ((type1 == CRITICAL_DAMAGE && type2 == CRITICAL_DAMAGE_REDUCTION) ||
+				    (type1 == CRITICAL_DAMAGE_REDUCTION && type2 == CRITICAL_DAMAGE)) {
 			return true;
 		}
 		

@@ -12,13 +12,14 @@ import org.apache.logging.log4j.Logger;
 import top.nebula.nebula_tinker.common.command.ModifierDebugCommand;
 import top.nebula.nebula_tinker.config.*;
 import top.nebula.nebula_tinker.common.register.*;
+import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
 
 @Mod(NebulaTinker.MODID)
 public class NebulaTinker {
 	public static final String MODID = "nebula_tinker";
 	public static final String NAME = "Nebula Tinker";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
-
+	
 	/**
 	 * 加载ResourceLocation资源
 	 *
@@ -30,16 +31,18 @@ public class NebulaTinker {
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
-
+	
 	public NebulaTinker(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
-
+		
 		// 注册修饰器
 		ModModifier.register(bus);
 		// 注册物品
 		ModItem.register(bus);
 		// 注册自定义属性
 		ModAttributes.register(bus);
+		// 注册全局暴击属性
+		GlobalCritAttributes.register(bus);
 		// 粒子效果
 		ModParticle.register(bus);
 		// 生物状态
@@ -52,10 +55,10 @@ public class NebulaTinker {
 		context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "nebula/tinker/client.toml");
 		// 服务端配置文件
 		context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, "nebula/tinker/server.toml");
-
+		
 		LOGGER.info("Nebula Tinker is initialized!");
 	}
-
+	
 	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 	public static class ForgeEvents {
 		@SubscribeEvent

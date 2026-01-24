@@ -258,42 +258,47 @@ public class AttributeApplicator {
 		return Component.translatable(key).getString();
 	}
 
+
+
 	/**
 	 * 格式化属性值
 	 */
 	private static String formatAttributeValue(EAttributeType type, double value) {
 		// 根据属性类型格式化显示
 		if (type == EAttributeType.CRITICAL_CHANCE ||
-				    type.name().contains("CRITICAL_REDUCTION") ||
-				    type == EAttributeType.ARROW_ACCURACY) {
+				    type == EAttributeType.CRITICAL_REDUCTION ||
+				    type == EAttributeType.ARROW_ACCURACY ||
+				    type == EAttributeType.GLOBAL_CRITICAL_CHANCE ||
+				    type == EAttributeType.CRITICAL_RESISTANCE) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.CRITICAL_DAMAGE ||
-				           type.name().contains("CRITICAL_DAMAGE_REDUCTION")) {
+				           type == EAttributeType.CRITICAL_DAMAGE_REDUCTION ||
+				           type == EAttributeType.GLOBAL_CRITICAL_DAMAGE) {
 			// 暴击伤害倍数显示
-			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.multiplier").getString(), value);
+			return String.format("%+.1f倍", value);
 		} else if (type == EAttributeType.FEATHER_FALLING) {
 			// 整数值
-			return String.format("+%.0f" + Component.translatable("format.nebula_tinker.blocks").getString(), value);
+			return String.format("+%.0f格", value);
 		} else if (type == EAttributeType.DURABILITY ||
-				           type.name().contains("DURABILITY_REDUCTION")) {
+				           type == EAttributeType.DURABILITY_REDUCTION) {
 			// 整数值
 			return String.format("%+.0f", value);
 		} else if (type == EAttributeType.HARVEST_LEVEL ||
-				           type.name().contains("HARVEST_LEVEL_REDUCTION")) {
+				           type == EAttributeType.HARVEST_LEVEL_REDUCTION) {
 			// 整数值
 			return String.format("%+.0f", value);
 		} else if (type == EAttributeType.MOVEMENT_SPEED ||
-				           type.name().contains("MOVEMENT_SLOW")) {
+				           type == EAttributeType.MOVEMENT_SLOW) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.ATTACK_SPEED ||
-				           type.name().contains("ATTACK_SPEED_REDUCTION")) {
+				           type == EAttributeType.ATTACK_SPEED_REDUCTION) {
 			// 攻击速度特殊格式
 			return String.format("%+.2f", value);
 		} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
 			// 元素伤害：显示秒数
-			return String.format("%+.1f" + Component.translatable("format.nebula_tinker.seconds").getString(), Math.abs(value) / 2);
+			return String.format("%+.1f秒", Math.abs(value) / 2);
 		} else if (type == EAttributeType.PROTECTION) {
 			// 保护
 			return String.format("+%.1f", value);
