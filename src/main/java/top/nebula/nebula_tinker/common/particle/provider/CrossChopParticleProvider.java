@@ -29,13 +29,6 @@ public class CrossChopParticleProvider implements ParticleProvider<SimpleParticl
 			double unusedY,
 			double unusedZ
 	) {
-		return new CrossChopParticle(
-				level,
-				x,
-				y,
-				z,
-				(float) rot,
-				this.sprites
-		);
+		return new CrossChopParticle(level, x, y, z, (float) rot, this.sprites);
 	}
 }
