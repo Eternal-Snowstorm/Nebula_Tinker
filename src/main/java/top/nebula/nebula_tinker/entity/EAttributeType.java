@@ -1,11 +1,11 @@
-package top.nebula.nebula_tinker.utils;
+package top.nebula.nebula_tinker.entity;
 
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import top.nebula.nebula_tinker.NebulaTinker;
-import top.nebula.nebula_tinker.common.register.ModAttributes;
-import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
+import top.nebula.nebula_tinker.common.register.attribute.ModAttributes;
+import top.nebula.nebula_tinker.common.register.attribute.GlobalCritAttributes;
 
 import java.util.*;
 

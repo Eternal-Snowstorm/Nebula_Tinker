@@ -1,4 +1,4 @@
-package top.nebula.nebula_tinker.utils;
+package top.nebula.nebula_tinker.entity;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
 import top.nebula.nebula_tinker.common.modifier.Demonization;
 import top.nebula.nebula_tinker.common.modifier.Divinization;
+import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -259,41 +260,40 @@ public class AttributeApplicator {
 	}
 
 
-
 	/**
 	 * 格式化属性值
 	 */
 	private static String formatAttributeValue(EAttributeType type, double value) {
 		// 根据属性类型格式化显示
 		if (type == EAttributeType.CRITICAL_CHANCE ||
-				    type == EAttributeType.CRITICAL_REDUCTION ||
-				    type == EAttributeType.ARROW_ACCURACY ||
-				    type == EAttributeType.GLOBAL_CRITICAL_CHANCE ||
-				    type == EAttributeType.CRITICAL_RESISTANCE) {
+				type == EAttributeType.CRITICAL_REDUCTION ||
+				type == EAttributeType.ARROW_ACCURACY ||
+				type == EAttributeType.GLOBAL_CRITICAL_CHANCE ||
+				type == EAttributeType.CRITICAL_RESISTANCE) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.CRITICAL_DAMAGE ||
-				           type == EAttributeType.CRITICAL_DAMAGE_REDUCTION ||
-				           type == EAttributeType.GLOBAL_CRITICAL_DAMAGE) {
+				type == EAttributeType.CRITICAL_DAMAGE_REDUCTION ||
+				type == EAttributeType.GLOBAL_CRITICAL_DAMAGE) {
 			// 暴击伤害倍数显示
 			return String.format("%+.1f倍", value);
 		} else if (type == EAttributeType.FEATHER_FALLING) {
 			// 整数值
 			return String.format("+%.0f格", value);
 		} else if (type == EAttributeType.DURABILITY ||
-				           type == EAttributeType.DURABILITY_REDUCTION) {
+				type == EAttributeType.DURABILITY_REDUCTION) {
 			// 整数值
 			return String.format("%+.0f", value);
 		} else if (type == EAttributeType.HARVEST_LEVEL ||
-				           type == EAttributeType.HARVEST_LEVEL_REDUCTION) {
+				type == EAttributeType.HARVEST_LEVEL_REDUCTION) {
 			// 整数值
 			return String.format("%+.0f", value);
 		} else if (type == EAttributeType.MOVEMENT_SPEED ||
-				           type == EAttributeType.MOVEMENT_SLOW) {
+				type == EAttributeType.MOVEMENT_SLOW) {
 			// 百分比显示
 			return String.format("%+.1f%%", value * 100);
 		} else if (type == EAttributeType.ATTACK_SPEED ||
-				           type == EAttributeType.ATTACK_SPEED_REDUCTION) {
+				type == EAttributeType.ATTACK_SPEED_REDUCTION) {
 			// 攻击速度特殊格式
 			return String.format("%+.2f", value);
 		} else if (type.getCategory() == EAttributeType.AttributeCategory.ELEMENTAL) {
@@ -303,13 +303,12 @@ public class AttributeApplicator {
 			// 保护
 			return String.format("+%.1f", value);
 		} else if (type == EAttributeType.DRAW_SPEED ||
-				           type == EAttributeType.ARROW_SPEED ||
-				           type == EAttributeType.PROJECTILE_DAMAGE ||
-				           type == EAttributeType.EFFICIENCY) {
+				type == EAttributeType.ARROW_SPEED ||
+				type == EAttributeType.PROJECTILE_DAMAGE ||
+				type == EAttributeType.EFFICIENCY) {
 			// 远程属性
 			return String.format("%+.1f", value);
-		} else if (type == EAttributeType.ARMOR_TOUGHNESS ||
-				           type == EAttributeType.KNOCKBACK_RESISTANCE) {
+		} else if (type == EAttributeType.ARMOR_TOUGHNESS || type == EAttributeType.KNOCKBACK_RESISTANCE) {
 			// 护甲韧性和击退抗性
 			return String.format("%+.1f", value);
 		} else {
@@ -322,7 +321,8 @@ public class AttributeApplicator {
 	 * 已应用的修饰符记录（扩展）
 	 */
 	private record AppliedModifier(
-			UUID uuid, Attribute attribute,
+			UUID uuid,
+			Attribute attribute,
 			EquipmentSlot slot,
 			String modifierId,
 			EAttributeType EAttributeType,

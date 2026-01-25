@@ -1,4 +1,4 @@
-package top.nebula.nebula_tinker.common.register;
+package top.nebula.nebula_tinker.common.register.attribute;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;

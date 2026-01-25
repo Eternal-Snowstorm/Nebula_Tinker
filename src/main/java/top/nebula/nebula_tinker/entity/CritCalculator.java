@@ -1,4 +1,4 @@
-package top.nebula.nebula_tinker.utils;
+package top.nebula.nebula_tinker.entity;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -7,10 +7,9 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.RegistryObject;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.config.CommonConfig;
-import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
+import top.nebula.nebula_tinker.common.register.attribute.GlobalCritAttributes;
 
 import java.util.HashMap;
 import java.util.Map;

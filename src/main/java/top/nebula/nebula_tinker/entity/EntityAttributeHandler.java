@@ -1,4 +1,4 @@
-package top.nebula.nebula_tinker.utils;
+package top.nebula.nebula_tinker.entity;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.config.CommonConfig;
-import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
+import top.nebula.nebula_tinker.common.register.attribute.GlobalCritAttributes;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EntityAttributeHandler {

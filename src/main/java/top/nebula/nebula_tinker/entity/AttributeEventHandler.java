@@ -1,11 +1,15 @@
-package top.nebula.nebula_tinker.utils;
+package top.nebula.nebula_tinker.entity;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.nebula_tinker.NebulaTinker;
+import top.nebula.nebula_tinker.utils.SimpleTConUtils;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID)
 public class AttributeEventHandler {
@@ -14,19 +18,19 @@ public class AttributeEventHandler {
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-	
+
 	@SubscribeEvent
 	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-	
+
 	@SubscribeEvent
 	public static void onPlayerChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event) {
 		Player player = event.getEntity();
 		AttributeApplicator.removeAllAttributes(player);
 	}
-	
+
 	@SubscribeEvent
 	public static void onPlayerClone(PlayerEvent.Clone event) {
 		Player original = event.getOriginal();
@@ -34,7 +38,7 @@ public class AttributeEventHandler {
 		Player newPlayer = event.getEntity();
 		AttributeApplicator.removeAllAttributes(newPlayer);
 	}
-	
+
 	@SubscribeEvent
 	public static void onServerTick(TickEvent.ServerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
@@ -43,24 +47,27 @@ public class AttributeEventHandler {
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.phase == TickEvent.Phase.END) {
 			Player player = event.player;
-			
+
 			if (player.level().getGameTime() % 20 == 0) {
 				checkAndRemoveOrphanedEffects(player);
 			}
 		}
 	}
-	
+
 	private static void checkAndRemoveOrphanedEffects(Player player) {
 		boolean hasDemonization = false;
 		boolean hasDivinization = false;
-		
-		for (var hand : new net.minecraft.world.InteractionHand[]{net.minecraft.world.InteractionHand.MAIN_HAND, net.minecraft.world.InteractionHand.OFF_HAND}) {
-			var stack = player.getItemInHand(hand);
+
+		for (InteractionHand hand : new InteractionHand[]{
+				InteractionHand.MAIN_HAND,
+				InteractionHand.OFF_HAND
+		}) {
+			ItemStack stack = player.getItemInHand(hand);
 			if (SimpleTConUtils.hasModifier(stack, NebulaTinker.loadResource("demonization").toString())) {
 				hasDemonization = true;
 			}
@@ -68,15 +75,15 @@ public class AttributeEventHandler {
 				hasDivinization = true;
 			}
 		}
-		
+
 		if (!hasDemonization) {
-			player.removeEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN);
-			player.removeEffect(net.minecraft.world.effect.MobEffects.WEAKNESS);
-			player.removeEffect(net.minecraft.world.effect.MobEffects.WITHER);
+			player.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
+			player.removeEffect(MobEffects.WEAKNESS);
+			player.removeEffect(MobEffects.WITHER);
 		}
-		
+
 		if (!hasDivinization) {
-			player.removeEffect(net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN);
+			player.removeEffect(MobEffects.DIG_SLOWDOWN);
 		}
 	}
 }

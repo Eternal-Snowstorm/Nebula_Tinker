@@ -10,9 +10,10 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import top.nebula.nebula_tinker.common.command.ModifierDebugCommand;
+import top.nebula.nebula_tinker.common.register.attribute.ModAttributes;
 import top.nebula.nebula_tinker.config.*;
 import top.nebula.nebula_tinker.common.register.*;
-import top.nebula.nebula_tinker.entity.attribute.GlobalCritAttributes;
+import top.nebula.nebula_tinker.common.register.attribute.GlobalCritAttributes;
 
 @Mod(NebulaTinker.MODID)
 public class NebulaTinker {
