@@ -25,7 +25,7 @@ import top.nebula.nebula_tinker.common.recipe.TConFuelMessageRecipe;
 
 import java.util.List;
 
-public class TConFuelMessageFuelCategory implements IRecipeCategory<TConFuelMessageRecipe> {
+public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageRecipe> {
 	private final IDrawable icon;
 	private static final int WIDTH = 192;
 	private static final int HEIGHT = 24;
@@ -40,7 +40,7 @@ public class TConFuelMessageFuelCategory implements IRecipeCategory<TConFuelMess
 			TConFuelMessageRecipe.class
 	);
 
-	public TConFuelMessageFuelCategory(IGuiHelper helper) {
+	public TConFuelMessageCategory(IGuiHelper helper) {
 		this.icon = helper.createDrawableItemStack(ICON_ITEM.get().getDefaultInstance());
 	}
 

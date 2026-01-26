@@ -16,7 +16,7 @@ import slimeknights.tconstruct.library.recipe.TinkerRecipeTypes;
 import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.common.recipe.TConFuelMessageRecipe;
-import top.nebula.nebula_tinker.compat.jei.category.TConFuelMessageFuelCategory;
+import top.nebula.nebula_tinker.compat.jei.category.TConFuelMessageCategory;
 import top.nebula.nebula_tinker.utils.ICheckModLoaded;
 
 import java.util.Comparator;
@@ -35,7 +35,7 @@ public class NebulaTinkerJeiPlugin implements IModPlugin {
 		IJeiHelpers jeiHelpers = registration.getJeiHelpers();
 		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
 
-		TConFuelMessageFuelCategory fuelCategory = new TConFuelMessageFuelCategory(guiHelper);
+		TConFuelMessageCategory fuelCategory = new TConFuelMessageCategory(guiHelper);
 		registration.addRecipeCategories(fuelCategory);
 	}
 
@@ -61,7 +61,7 @@ public class NebulaTinkerJeiPlugin implements IModPlugin {
 				.toList();
 
 		if (!ICheckModLoaded.hasMod("justenoughfuels")) {
-			registration.addRecipes(TConFuelMessageFuelCategory.RECIPE_TYPE, tconFuelRecipe);
+			registration.addRecipes(TConFuelMessageCategory.RECIPE_TYPE, tconFuelRecipe);
 		}
 	}
 }
