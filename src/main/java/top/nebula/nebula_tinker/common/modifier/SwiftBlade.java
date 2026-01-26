@@ -9,51 +9,51 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.nebula_tinker.NebulaTinker;
-import top.nebula.nebula_tinker.common.register.ModModifier;
+import top.nebula.nebula_tinker.entity.CritCalculator;
 import top.nebula.nebula_tinker.utils.AttackFeedback;
-import top.nebula.nebula_tinker.utils.SimpleTConUtils;
+import top.nebula.nebula_tinker.utils.CritUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class SwiftBlade extends Modifier {
-	// 基础暴击伤害倍率
-	private static final float BASE_CRIT_MULTIPLIER = 1.5F;
-	// 每级速度效果额外增加的暴击伤害
-	private static final float CRIT_BONUS_PER_SPEED_LEVEL = 0.1F;
-
+	
+	// 速度效果对暴击的影响常量
+	private static final float CRIT_CHANCE_PER_SPEED_LEVEL = 0.05f; // 每级速度增加5%暴击率
+	private static final float CRIT_DAMAGE_PER_SPEED_LEVEL = 0.1f;  // 每级速度增加0.1倍暴击伤害
+	private static final int MODIFIER_DURATION = 40; // 效果持续2秒（40 ticks）
+	
 	@SubscribeEvent
 	public static void onCriticalHit(CriticalHitEvent event) {
 		Player player = event.getEntity();
-
-		// 攻击冷却检查, 防止粒子效果以及音效连续触发
+		
 		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
 			return;
 		}
-
-		boolean hasModifier = SimpleTConUtils.hasModifier(
+		
+		boolean hasModifier = CritUtils.hasCritModifier(
 				player.getItemInHand(InteractionHand.MAIN_HAND),
-				NebulaTinker.loadResource("swift_blade").toString()
+				CritUtils.MODIFIER_SWIFT_BLADE
 		);
-
+		
 		if (!hasModifier) {
 			return;
 		}
-
-		// 检查玩家是否有速度效果
+		
 		if (!player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
 			return;
 		}
-
-		// 获取速度等级 (0 = Speed I, 1 = Speed II 以此类推)
-		// 不喜欢数值的自己改一下
+		
+		// 获取速度等级
 		int speedLevel = player.getEffect(MobEffects.MOVEMENT_SPEED).getAmplifier() + 1;
-
-		// 设置暴击
+		
+		// 计算暴击加成
+		float critChanceBonus = speedLevel * CRIT_CHANCE_PER_SPEED_LEVEL;
+		float critDamageBonus = speedLevel * CRIT_DAMAGE_PER_SPEED_LEVEL;
+		
+		// 添加临时暴击修饰符
+		CritCalculator.addTempCritModifier(player, critChanceBonus, critDamageBonus, MODIFIER_DURATION);
+		
+		// 触发暴击效果
 		AttackFeedback.spawnAbuserCritEffect(player);
-		event.setResult(Event.Result.ALLOW);
-
-		// 计算暴击伤害倍率：基础倍率 + 速度等级加成
-		float critMultiplier = BASE_CRIT_MULTIPLIER + (speedLevel * CRIT_BONUS_PER_SPEED_LEVEL);
-		event.setDamageModifier(critMultiplier);
 	}
 }
