@@ -5,7 +5,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.util.RandomSource;
-import top.nebula.nebula_tinker.config.CritConfig;
+import top.nebula.nebula_tinker.config.CommonConfig;
 import top.nebula.nebula_tinker.common.register.attribute.GlobalCritAttributes;
 import top.nebula.nebula_tinker.common.register.attribute.ModAttributes;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
@@ -48,10 +48,10 @@ public class CritCalculator {
 			return false;
 		}
 		
-		// 基础暴击率
+		// 基础暴击率（从CommonConfig.CritSystem获取）
 		float baseChance = isJumpAttack ?
-				                   CritConfig.JUMP_CRIT_CHANCE.get().floatValue() :
-				                   CritConfig.BASE_CRIT_CHANCE.get().floatValue();
+				                   CommonConfig.CritSystem.JUMP_CRIT_CHANCE.get().floatValue() :
+				                   CommonConfig.CritSystem.BASE_CRIT_CHANCE.get().floatValue();
 		
 		// 获取攻击方暴击率属性
 		float attackerCritChance = getAttackerCritChance(attacker, weapon);
@@ -66,7 +66,8 @@ public class CritCalculator {
 		finalCritChance += getTempCritChanceBonus(attacker);
 		
 		// 确保在0-1范围内
-		finalCritChance = Math.max(0, Math.min(finalCritChance, CritConfig.MAX_CRIT_CHANCE.get().floatValue()));
+		finalCritChance = Math.max(0, Math.min(finalCritChance,
+				CommonConfig.CritSystem.MAX_CRIT_CHANCE.get().floatValue()));
 		
 		// 使用确定的随机数种子
 		long seed = calculateCritSeed(attacker, target, weapon, isJumpAttack);
@@ -85,10 +86,10 @@ public class CritCalculator {
 			return isJumpAttack ? JUMP_CRIT_MULTIPLIER : BASE_CRIT_MULTIPLIER;
 		}
 		
-		// 基础暴击倍数
+		// 基础暴击倍数（从CommonConfig.CritSystem获取）
 		float baseMultiplier = isJumpAttack ?
-				                       CritConfig.JUMP_CRIT_MULTIPLIER.get().floatValue() :
-				                       CritConfig.BASE_CRIT_MULTIPLIER.get().floatValue();
+				                       CommonConfig.CritSystem.JUMP_CRIT_MULTIPLIER.get().floatValue() :
+				                       CommonConfig.CritSystem.BASE_CRIT_MULTIPLIER.get().floatValue();
 		
 		// 获取攻击方暴击伤害
 		float attackerCritDamage = getAttackerCritDamage(attacker, weapon);
@@ -103,7 +104,8 @@ public class CritCalculator {
 		finalMultiplier += getTempCritDamageBonus(attacker);
 		
 		// 确保至少为1
-		return Math.max(1.0f, Math.min(finalMultiplier, CritConfig.MAX_CRIT_MULTIPLIER.get().floatValue()));
+		return Math.max(1.0f, Math.min(finalMultiplier,
+				CommonConfig.CritSystem.MAX_CRIT_MULTIPLIER.get().floatValue()));
 	}
 	
 	/**
@@ -130,7 +132,7 @@ public class CritCalculator {
 			critChance += level * 0.05f; // 每级增加5%暴击率
 		}
 		
-		return Math.min(critChance, CritConfig.MAX_CRIT_CHANCE.get().floatValue());
+		return Math.min(critChance, CommonConfig.CritSystem.MAX_CRIT_CHANCE.get().floatValue());
 	}
 	
 	/**
@@ -171,7 +173,7 @@ public class CritCalculator {
 			resistance = (float) critResistance.getValue();
 		}
 		
-		return Math.min(resistance, CritConfig.MAX_CRIT_RESISTANCE.get().floatValue());
+		return Math.min(resistance, CommonConfig.CritSystem.MAX_CRIT_RESISTANCE.get().floatValue());
 	}
 	
 	/**
@@ -185,7 +187,7 @@ public class CritCalculator {
 			reduction = (float) critDamageReduction.getValue();
 		}
 		
-		return Math.min(reduction, CritConfig.MAX_CRIT_DAMAGE_REDUCTION.get().floatValue());
+		return Math.min(reduction, CommonConfig.CritSystem.MAX_CRIT_DAMAGE_REDUCTION.get().floatValue());
 	}
 	
 	/**
@@ -252,7 +254,7 @@ public class CritCalculator {
 		seed = seed * 31 + (target != null ? target.getUUID().hashCode() : 0);
 		seed = seed * 31 + (weapon != null ? weapon.hashCode() : 0);
 		seed = seed * 31 + (isJumpAttack ? 1 : 0);
-		seed = seed * 31 + CritConfig.RANDOM_SEED_MODIFIER.get();
+		seed = seed * 31 + CommonConfig.CritSystem.RANDOM_SEED_MODIFIER.get();
 		
 		return seed;
 	}

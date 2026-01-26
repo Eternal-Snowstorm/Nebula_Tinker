@@ -32,7 +32,7 @@ public class NebulaTinker {
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
-	
+
 	public NebulaTinker(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
 		
@@ -56,8 +56,6 @@ public class NebulaTinker {
 		context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "nebula/tinker/client.toml");
 		// 服务端配置文件
 		context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, "nebula/tinker/server.toml");
-		// 暴击配置文件
-		context.registerConfig(ModConfig.Type.COMMON, CritConfig.SPEC, "nebula/tinker/crit.toml");
 		
 		LOGGER.info("Nebula Tinker is initialized!");
 	}
