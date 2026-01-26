@@ -15,7 +15,7 @@ import java.util.*;
  */
 public enum EAttributeType {
 	// 正面属性
-		
+
 		// 通用战斗属性
 		ATTACK_DAMAGE(
 				Attributes.ATTACK_DAMAGE,

@@ -18,13 +18,14 @@ public class LanguageGenerate {
 		TooltipLanguage.register();
 		CommandLanguage.register();
 		AttributeLanguage.register();
+		JeiTextLanguage.register();
 	}
 
 	/**
 	 * 添加翻译
 	 *
 	 * @param type    类型
-	 * @param key     key
+	 * @param key     翻译键
 	 * @param english 英文
 	 * @param chinese 中文
 	 */

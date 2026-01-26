@@ -2,6 +2,7 @@ package top.nebula.nebula_tinker.common.register;
 
 import net.minecraftforge.eventbus.api.IEventBus;
 import slimeknights.tconstruct.library.modifiers.Modifier;
+import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import top.nebula.nebula_tinker.NebulaTinker;
@@ -21,7 +22,7 @@ public class ModModifier {
 	public static final StaticModifier<DeathEcho> DEATH_ECHO;
 	public static final StaticModifier<Demonization> DEMONIZATION;
 	public static final StaticModifier<Divinization> DIVINIZATION;
-	public static final StaticModifier<DivineDemonicHarmony> DIVINE_DEMONIC_HARMONY;
+	public static final DynamicModifier DIVINE_DEMONIC_HARMONY;
 	public static final StaticModifier<Frenzy> FRENZY;
 	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
@@ -29,6 +30,7 @@ public class ModModifier {
 	static {
 		MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
 
+		// 动态Modifiers
 		ABUSER = MODIFIERS.register("abuser", Abuser::new);
 		ACUPOINT = MODIFIERS.register("acupoint", Acupoint::new);
 		CAPTURE_KING = MODIFIERS.register("capture_king", CaptureKing::new);
@@ -37,10 +39,12 @@ public class ModModifier {
 		DEATH_ECHO = MODIFIERS.register("death_echo", DeathEcho::new);
 		DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
 		DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
-		DIVINE_DEMONIC_HARMONY = MODIFIERS.register("divine_demonic_harmony", DivineDemonicHarmony::new);
 		FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
 		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
 		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
+
+		// 静态Modifiers
+		DIVINE_DEMONIC_HARMONY = MODIFIERS.registerDynamic("divine_demonic_harmony");
 	}
 
 	public static void register(IEventBus bus) {

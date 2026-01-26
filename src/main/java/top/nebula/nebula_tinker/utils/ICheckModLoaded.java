@@ -3,7 +3,7 @@ package top.nebula.nebula_tinker.utils;
 import net.minecraftforge.fml.ModList;
 
 public interface ICheckModLoaded {
-	private static boolean hasMod(String modid) {
+	public static boolean hasMod(String modid) {
 		return ModList.get().isLoaded(modid);
 	}
 

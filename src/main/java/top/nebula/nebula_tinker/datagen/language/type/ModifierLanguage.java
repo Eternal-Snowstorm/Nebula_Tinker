@@ -193,7 +193,7 @@ public class ModifierLanguage extends LanguageGenerate {
 			addLanguage(
 					"modifier",
 					"killing_rhythm.description",
-					"Quickly kill 2 enemies to gain 25%% crit chance for 6s. Each extra kill: +5%% crit, +1s duration",
+					"Quickly kill 2 enemies to gain 25%% crit chance for 6s. Each extra kill: +5%% crit, +1s ruration",
 					"迅速杀死2名敌人后获得25%暴击率，持续6秒。每多杀1个: +5%暴击率, +1秒持续时间"
 			);
 			addLanguage(

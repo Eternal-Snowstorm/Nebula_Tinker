@@ -10,7 +10,6 @@ import top.nebula.nebula_tinker.NebulaTinker;
 import java.util.function.Supplier;
 
 public class GlobalCritAttributes {
-
 	public static final DeferredRegister<Attribute> ATTRIBUTES;
 
 	public static final Supplier<Attribute> GLOBAL_CRITICAL_CHANCE;
