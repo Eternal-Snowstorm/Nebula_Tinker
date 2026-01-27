@@ -32,10 +32,10 @@ public class NebulaTinkerJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
-		IJeiHelpers jeiHelpers = registration.getJeiHelpers();
-		IGuiHelper guiHelper = jeiHelpers.getGuiHelper();
+		IJeiHelpers helpers = registration.getJeiHelpers();
+		IGuiHelper helper = helpers.getGuiHelper();
 
-		TConFuelMessageCategory fuelCategory = new TConFuelMessageCategory(guiHelper);
+		TConFuelMessageCategory fuelCategory = new TConFuelMessageCategory(helper);
 		registration.addRecipeCategories(fuelCategory);
 	}
 
