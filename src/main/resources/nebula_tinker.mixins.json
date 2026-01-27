@@ -1,7 +1,7 @@
 {
 	"required": true,
 	"minVersion": "0.8",
-	"package": "top.nebula.nebula_tinker.mixin",
+	"package": "top.nebula.tinker.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "nebula_tinker.refmap.json",
 	"mixins": [
