@@ -194,10 +194,14 @@ public class AttributeApplicator {
 		}
 
 		// 检查是否有魔化或神化修饰符
-		boolean hasDemonization = SimpleTConUtils.hasModifier(stack,
-				top.nebula.tinker.NebulaTinker.loadResource("demonization").toString());
-		boolean hasDivinization = SimpleTConUtils.hasModifier(stack,
-				top.nebula.tinker.NebulaTinker.loadResource("divinization").toString());
+		boolean hasDemonization = SimpleTConUtils.hasModifier(
+				stack,
+				NebulaTinker.loadResource("demonization").toString()
+		);
+		boolean hasDivinization = SimpleTConUtils.hasModifier(
+				stack,
+				NebulaTinker.loadResource("divinization").toString()
+		);
 
 		if (!hasDemonization && !hasDivinization) {
 			return tooltips;

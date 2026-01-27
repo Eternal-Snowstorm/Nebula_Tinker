@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CombatUtils {
+	public static final Map<UUID, Long> LAST_HURT_TIME = new HashMap<>();
+
 	/**
 	 * 生成粒子效果和挥刀暴击音效
 	 *
@@ -63,6 +65,10 @@ public class CombatUtils {
 		return player.getAttackStrengthScale(0.5F) >= 0.9F;
 	}
 
+	public static void recordHurt(LivingEntity entity) {
+		LAST_HURT_TIME.put(entity.getUUID(), entity.level().getGameTime());
+	}
+
 	/**
 	 * 是否处于受伤后的 ticks 时间内
 	 *
@@ -71,7 +77,7 @@ public class CombatUtils {
 	 * @return
 	 */
 	public static boolean hurtAfter(LivingEntity entity, int ticks) {
-		Long last = CombatTimeEvents.LAST_HURT_TIME.get(entity.getUUID());
+		Long last = LAST_HURT_TIME.get(entity.getUUID());
 		if (last == null) {
 			return false;
 		}
@@ -86,17 +92,43 @@ public class CombatUtils {
 	 * @return
 	 */
 	public static boolean notHurtFor(LivingEntity entity, int ticks) {
-		Long last = CombatTimeEvents.LAST_HURT_TIME.get(entity.getUUID());
+		Long last = LAST_HURT_TIME.get(entity.getUUID());
 		if (last == null) {
 			return true;
 		}
 		return entity.level().getGameTime() - last >= ticks;
 	}
 
+	/**
+	 * 以"最后受伤时间"为起点，
+	 * 是否仍处于一个持续窗口中
+	 * <p>
+	 * 受伤那一刻开始，持续 ticks
+	 *
+	 * @param entity
+	 */
+	public static boolean hurtWindowActive(LivingEntity entity, int ticks) {
+		return hurtAfter(entity, ticks);
+	}
+
+	/**
+	 * 是否刚刚进入受伤窗口(仅一刻为 true)
+	 *
+	 * @param entity
+	 * @param ticks
+	 * @return
+	 */
+	public static boolean hurtWindowBegin(LivingEntity entity, int ticks) {
+		Long last = LAST_HURT_TIME.get(entity.getUUID());
+		if (last == null) {
+			return false;
+		}
+		long now = entity.level().getGameTime();
+		return now == last && ticks > 0;
+	}
+
 	@Mod.EventBusSubscriber
 	public static class CombatTimeEvents {
-		public static final Map<UUID, Long> LAST_HURT_TIME = new HashMap<>();
-
 		@SubscribeEvent
 		public static void onLivingHurt(LivingHurtEvent event) {
 			LivingEntity entity = event.getEntity();

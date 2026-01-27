@@ -23,9 +23,11 @@ public class ModModifier {
 	public static final StaticModifier<Demonization> DEMONIZATION;
 	public static final StaticModifier<Divinization> DIVINIZATION;
 	public static final DynamicModifier DIVINE_DEMONIC_HARMONY;
-	public static final StaticModifier<Frenzy> FRENZY;
 	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
+	public static final StaticModifier<ForceLiberation> FORCE_LIBERATION;
+
+	public static final StaticModifier<Frenzy> FRENZY;
 
 	static {
 		MODIFIERS = ModifierDeferredRegister.create(NebulaTinker.MODID);
@@ -42,6 +44,7 @@ public class ModModifier {
 		FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
 		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
 		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
+		FORCE_LIBERATION = MODIFIERS.register("force_liberation", ForceLiberation::new);
 
 		// 静态Modifiers
 		DIVINE_DEMONIC_HARMONY = MODIFIERS.registerDynamic("divine_demonic_harmony");
