@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import top.nebula.tinker.common.register.ModParticle;
 
-public class AttackFeedback {
+public class CombatUtils {
 	/**
 	 * 生成粒子效果和挥刀暴击音效
 	 *
@@ -46,5 +46,15 @@ public class AttackFeedback {
 				1.0F,
 				1.5F
 		);
+	}
+
+	/**
+	 * 检查攻击冷却 避免连续触发
+	 *
+	 * @param player
+	 * @return
+	 */
+	public static boolean isAttackCooled(Player player) {
+		return player.getAttackStrengthScale(0.5F) >= 0.9F;
 	}
 }

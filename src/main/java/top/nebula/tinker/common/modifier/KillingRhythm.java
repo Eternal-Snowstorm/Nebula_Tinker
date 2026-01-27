@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.AttackFeedback;
+import top.nebula.tinker.utils.CombatUtils;
 import top.nebula.tinker.utils.SimpleTConUtils;
 
 import java.util.Map;
@@ -141,7 +141,7 @@ public class KillingRhythm extends Modifier {
 		if (Math.random() >= state.critChance) {
 			return;
 		}
-		AttackFeedback.spawnAbuserCritEffect(player);
+		CombatUtils.spawnAbuserCritEffect(player);
 		event.setResult(Event.Result.ALLOW);
 		event.setDamageModifier(CRIT_MULTIPLIER);
 	}

@@ -121,19 +121,19 @@ public class DivineDemonicHarmony extends Modifier {
 
 		int harmonyLevel = SimpleTConUtils.getModifierLevel(stack, MODIFIER_ID.toString());
 		if (harmonyLevel <= 0) {
-			logDebug("No harmony modifier found on item");
+//			logDebug("No harmony modifier found on item");
 			return false;
 		}
 
 		int demonLevel = SimpleTConUtils.getModifierLevel(stack, DEMONIZATION_ID.toString());
 		int divinLevel = SimpleTConUtils.getModifierLevel(stack, DIVINIZATION_ID.toString());
 
-		logDebug("Checking coexist conditions - demonLevel: " + demonLevel + ", divinLevel: " + divinLevel);
+		debugLog("Checking coexist conditions - demonLevel: " + demonLevel + ", divinLevel: " + divinLevel);
 
 		boolean canCoexist = demonLevel > 0 && divinLevel > 0 && (demonLevel >= REQUIRED_LEVEL || divinLevel >= REQUIRED_LEVEL);
 
 		if (!canCoexist) {
-			logDebug("Cannot coexist - conditions not met");
+			debugLog("Cannot coexist - conditions not met");
 		}
 
 		return canCoexist;
@@ -180,14 +180,14 @@ public class DivineDemonicHarmony extends Modifier {
 
 	private static void applyHarmonyEffect(Player player, ItemStack stack, boolean isMainHand) {
 		if (!canCoexist(stack, player)) {
-			logDebug("Cannot apply harmony effect for player: " + player.getName().getString());
+			debugLog("Cannot apply harmony effect for player: " + player.getName().getString());
 			clearPlayerState(player);
 			return;
 		}
 
 		int levelDiff = getLevelDifference(stack);
 		if (levelDiff < 0) {
-			logDebug("Invalid level diff for player: " + player.getName().getString());
+			debugLog("Invalid level diff for player: " + player.getName().getString());
 			clearPlayerState(player);
 			return;
 		}
@@ -203,7 +203,7 @@ public class DivineDemonicHarmony extends Modifier {
 			playerDataMap.put(playerId, data);
 			isNewData = true;
 
-			logDebug("New harmony data created for player " + player.getName().getString() +
+			debugLog("New harmony data created for player " + player.getName().getString() +
 					", levelDiff=" + levelDiff);
 		} else {
 			// 更新现有数据
@@ -218,7 +218,7 @@ public class DivineDemonicHarmony extends Modifier {
 				data.update(stack, levelDiff);
 
 				if (levelDiffChanged) {
-					logDebug("Level diff changed for player " + player.getName().getString() +
+					debugLog("Level diff changed for player " + player.getName().getString() +
 							", old=" + data.lastLevelDiff + ", new=" + levelDiff);
 				}
 			}
@@ -230,7 +230,7 @@ public class DivineDemonicHarmony extends Modifier {
 		// 如果是新数据或等级差变化，安排第一次伤害
 		if (isNewData || data.nextDamageTick == 0) {
 			data.nextDamageTick = player.tickCount + data.damageInterval;
-			logDebug("Scheduling first damage for player " + player.getName().getString() +
+			debugLog("Scheduling first damage for player " + player.getName().getString() +
 					" in " + data.damageInterval + " ticks");
 		}
 
@@ -260,14 +260,14 @@ public class DivineDemonicHarmony extends Modifier {
 			applyDamageToPlayer(player, data);
 			// 安排下一次伤害
 			data.nextDamageTick = player.tickCount + data.damageInterval;
-			logDebug("Scheduled next damage for player " + player.getName().getString() +
+			debugLog("Scheduled next damage for player " + player.getName().getString() +
 					" in " + data.damageInterval + " ticks (tick " + data.nextDamageTick + ")");
 		}
 	}
 
 	private static void applyDamageToPlayer(Player player, PlayerHarmonyData data) {
 		if (player.isRemoved() || !player.isAlive() || player.isCreative() || player.isSpectator()) {
-			logDebug("Player not valid for damage, skipping: " + player.getName().getString());
+			debugLog("Player not valid for damage, skipping: " + player.getName().getString());
 			return;
 		}
 
@@ -278,7 +278,7 @@ public class DivineDemonicHarmony extends Modifier {
 		float originalHealth = player.getHealth();
 		player.hurt(player.damageSources().magic(), damage);
 
-		logDebug("Applied harmony damage to player " + player.getName().getString() +
+		debugLog("Applied harmony damage to player " + player.getName().getString() +
 				": " + originalHealth + " -> " + player.getHealth() + " (-" + damage + ")" +
 				", levelDiff=" + data.levelDiff + ", factor=" + damageFactor);
 
@@ -332,7 +332,7 @@ public class DivineDemonicHarmony extends Modifier {
 				);
 			}
 
-			logDebug("Health reduced for player " + player.getName().getString() +
+			debugLog("Health reduced for player " + player.getName().getString() +
 					", original=" + data.originalMaxHealth + ", reduction=" + data.healthReductionAmount +
 					", new max health=" + player.getMaxHealth());
 		}
@@ -354,7 +354,7 @@ public class DivineDemonicHarmony extends Modifier {
 
 			if (!attribute.hasModifier(modifier)) {
 				attribute.addTransientModifier(modifier);
-				logDebug("Applied health modifier: " + name + ", amount=" + amount);
+				debugLog("Applied health modifier: " + name + ", amount=" + amount);
 			}
 		}
 	}
@@ -372,7 +372,7 @@ public class DivineDemonicHarmony extends Modifier {
 		data.healthReduced = false;
 		data.healthReductionAmount = 0;
 
-		logDebug("Health restored for player " + player.getName().getString() + ", original max health=" + data.originalMaxHealth);
+		debugLog("Health restored for player " + player.getName().getString() + ", original max health=" + data.originalMaxHealth);
 
 		if (player.level() instanceof ServerLevel serverLevel) {
 			player.displayClientMessage(
@@ -505,20 +505,20 @@ public class DivineDemonicHarmony extends Modifier {
 			}
 
 			playerDataMap.remove(playerId);
-			logDebug("Player state cleared: " + player.getName().getString());
+			debugLog("Player state cleared: " + player.getName().getString());
 		}
 	}
 
 	private static boolean playerHasHarmony(Player player) {
 		ItemStack mainHand = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (canCoexist(mainHand, player)) {
-			logDebug("Player has harmony in main hand: " + player.getName().getString());
+			debugLog("Player has harmony in main hand: " + player.getName().getString());
 			return true;
 		}
 
 		ItemStack offHand = player.getItemInHand(InteractionHand.OFF_HAND);
 		if (canCoexist(offHand, player)) {
-			logDebug("Player has harmony in off hand: " + player.getName().getString());
+			debugLog("Player has harmony in off hand: " + player.getName().getString());
 			return true;
 		}
 
@@ -526,7 +526,7 @@ public class DivineDemonicHarmony extends Modifier {
 			if (slot.getType() == EquipmentSlot.Type.ARMOR) {
 				ItemStack armor = player.getItemBySlot(slot);
 				if (canCoexist(armor, player)) {
-					logDebug("Player has harmony in armor slot " + slot.getName() + ": " + player.getName().getString());
+					debugLog("Player has harmony in armor slot " + slot.getName() + ": " + player.getName().getString());
 					return true;
 				}
 			}
@@ -598,7 +598,7 @@ public class DivineDemonicHarmony extends Modifier {
 		for (UUID playerId : toRemove) {
 			PlayerHarmonyData data = playerDataMap.remove(playerId);
 			if (data != null) {
-				logDebug("Cleaned up unused player data for UUID: " + playerId);
+				debugLog("Cleaned up unused player data for UUID: " + playerId);
 			}
 		}
 	}
@@ -704,15 +704,15 @@ public class DivineDemonicHarmony extends Modifier {
 				}
 			}
 
-			logDebug("Attack damage bonus applied: levelDiff=" + levelDiff +
+			debugLog("Attack damage bonus applied: levelDiff=" + levelDiff +
 					", bonus=" + (damageBonus * 100) + "%, extra=" + extraDamage +
 					", crit=" + isCrit + ", critChance=" + (critChance * 100) + "%");
 		}
 	}
 
-	private static void logDebug(String message) {
+	private static void debugLog(String message) {
 		if (DEBUG) {
-			System.out.println("[DivineDemonicHarmony] " + message);
+			NebulaTinker.LOGGER.debug("[DivineDemonicHarmony] " + message);
 		}
 	}
 

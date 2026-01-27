@@ -9,7 +9,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.AttackFeedback;
+import top.nebula.tinker.utils.CombatUtils;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CritEventHandler {
@@ -36,7 +36,7 @@ public class CritEventHandler {
 			float critMultiplier = CritCalculator.getCritDamageMultiplier(player, target, weapon, isJumpAttack);
 
 			// 触发暴击效果
-			AttackFeedback.spawnAbuserCritEffect(player);
+			CombatUtils.spawnAbuserCritEffect(player);
 
 			// 设置事件结果
 			event.setResult(CriticalHitEvent.Result.ALLOW);

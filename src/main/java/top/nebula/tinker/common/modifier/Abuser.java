@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.shared.TinkerEffects;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.AttackFeedback;
+import top.nebula.tinker.utils.CombatUtils;
 import top.nebula.tinker.utils.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
@@ -33,7 +33,7 @@ public class Abuser extends Modifier {
 		}
 
 		// 攻击冷却检查(防止连触发)
-		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+		if (CombatUtils.isAttackCooled(player)) {
 			return;
 		}
 
@@ -51,14 +51,11 @@ public class Abuser extends Modifier {
 		}
 
 		// 强制暴击
-		AttackFeedback.spawnAbuserCritEffect(player);
+		CombatUtils.spawnAbuserCritEffect(player);
 		event.setResult(Event.Result.ALLOW);
 		event.setDamageModifier(CRIT_MULTIPLIER);
 	}
 
-	/**
-	 * 判断目标是否有可被剥削的异常状态
-	 */
 	private static boolean hasEffect(LivingEntity entity) {
 		return entity.hasEffect(MobEffects.POISON)
 				|| entity.hasEffect(MobEffects.WITHER)

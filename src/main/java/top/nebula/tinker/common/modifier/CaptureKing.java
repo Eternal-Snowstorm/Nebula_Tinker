@@ -14,7 +14,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.AttackFeedback;
+import top.nebula.tinker.utils.CombatUtils;
 import top.nebula.tinker.utils.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
@@ -37,7 +37,7 @@ public class CaptureKing extends Modifier {
 		}
 
 		// 攻击冷却检查(防止连触发)
-		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+		if (CombatUtils.isAttackCooled(player)) {
 			return;
 		}
 
@@ -75,7 +75,7 @@ public class CaptureKing extends Modifier {
 				.withStyle(ChatFormatting.BOLD);
 
 		player.displayClientMessage(tranKey, true);
-		AttackFeedback.spawnAbuserCritEffect(player);
+		CombatUtils.spawnAbuserCritEffect(player);
 		event.setResult(Event.Result.ALLOW);
 		event.setDamageModifier(CRIT_MULTIPLIER);
 	}
