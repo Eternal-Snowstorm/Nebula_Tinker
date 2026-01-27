@@ -6,5 +6,5 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 public interface ScreenElement {
 	@OnlyIn(Dist.CLIENT)
-	void render(GuiGraphics var1, int var2, int var3);
+	void render(GuiGraphics graphics, int var0, int var1);
 }
