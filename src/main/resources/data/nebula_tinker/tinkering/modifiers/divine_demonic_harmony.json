@@ -14,7 +14,7 @@
 				}
 			],
 			"requirement": {
-				"type": "mantle:and",
+				"type": "mantle:or",
 				"predicates": [
 					{
 						"type": "tconstruct:has_modifier",
