@@ -61,7 +61,7 @@ public class JeiTextLanguage extends LanguageGenerate {
 		);
 	}
 
-	private static void setJeiCatagory(String key, String englist, String chinese) {
-		addLanguage("jei.category", key, englist, chinese);
+	private static void setJeiCatagory(String key, String english, String chinese) {
+		addLanguage("jei.category", key, english, chinese);
 	}
 }

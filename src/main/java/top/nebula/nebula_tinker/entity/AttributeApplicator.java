@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.network.chat.Component;
 import net.minecraft.ChatFormatting;
+import top.nebula.nebula_tinker.NebulaTinker;
 import top.nebula.nebula_tinker.common.modifier.Demonization;
 import top.nebula.nebula_tinker.common.modifier.Divinization;
 import top.nebula.nebula_tinker.utils.SimpleTConUtils;
@@ -48,13 +49,13 @@ public class AttributeApplicator {
 			}
 
 			// 生成唯一的UUID
-			UUID modifierUuid = UUID.nameUUIDFromBytes((stack.getDescriptionId() + type.name() + modifierId + slot.getName()).getBytes());
+			UUID modifierUUID = UUID.nameUUIDFromBytes((stack.getDescriptionId() + type.name() + modifierId + slot.getName()).getBytes());
 
 			// 应用属性修饰符
 			AttributeInstance attributeInstance = entity.getAttribute(type.getAttribute());
 			if (attributeInstance != null) {
 				// 移除旧的相同UUID的修饰符
-				attributeInstance.removeModifier(modifierUuid);
+				attributeInstance.removeModifier(modifierUUID);
 
 				// 确定操作类型（加法或乘法）
 				AttributeModifier.Operation operation = AttributeModifier.Operation.ADDITION;
@@ -66,8 +67,8 @@ public class AttributeApplicator {
 
 				// 添加新的修饰符
 				AttributeModifier modifier = new AttributeModifier(
-						modifierUuid,
-						"nebula_tinker_" + modifierId + "_" + type.name().toLowerCase(),
+						modifierUUID,
+						String.format("%s_%s_%s", NebulaTinker.MODID, modifierId, type.name().toLowerCase()),
 						value,
 						operation
 				);
@@ -75,7 +76,12 @@ public class AttributeApplicator {
 
 				// 记录已应用的修饰符
 				AppliedModifier appliedModifier = new AppliedModifier(
-						modifierUuid, type.getAttribute(), slot, modifierId, type, value
+						modifierUUID,
+						type.getAttribute(),
+						slot,
+						modifierId,
+						type,
+						value
 				);
 				List<AppliedModifier> slotModifiers = entityModifiers
 						.computeIfAbsent(slot, (slot1) -> {
@@ -89,9 +95,7 @@ public class AttributeApplicator {
 		lastAccessTime.put(entityId, System.currentTimeMillis());
 	}
 
-	/**
-	 * 移除指定槽位的所有属性
-	 */
+	// 移除指定槽位的所有属性
 	public static void removeAttributes(Player player, EquipmentSlot slot) {
 		UUID playerId = player.getUUID();
 		if (!appliedModifiers.containsKey(playerId)) {
@@ -119,9 +123,7 @@ public class AttributeApplicator {
 		}
 	}
 
-	/**
-	 * 移除玩家的所有属性
-	 */
+	// 移除玩家的所有属性
 	public static void removeAllAttributes(Player player) {
 		UUID playerId = player.getUUID();
 		if (!appliedModifiers.containsKey(playerId)) {
@@ -164,9 +166,7 @@ public class AttributeApplicator {
 		return false;
 	}
 
-	/**
-	 * 清理过期缓存
-	 */
+	// 清理过期缓存
 	public static void cleanupExpiredCache() {
 		long currentTime = System.currentTimeMillis();
 		List<UUID> toRemove = new ArrayList<>();
