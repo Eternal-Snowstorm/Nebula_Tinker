@@ -121,7 +121,7 @@ public class KillingRhythm extends Modifier {
 		if (!(target instanceof LivingEntity)) {
 			return;
 		}
-		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+		if (CombatUtils.isAttackCooled(player)) {
 			return;
 		}
 		boolean hasModifier = SimpleTConUtils.hasModifier(

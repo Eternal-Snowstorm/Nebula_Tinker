@@ -21,7 +21,7 @@ public class CritEventHandler {
 		if (target == null) return;
 
 		// 检查攻击冷却
-		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+		if (CombatUtils.isAttackCooled(player)) {
 			return;
 		}
 

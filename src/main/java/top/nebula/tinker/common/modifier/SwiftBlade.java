@@ -24,7 +24,7 @@ public class SwiftBlade extends Modifier {
 	public static void onCriticalHit(CriticalHitEvent event) {
 		Player player = event.getEntity();
 
-		if (player.getAttackStrengthScale(0.5F) < 0.9F) {
+		if (CombatUtils.isAttackCooled(player)) {
 			return;
 		}
 
