@@ -101,7 +101,7 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 
 		List<TextPair> rightTexts = List.of(
 				TextPair.of("amount", recipe.fuel().getAmount(), layout.colorAmount),
-				TextPair.of("ruration", recipe.ruration(), layout.colorDuration)
+				TextPair.of("duration", recipe.duration(), layout.colorDuration)
 		);
 
 		int xCenter = WIDTH / 2;

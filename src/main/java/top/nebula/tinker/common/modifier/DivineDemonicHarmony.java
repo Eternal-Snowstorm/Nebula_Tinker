@@ -532,7 +532,7 @@ public class DivineDemonicHarmony extends Modifier {
 			}
 		}
 
-		logDebug("Player has no harmony items: " + player.getName().getString());
+//		logDebug("Player has no harmony items: " + player.getName().getString());
 		return false;
 	}
 
@@ -570,11 +570,17 @@ public class DivineDemonicHarmony extends Modifier {
 								1, 0, 0.04, 0, 0);
 					}
 				} else {
-					serverLevel.sendParticles(ParticleTypes.GLOW,
+					serverLevel.sendParticles(
+							ParticleTypes.GLOW,
 							player.getX() + offsetX + handOffset,
 							player.getY() + offsetY,
 							player.getZ() + offsetZ,
-							1, 0, 0.06, 0, 0);
+							1,
+							0,
+							0.06,
+							0,
+							0
+					);
 				}
 			}
 		}
