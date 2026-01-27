@@ -13,7 +13,7 @@ public class JeiTextLanguage extends LanguageGenerate {
 		setJeiCatagory(
 				"tcon_fuel_message",
 				"Fuel Message",
-				"燃料信息"
+				"冶炼炉燃料信息"
 		);
 
 		setJeiCatagory(
@@ -52,7 +52,7 @@ public class JeiTextLanguage extends LanguageGenerate {
 		setJeiCatagory(
 				"ruration.title",
 				"Duration: ",
-				"持续时间: "
+				"持续: "
 		);
 		setJeiCatagory(
 				"ruration",
