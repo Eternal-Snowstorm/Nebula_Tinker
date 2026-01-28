@@ -50,12 +50,12 @@ public class JeiTextLanguage extends LanguageGenerate {
 		);
 
 		setJeiCatagory(
-				"ruration.title",
+				"duration.title",
 				"Duration: ",
 				"持续: "
 		);
 		setJeiCatagory(
-				"ruration",
+				"duration",
 				"%s Tick",
 				"%s Tick"
 		);
