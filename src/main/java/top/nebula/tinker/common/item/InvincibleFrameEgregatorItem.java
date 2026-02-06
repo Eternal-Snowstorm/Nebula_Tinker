@@ -52,9 +52,8 @@ public class InvincibleFrameEgregatorItem extends Item {
 		return CuriosApi.getCuriosInventory(player)
 				.map((handler) -> {
 					return handler.findFirstCurio((stack) -> {
-								return stack.is(ModItem.INVINCIBLE_FRAME_EGREGATOR.get());
-							})
-							.isPresent();
+						return stack.is(ModItem.INVINCIBLE_FRAME_EGREGATOR.get());
+					}).isPresent();
 				}).orElse(false);
 	}
 }

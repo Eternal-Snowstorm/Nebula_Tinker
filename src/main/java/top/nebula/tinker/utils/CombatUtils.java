@@ -100,7 +100,7 @@ public class CombatUtils {
 	 * @return true 表示可以进行完整强度攻击
 	 */
 	public static boolean isAttackCooled(Player player) {
-		return player.getAttackStrengthScale(0.5F) >= 0.9F;
+		return !(player.getAttackStrengthScale(0.5F) >= 0.9F);
 	}
 
 	/**
