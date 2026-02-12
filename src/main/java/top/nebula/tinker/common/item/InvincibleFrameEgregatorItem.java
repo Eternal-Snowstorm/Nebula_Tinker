@@ -15,8 +15,8 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class InvincibleFrameEgregatorItem extends Item {
-	public InvincibleFrameEgregatorItem(Properties properties) {
-		super(properties);
+	public InvincibleFrameEgregatorItem() {
+		super(new Properties());
 	}
 
 	@SubscribeEvent

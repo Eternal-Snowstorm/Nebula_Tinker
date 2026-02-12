@@ -25,18 +25,12 @@ public class ModItem {
 	static {
 		ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NebulaTinker.MODID);
 
-		DEMONIZATION_STONE = registerItem("demonization_stone", () -> {
-			return new DemonizationStoneItem(new Item.Properties());
-		});
-		DIVINIZATION_STONE = registerItem("divinization_stone", () -> {
-			return new DivinizationStoneItem(new Item.Properties());
-		});
-		INVINCIBLE_FRAME_EGREGATOR = registerItem("invincible_frame_egregator", () -> {
-			return new InvincibleFrameEgregatorItem(new Item.Properties());
-		}, false);
+		DEMONIZATION_STONE = addItem("demonization_stone", DemonizationStoneItem::new);
+		DIVINIZATION_STONE = addItem("divinization_stone", DivinizationStoneItem::new);
+		INVINCIBLE_FRAME_EGREGATOR = addItem("invincible_frame_egregator", InvincibleFrameEgregatorItem::new, false);
 	}
 
-	private static Supplier<Item> registerItem(String id, Supplier<Item> supplier, boolean addToCreativeTab) {
+	private static Supplier<Item> addItem(String id, Supplier<Item> supplier, boolean addToCreativeTab) {
 		Supplier<Item> item = ITEMS.register(id, supplier);
 		if (addToCreativeTab) {
 			CREATIVE_TAB_ITEMS.add(item);
@@ -44,8 +38,8 @@ public class ModItem {
 		return item;
 	}
 
-	private static Supplier<Item> registerItem(String id, Supplier<Item> supplier) {
-		return registerItem(id, supplier, true);
+	private static Supplier<Item> addItem(String id, Supplier<Item> supplier) {
+		return addItem(id, supplier, true);
 	}
 
 	public static void register(IEventBus bus) {
