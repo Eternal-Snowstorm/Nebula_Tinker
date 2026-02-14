@@ -12,7 +12,7 @@ import net.minecraft.ChatFormatting;
 import top.nebula.tinker.NebulaTinker;
 import top.nebula.tinker.common.modifier.Demonization;
 import top.nebula.tinker.common.modifier.Divinization;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

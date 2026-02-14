@@ -1,4 +1,4 @@
-package top.nebula.tinker.utils;
+package top.nebula.tinker.api;
 
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.MutableComponent;

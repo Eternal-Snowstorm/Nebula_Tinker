@@ -12,8 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.shared.TinkerEffects;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.CombatUtils;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.CombatUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)

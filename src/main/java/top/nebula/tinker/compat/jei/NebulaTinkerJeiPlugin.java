@@ -17,7 +17,7 @@ import slimeknights.tconstruct.library.recipe.fuel.MeltingFuel;
 import top.nebula.tinker.NebulaTinker;
 import top.nebula.tinker.common.recipe.TConFuelMessageRecipe;
 import top.nebula.tinker.compat.jei.category.TConFuelMessageCategory;
-import top.nebula.tinker.utils.ICheckModLoaded;
+import top.nebula.tinker.api.ICheckModLoaded;
 
 import java.util.Comparator;
 import java.util.List;

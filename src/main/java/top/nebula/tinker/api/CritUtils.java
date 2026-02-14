@@ -1,4 +1,4 @@
-package top.nebula.tinker.utils;
+package top.nebula.tinker.api;
 
 import net.minecraft.world.item.ItemStack;
 import top.nebula.tinker.NebulaTinker;

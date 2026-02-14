@@ -1,4 +1,4 @@
-package top.nebula.tinker.utils;
+package top.nebula.tinker.api;
 
 import net.minecraftforge.fml.ModList;
 

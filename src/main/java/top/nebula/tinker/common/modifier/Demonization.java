@@ -28,7 +28,7 @@ import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import top.nebula.tinker.NebulaTinker;
 import top.nebula.tinker.entity.AttributeApplicator;
 import top.nebula.tinker.entity.EAttributeType;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,4 +1,4 @@
-package top.nebula.tinker.utils;
+package top.nebula.tinker.api;
 
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;

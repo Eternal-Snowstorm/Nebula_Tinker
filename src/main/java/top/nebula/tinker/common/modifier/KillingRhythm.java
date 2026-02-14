@@ -16,8 +16,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.CombatUtils;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.CombatUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.Map;
 import java.util.UUID;

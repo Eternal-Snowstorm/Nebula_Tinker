@@ -9,7 +9,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.CombatUtils;
+import top.nebula.tinker.api.CombatUtils;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CritEventHandler {

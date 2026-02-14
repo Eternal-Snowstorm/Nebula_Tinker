@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import slimeknights.tconstruct.library.tools.item.ranged.ModifiableBowItem;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 @Mixin(ModifiableBowItem.class)
 public class ModifiableBowItemMixin {

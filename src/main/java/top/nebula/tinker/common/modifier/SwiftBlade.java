@@ -9,8 +9,8 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import top.nebula.tinker.NebulaTinker;
 import top.nebula.tinker.entity.CritCalculator;
-import top.nebula.tinker.utils.CombatUtils;
-import top.nebula.tinker.utils.CritUtils;
+import top.nebula.tinker.api.CombatUtils;
+import top.nebula.tinker.api.CritUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)

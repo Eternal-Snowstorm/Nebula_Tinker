@@ -7,7 +7,7 @@ import net.minecraft.util.RandomSource;
 import top.nebula.tinker.config.CommonConfig;
 import top.nebula.tinker.common.register.attribute.GlobalCritAttributes;
 import top.nebula.tinker.common.register.attribute.ModAttributes;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;

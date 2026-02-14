@@ -27,7 +27,7 @@ import org.joml.Vector3f;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 import top.nebula.tinker.NebulaTinker;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.ArrayList;
 import java.util.List;

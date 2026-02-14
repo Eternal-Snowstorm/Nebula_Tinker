@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import top.nebula.tinker.NebulaTinker;
 import top.nebula.tinker.common.modifier.*;
-import top.nebula.tinker.utils.SimpleTConUtils;
+import top.nebula.tinker.api.SimpleTConUtils;
 
 import java.util.List;
 import java.util.Locale;
