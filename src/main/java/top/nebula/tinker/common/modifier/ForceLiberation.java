@@ -4,6 +4,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,13 +29,8 @@ public class ForceLiberation extends Modifier {
 			return;
 		}
 
-		boolean hasModifier = SimpleTConUtils.hasModifier(
-				player.getMainHandItem(),
-				NebulaTinker.loadResource("force_liberation").toString()
-		);
-
 		// 只在受伤状态检测是否有modifier
-		if (hasModifier) {
+		if (hasModifier(player, NebulaTinker.loadResource("force_liberation").toString())) {
 			CombatUtils.recordHurt(player);
 		}
 	}
@@ -68,5 +64,28 @@ public class ForceLiberation extends Modifier {
 			AttributeHelper.remove(player, Attributes.ATTACK_DAMAGE);
 			AttributeHelper.remove(player, Attributes.ARMOR);
 		}
+	}
+
+	private static boolean hasModifier(Player player, String modifierId) {
+		// 主手
+		ItemStack mainHand = player.getMainHandItem();
+		if (!mainHand.isEmpty() && SimpleTConUtils.hasModifier(mainHand, modifierId)) {
+			return true;
+		}
+
+		// 副手
+		ItemStack offHand = player.getOffhandItem();
+		if (!offHand.isEmpty() && SimpleTConUtils.hasModifier(offHand, modifierId)) {
+			return true;
+		}
+
+		// 盔甲
+		for (ItemStack armor : player.getArmorSlots()) {
+			if (!armor.isEmpty() && SimpleTConUtils.hasModifier(armor, modifierId)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 }
