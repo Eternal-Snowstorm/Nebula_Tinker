@@ -9,7 +9,6 @@ import java.util.Random;
 
 public class CurseOfTheWarGod extends MobEffect {
 	private static final String LAST_HEALTH_KEY = "nebula_tinker:last_health";
-	private static final Random RANDOM = new Random();
 	// 触发概率
 	private static final double PROBABILITY_OF_INJURY = 0.5;
 	// 受到的伤害百分比
@@ -41,7 +40,7 @@ public class CurseOfTheWarGod extends MobEffect {
 		// 检测刚刚受伤
 		if (currentHealth < lastHealth) {
 			// 受伤概率PROBABILITY_OF_INJURY
-			if (RANDOM.nextFloat() < PROBABILITY_OF_INJURY) {
+			if (new Random().nextFloat() < PROBABILITY_OF_INJURY) {
 				double damage = currentHealth * PERCENTAGE_OF_DAMAGE;
 
 				// 防止直接秒杀
