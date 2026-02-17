@@ -35,8 +35,7 @@ public class NebulaTinkerJeiPlugin implements IModPlugin {
 		IJeiHelpers helpers = registration.getJeiHelpers();
 		IGuiHelper helper = helpers.getGuiHelper();
 
-		TConFuelMessageCategory fuelCategory = new TConFuelMessageCategory(helper);
-		registration.addRecipeCategories(fuelCategory);
+		registration.addRecipeCategories(new TConFuelMessageCategory(helper));
 	}
 
 	@Override
