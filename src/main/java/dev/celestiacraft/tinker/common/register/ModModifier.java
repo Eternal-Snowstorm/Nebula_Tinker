@@ -7,7 +7,7 @@ import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import dev.celestiacraft.tinker.NebulaTinker;
-import top.nebula.tinker.common.modifier.*;
+import dev.celestiacraft.tinker.common.modifier.*;
 
 /**
  * 由于暂时没空写Json, 因此在这里写一下一些注意事项, 到时候写Json时避免忘记

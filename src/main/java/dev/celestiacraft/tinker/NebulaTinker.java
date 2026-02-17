@@ -5,18 +5,15 @@ import dev.celestiacraft.tinker.config.ClientConfig;
 import dev.celestiacraft.tinker.config.CommonConfig;
 import dev.celestiacraft.tinker.config.ServerConfig;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import dev.celestiacraft.tinker.common.command.ModifierDebugCommand;
 import dev.celestiacraft.tinker.common.register.attribute.ModAttributes;
-import top.nebula.tinker.config.*;
-import top.nebula.tinker.common.register.*;
+import dev.celestiacraft.tinker.config.*;
+import dev.celestiacraft.tinker.common.register.*;
 import dev.celestiacraft.tinker.common.register.attribute.GlobalCritAttributes;
 
 @Mod(NebulaTinker.MODID)
@@ -24,15 +21,7 @@ public class NebulaTinker {
 	public static final String MODID = "nebula_tinker";
 	public static final String NAME = "Nebula Tinker";
 	public static final Logger LOGGER = LogManager.getLogger(NAME);
-	
-	/**
-	 * 加载ResourceLocation资源
-	 *
-	 * @param path 命名空间下的资源路径
-	 *             <p>
-	 *             Resource path under namespace
-	 * @return
-	 */
+
 	public static ResourceLocation loadResource(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MODID, path);
 	}
@@ -62,14 +51,5 @@ public class NebulaTinker {
 		context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, "nebula/tinker/server.toml");
 		
 		LOGGER.info("Nebula Tinker is initialized!");
-	}
-	
-	@Mod.EventBusSubscriber(modid = MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-	public static class ForgeEvents {
-		@SubscribeEvent
-		public static void onRegisterCommands(RegisterCommandsEvent event) {
-			ModifierDebugCommand.register(event.getDispatcher());
-			LOGGER.info("Nebula Tinker Debug Commands Registered!");
-		}
 	}
 }

@@ -4,7 +4,7 @@ import dev.celestiacraft.tinker.tags.builder.type.BlockTag;
 import dev.celestiacraft.tinker.tags.builder.type.EntityTypeTag;
 import dev.celestiacraft.tinker.tags.builder.type.FluidTag;
 import dev.celestiacraft.tinker.tags.builder.type.ItemTag;
-import top.nebula.tinker.tags.builder.type.*;
+import dev.celestiacraft.tinker.tags.builder.type.*;
 
 public class TagsBuilder {
 	public static BlockTag block(String name) {

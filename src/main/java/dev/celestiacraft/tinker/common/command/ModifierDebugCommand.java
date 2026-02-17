@@ -12,13 +12,23 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import dev.celestiacraft.tinker.NebulaTinker;
-import top.nebula.tinker.common.modifier.*;
+import dev.celestiacraft.tinker.common.modifier.*;
 import dev.celestiacraft.tinker.api.SimpleTConUtils;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 import java.util.Locale;
 
+@Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModifierDebugCommand {
+	@SubscribeEvent
+	public static void onRegisterCommands(RegisterCommandsEvent event) {
+		register(event.getDispatcher());
+		NebulaTinker.LOGGER.info("Nebula Tinker Debug Commands Registered!");
+	}
+
 	public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 		dispatcher.register(Commands.literal("nebula_tinker")
 				.requires((source) -> {
@@ -32,7 +42,8 @@ public class ModifierDebugCommand {
 						.then(Commands.literal("divinization")
 								.executes(ModifierDebugCommand::debugDivinization))
 						.then(Commands.literal("check_hands")
-								.executes(ModifierDebugCommand::checkHands)))
+								.executes(ModifierDebugCommand::checkHands))
+				)
 		);
 	}
 

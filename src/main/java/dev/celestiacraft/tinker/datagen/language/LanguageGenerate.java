@@ -2,7 +2,7 @@ package dev.celestiacraft.tinker.datagen.language;
 
 import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.datagen.language.type.*;
-import top.nebula.tinker.datagen.language.type.*;
+import dev.celestiacraft.tinker.datagen.language.type.*;
 
 import java.util.ArrayList;
 import java.util.List;
