@@ -7,7 +7,6 @@ import slimeknights.tconstruct.library.modifiers.util.DynamicModifier;
 import slimeknights.tconstruct.library.modifiers.util.ModifierDeferredRegister;
 import slimeknights.tconstruct.library.modifiers.util.StaticModifier;
 import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.common.modifier.*;
 
 /**
  * 由于暂时没空写Json, 因此在这里写一下一些注意事项, 到时候写Json时避免忘记
@@ -24,7 +23,7 @@ public class ModModifier {
 	public static final StaticModifier<Demonization> DEMONIZATION;
 	public static final StaticModifier<Divinization> DIVINIZATION;
 	public static final DynamicModifier DIVINE_DEMONIC_HARMONY;
-	public static final StaticModifier<SwiftBlade> SWIFT_BLADE;
+	public static final StaticModifier<Clockwork> CLOCKWORK;
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
 	public static final StaticModifier<ForceLiberation> FORCE_LIBERATION;
 
@@ -43,7 +42,7 @@ public class ModModifier {
 		DEMONIZATION = MODIFIERS.register("demonization", Demonization::new);
 		DIVINIZATION = MODIFIERS.register("divinization", Divinization::new);
 		FRENZY = MODIFIERS.register("frenzy", Frenzy::new);
-		SWIFT_BLADE = MODIFIERS.register("swift_blade", SwiftBlade::new);
+		CLOCKWORK = MODIFIERS.register("clockwork", Clockwork::new);
 		KILLING_RHYTHM = MODIFIERS.register("killing_rhythm", KillingRhythm::new);
 		FORCE_LIBERATION = MODIFIERS.register("force_liberation", ForceLiberation::new);
 

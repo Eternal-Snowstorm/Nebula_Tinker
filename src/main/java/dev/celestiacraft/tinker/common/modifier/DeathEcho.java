@@ -17,7 +17,7 @@ import dev.celestiacraft.tinker.api.SimpleTConUtils;
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class DeathEcho extends Modifier {
 	// 生命阈值
-	private static final double LIFE_THRESHOLD = 0.35;
+	private static final double LIFE_THRESHOLD = 0.20;
 	// 基础暴击倍率(原本 1.5x 伤害)
 	private static final float CRIT_MULTIPLIER = 1.5F;
 	// 暴击率

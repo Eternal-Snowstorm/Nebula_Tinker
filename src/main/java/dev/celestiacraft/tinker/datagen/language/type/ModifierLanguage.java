@@ -39,9 +39,9 @@ public class ModifierLanguage extends LanguageGenerate {
 		);
 		addLanguage(
 				"modifier",
-				"swift_blade",
-				"Swift Blade",
-				"迅捷之刃"
+				"clockwork",
+				"Clockwork",
+				"发条"
 		);
 		addLanguage(
 				"modifier",
@@ -145,9 +145,9 @@ public class ModifierLanguage extends LanguageGenerate {
 			);
 			addLanguage(
 					"modifier",
-					"swift_blade.flavor",
-					"I AM THE STORM THAT IS APPROOOOOOOOOOOOOOOOOOOOOOOACHING",
-					"我就是即将到来的风风风风风风风风风风风风风风风暴"
+					"clockwork.flavor",
+					"Winding up",
+					"蓄势待发"
 			);
 			addLanguage(
 					"modifier",
@@ -205,14 +205,14 @@ public class ModifierLanguage extends LanguageGenerate {
 			addLanguage(
 					"modifier",
 					"death_echo.description",
-					"When HP is less than 35%, attacks have a 15% chance to be critical directly.",
-					"当血量低于35%时攻击有15%的概率直接暴击"
+					"When HP is less than 20%, attacks will be critical directly.",
+					"当血量低于20%时攻击会全部变为暴击"
 			);
 			addLanguage(
 					"modifier",
 					"acupoint.description",
-					"Chance to instantly kill enemies below 25% health (12.5% for BOSS)",
-					"怪物血量低于25%时有概率直接斩杀 (BOSS为12.5%)"
+					"Chance to instantly kill enemies below 50% health (25% for BOSS)",
+					"怪物血量低于50%时有概率直接斩杀 (BOSS为25%)"
 			);
 			addLanguage(
 					"modifier",
@@ -222,7 +222,7 @@ public class ModifierLanguage extends LanguageGenerate {
 			);
 			addLanguage(
 					"modifier",
-					"swift_blade.description",
+					"clockwork.description",
 					"§7Always critical hit while having speed effect (Higher speed level increases critical damage)",
 					"§7拥有速度效果时，攻击必定暴击 (速度等级越高，暴击伤害越高)"
 			);

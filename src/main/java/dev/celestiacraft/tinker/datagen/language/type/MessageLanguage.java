@@ -7,26 +7,26 @@ public class MessageLanguage extends LanguageGenerate {
 		addLanguage(
 				"message",
 				"modifier.acupoint",
-				"Deadly Acupoint activated",
-				"<死穴>效果发动"
+				"The skill Deadly Acupoint has activated",
+				"技能<死穴>的效果已发动"
 		);
 		addLanguage(
 				"message",
 				"modifier.capture_king",
-				"Capture King activated",
-				"<擒王>效果发动"
+				"The skill Capture King has activated",
+				"技能<擒王>的效果已发动"
 		);
 		addLanguage(
 				"message",
 				"modifier.killing_rhythm",
-				"§6Killing Rhythm activated! %s%% crit chance!",
-				"§6<杀戮节奏>效果发动！%s%%暴击率！"
+				"§6The skill Killing Rhythm has activated\nCurrent crit chance %s%%",
+				"§6技能<杀戮节奏>的效果已发动\n当前暴击率为%s%%"
 		);
 		addLanguage(
 				"message",
 				"modifier.killing_rhythm.stack",
-				"§e+Kill! Crit: %s%% | Duration: %ss",
-				"§e+击杀！暴击率: %s%% | 持续: %s秒"
+				"§eThe skill Killing Rhythm has strengthened\nCurrent crit: %s%% | Duration: %s sec.",
+				"§e技能<杀戮节奏>的效果已强化\n当前暴击率: %s%% | 持续: %s秒"
 		);
 		addLanguage(
 				"message",

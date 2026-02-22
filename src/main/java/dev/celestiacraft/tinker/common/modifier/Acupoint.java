@@ -23,9 +23,9 @@ import dev.celestiacraft.tinker.api.SimpleTConUtils;
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class Acupoint extends Modifier {
 	// 血量阈值
-	private static final double LIFE_THRESHOLD = 0.25;
+	private static final double LIFE_THRESHOLD = 0.5;
 	// 触发概率
-	private static final double TRIGGER_PROBABILITY = 0.25;
+	private static final double TRIGGER_PROBABILITY = 1;
 
 	@SubscribeEvent
 	public static void onLivingHurt(LivingHurtEvent event) {

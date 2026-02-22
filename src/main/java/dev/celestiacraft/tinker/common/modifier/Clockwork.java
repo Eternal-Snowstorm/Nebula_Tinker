@@ -14,7 +14,7 @@ import dev.celestiacraft.tinker.api.CritUtils;
 
 @SuppressWarnings("ALL")
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class SwiftBlade extends Modifier {
+public class Clockwork extends Modifier {
 	// 速度效果对暴击的影响常量
 	private static final float CRIT_CHANCE_PER_SPEED_LEVEL = 0.05f; // 每级速度增加5%暴击率
 	private static final float CRIT_DAMAGE_PER_SPEED_LEVEL = 0.1f;  // 每级速度增加0.1倍暴击伤害
