@@ -12,6 +12,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * 该工具不会创建 AttributeModifier,
  * 而是直接修改 AttributeInstance 的基础值.
  * <p>
+ * 同时该工具内置了原版的几个常用属性的直接修改方法,
+ * 如 {@link #setMaxHealth(LivingEntity, double)}和{@link #setAttackDamage(LivingEntity, double)} 等.
+ * 想要使用自定义的属性请直接调用 {@link #setBase(LivingEntity, Attribute, double)} 方法.
+ * <p>
  * 适用场景:
  * <ul>
  *     <li>强制锁定某个属性的基础数值</li>
@@ -47,9 +51,9 @@ public class AttributeOverrideHelper {
 	}
 
 	/**
-	 * 设置实体的最大生命值. 
+	 * 设置实体的最大生命值.
 	 * <p>
-	 * 同时会将当前生命值调整为新的最大生命值. 
+	 * 同时会将当前生命值调整为新的最大生命值.
 	 *
 	 * @param entity 目标实体
 	 * @param value  新的最大生命值
@@ -62,7 +66,7 @@ public class AttributeOverrideHelper {
 	}
 
 	/**
-	 * 设置实体的攻击力. 
+	 * 设置实体的攻击力.
 	 *
 	 * @param entity 目标实体
 	 * @param value  新的攻击力基础值
@@ -72,9 +76,9 @@ public class AttributeOverrideHelper {
 	}
 
 	/**
-	 * 设置实体的移动速度. 
+	 * 设置实体的移动速度.
 	 * <p>
-	 * 原版玩家默认约为 0.1. 
+	 * 原版玩家默认约为 0.1.
 	 *
 	 * @param entity 目标实体
 	 * @param value  新的移动速度基础值
@@ -84,7 +88,7 @@ public class AttributeOverrideHelper {
 	}
 
 	/**
-	 * 设置实体的护甲值. 
+	 * 设置实体的护甲值.
 	 *
 	 * @param entity 目标实体
 	 * @param value  新的护甲基础值
@@ -94,7 +98,7 @@ public class AttributeOverrideHelper {
 	}
 
 	/**
-	 * 设置实体的护甲韧性. 
+	 * 设置实体的护甲韧性.
 	 *
 	 * @param entity 目标实体
 	 * @param value  新的护甲韧性基础值

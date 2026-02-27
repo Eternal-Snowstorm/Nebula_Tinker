@@ -29,7 +29,6 @@ import java.util.*;
  * 必须在 LivingTickEvent 中调用 {@link #tick(LivingEntity)}.
  */
 public final class AttributeLockManager {
-
 	private AttributeLockManager() {
 	}
 

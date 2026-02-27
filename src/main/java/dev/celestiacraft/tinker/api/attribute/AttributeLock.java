@@ -3,12 +3,12 @@ package dev.celestiacraft.tinker.api.attribute;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
 /**
- * 简易 Attribute 锁数据结构. 
+ * 简易 Attribute 锁数据结构.
  * <p>
- * 仅记录属性、锁定值与持续时间, 
- * 不负责自动恢复或实体操作. 
+ * 仅记录属性、锁定值与持续时间,
+ * 不负责自动恢复或实体操作.
  * <p>
- * 通常用于轻量级逻辑或数据传输. 
+ * 通常用于轻量级逻辑或数据传输.
  */
 public class AttributeLock {
 	/**
@@ -27,7 +27,7 @@ public class AttributeLock {
 	public int duration;
 
 	/**
-	 * 创建一个简单 Attribute 锁. 
+	 * 创建一个简单 Attribute 锁.
 	 *
 	 * @param attribute 属性
 	 * @param value     锁定值
@@ -40,7 +40,7 @@ public class AttributeLock {
 	}
 
 	/**
-	 * 递减持续时间. 
+	 * 递减持续时间.
 	 *
 	 * @return true 表示锁已结束
 	 */
