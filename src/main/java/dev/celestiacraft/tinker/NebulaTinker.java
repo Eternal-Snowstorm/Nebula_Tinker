@@ -28,7 +28,7 @@ public class NebulaTinker {
 
 	public NebulaTinker(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
-		
+
 		// 注册修饰器
 		ModModifier.register(bus);
 		// 注册物品
@@ -43,13 +43,18 @@ public class NebulaTinker {
 		ModEffect.register(bus);
 		// 标签页注册(一定要在最后)
 		ModCreativeTab.register(bus);
+		// 配置文件
+		registerConfig(context);
+
+		LOGGER.info("Nebula Tinker is initialized!");
+	}
+
+	private static void registerConfig(FMLJavaModLoadingContext context) {
 		// 普通配置文件
 		context.registerConfig(ModConfig.Type.COMMON, CommonConfig.SPEC, "nebula/tinker/common.toml");
 		// 客户端配置文件
 		context.registerConfig(ModConfig.Type.CLIENT, ClientConfig.SPEC, "nebula/tinker/client.toml");
 		// 服务端配置文件
 		context.registerConfig(ModConfig.Type.SERVER, ServerConfig.SPEC, "nebula/tinker/server.toml");
-		
-		LOGGER.info("Nebula Tinker is initialized!");
 	}
 }
