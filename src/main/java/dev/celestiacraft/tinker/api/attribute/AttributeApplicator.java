@@ -1,20 +1,24 @@
-package dev.celestiacraft.tinker.entity;
+package dev.celestiacraft.tinker.api.attribute;
 
+import dev.celestiacraft.tinker.NebulaTinker;
+import dev.celestiacraft.tinker.api.SimpleTConUtils;
+import dev.celestiacraft.tinker.common.modifier.Demonization;
+import dev.celestiacraft.tinker.common.modifier.Divinization;
+import dev.celestiacraft.tinker.entity.EAttributeType;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.network.chat.Component;
-import net.minecraft.ChatFormatting;
-import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.common.modifier.Demonization;
-import dev.celestiacraft.tinker.common.modifier.Divinization;
-import dev.celestiacraft.tinker.api.SimpleTConUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AttributeApplicator {
@@ -33,10 +37,9 @@ public class AttributeApplicator {
 		}
 
 		UUID entityId = entity.getUUID();
-		Map<EquipmentSlot, List<AppliedModifier>> entityModifiers =
-				appliedModifiers.computeIfAbsent(entityId, (uuid) -> {
-					return new ConcurrentHashMap<>();
-				});
+		Map<EquipmentSlot, List<AppliedModifier>> entityModifiers = appliedModifiers.computeIfAbsent(entityId, (uuid) -> {
+			return new ConcurrentHashMap<>();
+		});
 
 		for (Demonization.AttributeEntry entry : attributes) {
 			EAttributeType type = entry.type();

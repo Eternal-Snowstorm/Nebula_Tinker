@@ -11,7 +11,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.api.AttributeHelper;
+import dev.celestiacraft.tinker.api.attribute.AttributeHelper;
 import dev.celestiacraft.tinker.api.CombatUtils;
 import dev.celestiacraft.tinker.api.SimpleTConUtils;
 

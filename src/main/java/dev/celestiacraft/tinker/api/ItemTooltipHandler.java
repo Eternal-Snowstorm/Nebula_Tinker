@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.api;
 
+import dev.celestiacraft.tinker.api.attribute.AttributeApplicator;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
@@ -10,7 +11,6 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.entity.AttributeApplicator;
 
 import java.util.List;
 

@@ -12,7 +12,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.common.modifier.*;
 import dev.celestiacraft.tinker.api.SimpleTConUtils;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

@@ -1,9 +1,13 @@
 package dev.celestiacraft.tinker.entity;
 
+import dev.celestiacraft.tinker.api.attribute.AttributeApplicator;
+import dev.celestiacraft.tinker.api.attribute.AttributeLockManager;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -57,6 +61,22 @@ public class AttributeEventHandler {
 				checkAndRemoveOrphanedEffects(player);
 			}
 		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingTick(LivingEvent.LivingTickEvent event) {
+		if (event.getEntity().level().isClientSide()) {
+			return;
+		}
+		AttributeLockManager.tick(event.getEntity());
+	}
+
+	@SubscribeEvent
+	public static void onLivingDeath(LivingDeathEvent event) {
+		if (event.getEntity().level().isClientSide()) {
+			return;
+		}
+		AttributeLockManager.clear(event.getEntity());
 	}
 
 	private static void checkAndRemoveOrphanedEffects(Player player) {

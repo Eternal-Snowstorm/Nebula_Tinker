@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.api.attribute.AttributeApplicator;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -26,7 +27,6 @@ import net.minecraftforge.fml.common.Mod;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.nbt.ToolStack;
 import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.entity.AttributeApplicator;
 import dev.celestiacraft.tinker.entity.EAttributeType;
 import dev.celestiacraft.tinker.api.SimpleTConUtils;
 
@@ -132,7 +132,7 @@ public class Demonization extends Modifier {
 			AttributePack pack = new AttributePack(positiveAttributes, negativeAttributes);
 			playerCache.put(stack, pack);
 
-			if (player.level() != null && !player.level().isClientSide()) {
+			if (!player.level().isClientSide()) {
 				MutableComponent message = Component.translatable("message.nebula_tinker.demonization.generate").withStyle(ChatFormatting.DARK_RED);
 				player.displayClientMessage(message, true);
 
