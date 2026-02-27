@@ -22,6 +22,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.common.recipe.TConFuelMessageRecipe;
+import slimeknights.tconstruct.TConstruct;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	private static final int HEIGHT = 24;
 
 	private static final Lazy<Item> ICON_ITEM = Lazy.of(() -> {
-		return ForgeRegistries.ITEMS.getValue(ResourceLocation.parse("tconstruct:blazing_blood_bucket"));
+		return ForgeRegistries.ITEMS.getValue(TConstruct.getResource("blazing_blood_bucket"));
 	});
 
 	public static final RecipeType<TConFuelMessageRecipe> RECIPE_TYPE = RecipeType.create(
@@ -70,11 +71,8 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	}
 
 	@Override
-	public void setRecipe(
-			@NotNull IRecipeLayoutBuilder builder,
-			@NotNull TConFuelMessageRecipe recipe,
-			@NotNull IFocusGroup group
-	) {
+	public void setRecipe(@NotNull IRecipeLayoutBuilder builder,
+	                      @NotNull TConFuelMessageRecipe recipe, @NotNull IFocusGroup group) {
 		FluidStack fuel = recipe.fuel();
 
 		IRecipeSlotBuilder slot = builder.addInputSlot();
@@ -83,13 +81,7 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	}
 
 	@Override
-	public void draw(
-			@NotNull TConFuelMessageRecipe recipe,
-			@NotNull IRecipeSlotsView recipeSlotsView,
-			@NotNull GuiGraphics graphics,
-			double mouseX,
-			double mouseY
-	) {
+	public void draw(@NotNull TConFuelMessageRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
 		Font font = Minecraft.getInstance().font;
 
 		TextLayout layout = TextLayout.defaultLayout();
