@@ -4,6 +4,8 @@ import dev.celestiacraft.tinker.api.attribute.*;
 import dev.celestiacraft.tinker.entity.EAttributeType;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 import dev.latvian.mods.kubejs.script.BindingsEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.List;
 
@@ -17,7 +19,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 				AttributeLock.class,
 				AttributeLockManager.class,
 				AttributeOverrideHelper.class,
-				EAttributeType.class
+				EAttributeType.class,
+				Attributes.class,
+				EntityType.class
 		);
 		simpleClassList.forEach((cls) -> {
 			event.add(cls.getSimpleName(), cls);
