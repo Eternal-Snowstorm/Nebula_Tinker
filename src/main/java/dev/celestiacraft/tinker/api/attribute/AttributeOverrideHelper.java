@@ -31,9 +31,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
  * </ul>
  */
 public class AttributeOverrideHelper {
-	private AttributeOverrideHelper() {
-	}
-
 	/**
 	 * 设置指定 Attribute 的 base value.
 	 *
