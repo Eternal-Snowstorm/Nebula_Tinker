@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class ModItem {
+public class NTItem {
 	public static final DeferredRegister<Item> ITEMS;
 
 	public static final List<Supplier<Item>> CREATIVE_TAB_ITEMS = new ArrayList<>();

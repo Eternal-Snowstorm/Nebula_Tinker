@@ -9,7 +9,7 @@ import dev.celestiacraft.tinker.common.effect.CurseOfTheWarGod;
 
 import java.util.function.Supplier;
 
-public class ModEffect {
+public class NTEffect {
 	public static final DeferredRegister<MobEffect> EFFECTS;
 	public static final Supplier<MobEffect> CURSE_OF_THE_WAR_GOD;
 

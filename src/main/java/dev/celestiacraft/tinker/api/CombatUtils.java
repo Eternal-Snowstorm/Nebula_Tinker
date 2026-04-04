@@ -9,7 +9,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import dev.celestiacraft.tinker.common.register.ModParticle;
+import dev.celestiacraft.tinker.common.register.NTParticle;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +68,7 @@ public class CombatUtils {
 		double z = player.getZ() + look.z * distance;
 
 		level.sendParticles(
-				ModParticle.CROSS_CHOP.get(),
+				NTParticle.CROSS_CHOP.get(),
 				x,
 				y,
 				z,

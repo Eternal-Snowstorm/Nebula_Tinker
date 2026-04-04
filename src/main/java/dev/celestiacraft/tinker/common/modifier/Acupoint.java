@@ -7,73 +7,45 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import slimeknights.tconstruct.library.modifiers.Modifier;
-import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.api.SimpleTConUtils;
+import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 
-@SuppressWarnings("ALL")
-@Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class Acupoint extends Modifier {
-	// 血量阈值
+public class Acupoint extends BasicModifier {
 	private static final double LIFE_THRESHOLD = 0.5;
-	// 触发概率
 	private static final double TRIGGER_PROBABILITY = 1;
 
-	@SubscribeEvent
-	public static void onLivingHurt(LivingHurtEvent event) {
-		LivingEntity entity = event.getEntity();
-		DamageSource source = event.getSource();
-
-		if (!(source.getEntity() instanceof Player player)) {
-			return;
-		}
-
-		boolean hasModifier = SimpleTConUtils.hasModifier(
-				player.getItemInHand(InteractionHand.MAIN_HAND),
-				NebulaTinker.loadResource("acupoint").toString()
-		);
+	@Override
+	public void onLivingHurt(Player player, LivingEntity entity, LivingHurtEvent event, int level) {
 		boolean isBoss = entity.getType().is(Tags.EntityTypes.BOSSES);
+
 		MutableComponent tranKey = Component.translatable("message.nebula_tinker.modifier.acupoint")
 				.withStyle(ChatFormatting.RED)
 				.withStyle(ChatFormatting.BOLD);
 
-		if (hasModifier) {
-			// 如果是 BOSS, 在血量低于 LIFE_THRESHOLD / 2 时攻击有 TRIGGER_PROBABILITY 的概率直接斩杀
-			if (isBoss) {
-				if (entity.getHealth() <= entity.getMaxHealth() * LIFE_THRESHOLD / 2) {
-					if (Math.random() < TRIGGER_PROBABILITY) {
-						player.displayClientMessage(tranKey, true);
-						spawnSonicBoom(entity);
-						event.setAmount(entity.getHealth());
-					}
-				}
-			} else {
-				// 如果不是 BOSS 则阈值不减半
-				if (entity.getHealth() <= entity.getMaxHealth() * LIFE_THRESHOLD) {
-					if (Math.random() < TRIGGER_PROBABILITY) {
-						player.displayClientMessage(tranKey, true);
-						spawnSonicBoom(entity);
-						event.setAmount(entity.getHealth());
-					}
-				}
+		// BOSS: 阈值减半
+		if (isBoss) {
+			if (entity.getHealth() <= entity.getMaxHealth() * LIFE_THRESHOLD / 2) {
+				trigger(player, entity, event, tranKey);
 			}
+			return;
+		}
+
+		// 普通生物
+		if (entity.getHealth() <= entity.getMaxHealth() * LIFE_THRESHOLD) {
+			trigger(player, entity, event, tranKey);
 		}
 	}
 
-	/**
-	 * 触发音爆效果
-	 *
-	 * @param entity
-	 */
-	private static void spawnSonicBoom(LivingEntity entity) {
+	private void trigger(Player player, LivingEntity entity, LivingHurtEvent event, Component component) {
+		player.displayClientMessage(component, true);
+		spawnSonicBoom(entity);
+		event.setAmount(entity.getHealth());
+	}
+
+	private void spawnSonicBoom(LivingEntity entity) {
 		if (!(entity.level() instanceof ServerLevel level)) {
 			return;
 		}

@@ -10,7 +10,7 @@ import dev.celestiacraft.tinker.NebulaTinker;
 
 import java.util.function.Supplier;
 
-public class ModCreativeTab {
+public class NTCreativeTab {
 
 	public static final DeferredRegister<CreativeModeTab> TABS =
 			DeferredRegister.create(Registries.CREATIVE_MODE_TAB, NebulaTinker.MODID);
@@ -19,9 +19,9 @@ public class ModCreativeTab {
 			TABS.register("nebula_tinker_tab", () -> {
 				return CreativeModeTab.builder()
 						.title(Component.translatable("itemGroup.nebula_tinker.tab"))
-						.icon(() -> new ItemStack(ModItem.DEMONIZATION_STONE.get()))
+						.icon(() -> new ItemStack(NTItem.DEMONIZATION_STONE.get()))
 						.displayItems((parameters, output) -> {
-							ModItem.CREATIVE_TAB_ITEMS.forEach((item) -> {
+							NTItem.CREATIVE_TAB_ITEMS.forEach((item) -> {
 								output.accept(item.get());
 							});
 						})

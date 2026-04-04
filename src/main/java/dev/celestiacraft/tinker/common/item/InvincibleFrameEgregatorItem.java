@@ -10,7 +10,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import dev.celestiacraft.tinker.common.register.ModItem;
+import dev.celestiacraft.tinker.common.register.NTItem;
 import top.theillusivec4.curios.api.CuriosApi;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -52,7 +52,7 @@ public class InvincibleFrameEgregatorItem extends Item {
 		return CuriosApi.getCuriosInventory(player)
 				.map((handler) -> {
 					return handler.findFirstCurio((stack) -> {
-						return stack.is(ModItem.INVINCIBLE_FRAME_EGREGATOR.get());
+						return stack.is(NTItem.INVINCIBLE_FRAME_EGREGATOR.get());
 					}).isPresent();
 				}).orElse(false);
 	}

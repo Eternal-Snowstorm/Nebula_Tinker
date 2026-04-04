@@ -9,7 +9,7 @@ import dev.celestiacraft.tinker.NebulaTinker;
 
 import java.util.function.Supplier;
 
-public class ModParticle {
+public class NTParticle {
 	public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES;
 	public static final Supplier<SimpleParticleType> CROSS_CHOP;
 

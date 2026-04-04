@@ -12,8 +12,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import dev.celestiacraft.tinker.common.register.attribute.ModAttributes;
-import dev.celestiacraft.tinker.config.*;
-import dev.celestiacraft.tinker.common.register.*;
 import dev.celestiacraft.tinker.common.register.attribute.GlobalCritAttributes;
 
 @Mod(NebulaTinker.MODID)
@@ -30,19 +28,19 @@ public class NebulaTinker {
 		IEventBus bus = context.getModEventBus();
 
 		// 注册修饰器
-		ModModifier.register(bus);
+		NTModifier.register(bus);
 		// 注册物品
-		ModItem.register(bus);
+		NTItem.register(bus);
 		// 注册自定义属性
 		ModAttributes.register(bus);
 		// 注册全局暴击属性
 		GlobalCritAttributes.register(bus);
 		// 粒子效果
-		ModParticle.register(bus);
+		NTParticle.register(bus);
 		// 生物状态
-		ModEffect.register(bus);
+		NTEffect.register(bus);
 		// 标签页注册(一定要在最后)
-		ModCreativeTab.register(bus);
+		NTCreativeTab.register(bus);
 		// 配置文件
 		registerConfig(context);
 
