@@ -14,6 +14,17 @@ import slimeknights.tconstruct.library.tools.context.ToolHarvestContext;
 import slimeknights.tconstruct.library.tools.helper.ToolDamageUtil;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
+/**
+ * 爱石
+ * <p>
+ * 挖掘 {@link ModBlockTags#PETRAMOR} 时有一定概率回复耐久
+ * <p>
+ * 回复量为5-10随机
+ * <p>
+ * 回复的概率默认为 10%, 每升一级提高 10%, 最高 50%
+ * <p>
+ * 如果挖掘的对象是 {@link Tags.Blocks#ORES} 并且成功触发则可以恢复双倍的耐久
+ */
 public class Petramor extends Modifier implements BlockBreakModifierHook {
 	@Override
 	protected void registerHooks(ModuleHookMap.@NotNull Builder builder) {
