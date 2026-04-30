@@ -28,6 +28,7 @@ public class NTModifier {
 	public static final StaticModifier<KillingRhythm> KILLING_RHYTHM;
 	public static final StaticModifier<ForceLiberation> FORCE_LIBERATION;
 	public static final StaticModifier<Frenzy> FRENZY;
+	public static final StaticModifier<Petramor> PETRAMOR;
 
 	public static final DynamicModifier DIVINE_DEMONIC_HARMONY;
 
@@ -47,6 +48,7 @@ public class NTModifier {
 		CLOCKWORK = register("clockwork", Clockwork::new);
 		KILLING_RHYTHM = register("killing_rhythm", KillingRhythm::new);
 		FORCE_LIBERATION = register("force_liberation", ForceLiberation::new);
+		PETRAMOR = register("petramor", Petramor::new);
 
 		// 静态Modifiers
 		DIVINE_DEMONIC_HARMONY = register("divine_demonic_harmony");

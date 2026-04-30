@@ -1,9 +1,10 @@
 package dev.celestiacraft.tinker.tags.builder.type;
 
+import dev.celestiacraft.tinker.tags.builder.AbstractTagBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import dev.celestiacraft.tinker.tags.builder.AbstractTagBuilder;
 
 public class BlockTag extends AbstractTagBuilder<Block> {
 	public BlockTag(String name) {
@@ -11,7 +12,7 @@ public class BlockTag extends AbstractTagBuilder<Block> {
 	}
 
 	@Override
-	public TagKey<Block> build() {
-		return BlockTags.create(id());
+	protected TagKey<Block> create(ResourceLocation id) {
+		return BlockTags.create(id);
 	}
 }
