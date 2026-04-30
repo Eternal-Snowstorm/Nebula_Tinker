@@ -23,7 +23,7 @@ public class Petramor extends Modifier implements BlockBreakModifierHook {
 
 	@Override
 	public void afterBlockBreak(@NotNull IToolStackView view, @NotNull ModifierEntry entry, @NotNull ToolHarvestContext context) {
-		Level level = context.getWorld().getLevel();
+		Level level = context.getWorld();
 		BlockState state = context.getState();
 
 		if (!state.is(ModBlockTags.PETRAMOR)) {
