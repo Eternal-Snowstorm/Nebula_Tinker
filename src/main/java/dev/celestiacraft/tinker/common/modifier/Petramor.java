@@ -1,7 +1,6 @@
 package dev.celestiacraft.tinker.common.modifier;
 
 import dev.celestiacraft.tinker.tags.ModBlockTags;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
