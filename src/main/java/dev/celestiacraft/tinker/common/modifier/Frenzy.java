@@ -11,7 +11,6 @@ import java.util.Objects;
 public class Frenzy extends BasicModifier {
 	@Override
 	public void onLivingHurt(Player player, LivingEntity target, LivingHurtEvent event, int level) {
-
 		// 必须有速度效果
 		if (!player.hasEffect(MobEffects.MOVEMENT_SPEED)) {
 			return;

@@ -1,13 +1,13 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.api.CombatUtils;
+import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import net.minecraftforge.eventbus.api.Event;
 import slimeknights.tconstruct.shared.TinkerEffects;
-import dev.celestiacraft.tinker.api.CombatUtils;
-import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 
 public class Abuser extends BasicModifier {
 	private static final float CRIT_MULTIPLIER = 1.5F;
