@@ -1,7 +1,9 @@
 package dev.celestiacraft.tinker.datagen;
 
+import dev.celestiacraft.tinker.datagen.recipes.tconstruct.ModifierRecipe;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
@@ -16,6 +18,8 @@ import dev.celestiacraft.tinker.datagen.tags.ModFluidTagsProvider;
 import dev.celestiacraft.tinker.datagen.tags.ModItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class DataGenerators {
@@ -37,8 +41,24 @@ public class DataGenerators {
 		ModItemTagsProvider itemTags = new ModItemTagsProvider(output, provider, blockTags, helper);
 		ModFluidTagsProvider fluidTags = new ModFluidTagsProvider(output, provider, helper);
 
+		addTConRecipes(add(event));
+
 		generator.addProvider(event.includeServer(), blockTags);
 		generator.addProvider(event.includeServer(), itemTags);
 		generator.addProvider(event.includeServer(), fluidTags);
+	}
+
+	private static void addTConRecipes(Consumer<Function<PackOutput, ? extends DataProvider>> consumer) {
+		consumer.accept(ModifierRecipe::new);
+	}
+
+	private static Consumer<Function<PackOutput, ? extends DataProvider>> add(GatherDataEvent event) {
+		DataGenerator generator = event.getGenerator();
+		PackOutput output = generator.getPackOutput();
+		boolean server = event.includeServer();
+
+		return (function) -> {
+			generator.addProvider(server, function.apply(output));
+		};
 	}
 }
