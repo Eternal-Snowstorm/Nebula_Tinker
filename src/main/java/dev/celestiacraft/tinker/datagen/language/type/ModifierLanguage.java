@@ -9,6 +9,24 @@ public class ModifierLanguage extends LanguageGenerate {
 
 		addLanguage(
 				"modifier",
+				"petramor",
+				"Petramor",
+				"爱石"
+		);
+		addLanguage(
+				"modifier",
+				"aquadynamic",
+				"Aquadynamic",
+				"喜水"
+		);
+		addLanguage(
+				"modifier",
+				"crude",
+				"Crude",
+				"粗暴"
+		);
+		addLanguage(
+				"modifier",
 				"killing_rhythm",
 				"Killing Rhythm",
 				"杀戮节奏"
@@ -190,6 +208,24 @@ public class ModifierLanguage extends LanguageGenerate {
 
 	public static class ModifierDescription extends LanguageGenerate {
 		public static void register() {
+			addLanguage(
+					"modofier",
+					"petramor.description",
+					"Mines stone blocks have a chance to restore durability; mining ores restores double durability.",
+					"挖掘石头时有一定概率回复耐久，如果挖掘矿石则会回复两倍的耐久"
+			);
+			addLanguage(
+					"modofier",
+					"aquadynamic.description",
+					"Mining speed increased in water (more when submerged). Negates underwater penalties. Rain bonus stacks",
+					"水中提升挖掘速度（完全浸没时更高），免疫水下惩罚；雨天同样提升，且可叠加"
+			);
+			addLanguage(
+					"modofier",
+					"crude.description",
+					"When the target's defense is less than or equal to 5, the attack will deal additional damage, up to 3 levels",
+					"当目标防御小于或等于5时攻击会造成额外的伤害，最高三级"
+			);
 			addLanguage(
 					"modifier",
 					"killing_rhythm.description",

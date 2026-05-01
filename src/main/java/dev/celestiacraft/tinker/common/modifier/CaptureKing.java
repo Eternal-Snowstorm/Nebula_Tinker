@@ -18,7 +18,6 @@ public class CaptureKing extends BasicModifier {
 
 	@Override
 	public void onCriticalHit(Player player, LivingEntity entity, CriticalHitEvent event, int level) {
-
 		boolean isBoss = entity.getType().is(Tags.EntityTypes.BOSSES);
 
 		// 只对 BOSS 生效

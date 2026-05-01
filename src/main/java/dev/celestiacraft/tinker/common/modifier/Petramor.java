@@ -23,14 +23,9 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
  * <p>
  * 回复的概率默认为 10%, 每升一级提高 10%, 最高 50%
  * <p>
- * 如果挖掘的对象是 {@link Tags.Blocks#ORES} 并且成功触发则可以恢复双倍的耐久
+ * 如果挖掘的对象是 {@link Tags.Blocks#ORES} 并且成功触发则可以回复双倍的耐久
  */
 public class Petramor extends Modifier implements BlockBreakModifierHook {
-	@Override
-	protected void registerHooks(ModuleHookMap.@NotNull Builder builder) {
-		builder.addHook(this, ModifierHooks.BLOCK_BREAK);
-	}
-
 	@Override
 	public void afterBlockBreak(@NotNull IToolStackView view, @NotNull ModifierEntry entry, @NotNull ToolHarvestContext context) {
 		Level level = context.getWorld();
@@ -53,5 +48,10 @@ public class Petramor extends Modifier implements BlockBreakModifierHook {
 
 			ToolDamageUtil.repair(view, repairValue);
 		}
+	}
+
+	@Override
+	protected void registerHooks(ModuleHookMap.@NotNull Builder builder) {
+		builder.addHook(this, ModifierHooks.BLOCK_BREAK);
 	}
 }

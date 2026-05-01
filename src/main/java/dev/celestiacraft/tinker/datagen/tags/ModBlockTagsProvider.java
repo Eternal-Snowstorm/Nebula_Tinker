@@ -24,6 +24,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
 		tag(ModBlockTags.PETRAMOR)
-				.addTag(Tags.Blocks.STONE);
+				.addTag(Tags.Blocks.STONE)
+				.addTag(Tags.Blocks.COBBLESTONE);
 	}
 }
