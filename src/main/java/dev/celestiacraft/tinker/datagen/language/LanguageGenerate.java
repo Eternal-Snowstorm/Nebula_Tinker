@@ -2,7 +2,6 @@ package dev.celestiacraft.tinker.datagen.language;
 
 import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.datagen.language.type.*;
-import dev.celestiacraft.tinker.datagen.language.type.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +10,15 @@ public class LanguageGenerate {
 	public static final List<List<String>> TRANSLATION_LIST = new ArrayList<>();
 
 	public static void register() {
-		ItemLanguage.register();
-		OtherLanguage.register();
-		EffectLanguage.register();
-		MessageLanguage.register();
-		ModifierLanguage.register();
-		TooltipLanguage.register();
-		CommandLanguage.register();
-		AttributeLanguage.register();
-		JeiTextLanguage.register();
+		ItemLanguage.addLang();
+		OtherLanguage.addLang();
+		EffectLanguage.addLang();
+		MessageLanguage.addLang();
+		ModifierLanguage.addLang();
+		TooltipLanguage.addLang();
+		CommandLanguage.addLang();
+		AttributeLanguage.addLang();
+		JeiTextLanguage.addLang();
 	}
 
 	/**

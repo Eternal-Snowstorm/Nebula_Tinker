@@ -5,7 +5,7 @@ import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
 public class JeiTextLanguage extends LanguageGenerate {
 	private static final String JEI_CATAGORY = "jei.category";
 
-	public static void register() {
+	public static void addLang() {
 		tconFuelMessage();
 	}
 

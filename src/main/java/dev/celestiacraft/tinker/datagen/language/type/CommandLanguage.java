@@ -3,7 +3,7 @@ package dev.celestiacraft.tinker.datagen.language.type;
 import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
 
 public class CommandLanguage extends LanguageGenerate {
-	public static void register() {
+	public static void addLang() {
 		addLanguage(
 				"command",
 				"player_only",

@@ -3,7 +3,7 @@ package dev.celestiacraft.tinker.datagen.language.type;
 import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
 
 public class ItemLanguage extends LanguageGenerate {
-	public static void register() {
+	public static void addLang() {
 		addLanguage(
 				"item",
 				"demonization_stone",

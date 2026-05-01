@@ -3,319 +3,164 @@ package dev.celestiacraft.tinker.datagen.language.type;
 import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
 
 public class ModifierLanguage extends LanguageGenerate {
-	public static void register() {
-		ModifierFlavor.register();
-		ModifierDescription.register();
+	public static void addLang() {
+		names();
+		flavor();
+		description();
+		extra();
+	}
 
-		addLanguage(
-				"modifier",
+	private static void names() {
+		addModifierLang("petramor", "Petramor", "爱石");
+		addModifierLang("aquadynamic", "Aquadynamic", "喜水");
+		addModifierLang("crude", "Crude", "粗暴");
+		addModifierLang("killing_rhythm", "Killing Rhythm", "杀戮节奏");
+		addModifierLang("capture_king", "Capture King", "擒王");
+		addModifierLang("death_echo", "Death Echo", "生命回响");
+		addModifierLang("acupoint", "Deadly Acupoint", "死穴");
+		addModifierLang("frenzy", "Frenzy", "狂乱");
+		addModifierLang("clockwork", "Clockwork", "发条");
+		addModifierLang("causal_truncation", "Causal Truncation", "因果裁断");
+		addModifierLang("abuser", "Abuser", "虐待者");
+		addModifierLang("converge", "Converge", "收束");
+		addModifierLang("divinization", "Divinization", "神化");
+		addModifierLang("demonization", "Demonization", "魔化");
+		addModifierLang("divine_demonic_harmony", "Divine-Demonic Harmony", "归一");
+	}
+
+	private static void flavor() {
+		addFlavorLang("petramor", "Stone is Right", "赤石大王");
+		addFlavorLang("aquadynamic", "Water! Cool!", "水! 凉快!");
+		addFlavorLang("crude", "Bullying the unarmed", "欺负手无寸铁");
+		addFlavorLang("killing_rhythm", "Fast Fast Fast!", "快快快！");
+		addFlavorLang("capture_king", "King and King's Fight", "王与王的战斗!");
+		addFlavorLang("death_echo", "Fight to the end!", "战斗到底!");
+		addFlavorLang("acupoint", "You're in the kill zone!", "你已进入斩杀线！");
+		addFlavorLang("frenzy", "Speed is life", "速度即是生命");
+		addFlavorLang("clockwork", "Winding up", "蓄势待发");
+		addFlavorLang("causal_truncation", "Sever the chains of causality", "斩断因果，得证大道");
+		addFlavorLang("abuser", "Kick them when they're down", "趁你病，要你命");
+		addFlavorLang("converge", "Arrows like rain", "箭如雨下");
+		addFlavorLang("divinization", "Infused with divine power", "灌注神圣之力");
+		addFlavorLang("demonization", "Corrupted by demonic power", "被恶魔之力腐蚀");
+		addFlavorLang("divine_demonic_harmony", "Balance between light and darkness...", "光与暗的平衡...");
+	}
+
+	private static void description() {
+		addDescriptionLang(
 				"petramor",
-				"Petramor",
-				"爱石"
+				"Mines stone blocks have a chance to restore durability; mining ores restores double durability.",
+				"挖掘石头时有一定概率回复耐久，如果挖掘矿石则会回复两倍的耐久"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"aquadynamic",
-				"Aquadynamic",
-				"喜水"
+				"Mining speed increases in water (higher when submerged). Negates underwater penalties. Rain bonus stacks.",
+				"水中提升挖掘速度（完全浸没时更高），免疫水下惩罚；雨天同样提升，且可叠加"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"crude",
-				"Crude",
-				"粗暴"
+				"Deals bonus damage when target defense ≤ 5 (up to level 3).",
+				"当目标防御小于或等于5时攻击会造成额外伤害，最高三级"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"killing_rhythm",
-				"Killing Rhythm",
-				"杀戮节奏"
+				"Kill 2 enemies quickly to gain 25% crit chance for 6s. Each extra kill: +5% crit, +1s duration.",
+				"迅速杀死2名敌人后获得25%暴击率，持续6秒。每多杀1个: +5%暴击率, +1秒持续时间"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"capture_king",
-				"Capture King",
-				"擒王"
+				"Chance to critically strike bosses directly. Higher level increases chance.",
+				"攻击时概率对BOSS直接造成暴击，等级越高暴击率越高"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"death_echo",
-				"Death Echo",
-				"生命回响"
+				"All attacks critically strike when HP is below 20%.",
+				"当血量低于20%时攻击会全部变为暴击"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"acupoint",
-				"Deadly Acupoint",
-				"死穴"
+				"Chance to instantly kill enemies below 50% HP (25% for bosses).",
+				"怪物血量低于50%时有概率直接斩杀 (BOSS为25%)"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"frenzy",
-				"Frenzy",
-				"狂乱"
+				"Heal on hit while having Speed effect.",
+				"拥有速度效果时，攻击会回复生命值"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"clockwork",
-				"Clockwork",
-				"发条"
+				"§7Always crit while having Speed. Higher Speed level increases crit damage.",
+				"§7拥有速度效果时，攻击必定暴击（速度等级越高，暴击伤害越高）"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"causal_truncation",
-				"Causal Truncation",
-				"因果裁断"
+				"Chance to deal 33% of target's current health as damage.",
+				"攻击时有概率造成目标33%当前血量的伤害"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"abuser",
-				"Abuser",
-				"虐待者"
+				"Deals 50% more damage to poisoned, withered or bleeding targets.",
+				"如果目标身上有中毒、凋零或流血效果，造成更高伤害"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"converge",
-				"Converge",
-				"收束"
+				"Reduces arrow spread for bows with Multishot.",
+				"使带有“多重射击”的弓箭矢散布更加集中"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"divinization",
-				"Divinization",
-				"神化"
+				"Grants 3 random divine attributes when applied.\n§6Total 9 levels, each level enhances effects.",
+				"每次应用时随机赋予3种神圣属性"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"demonization",
-				"Demonization",
-				"魔化"
+				"Grants 3 powerful attributes with 1 negative effect.\n§cPeriodically deals damage.",
+				"赋予3种强力属性，但附带1个负面效果"
 		);
-		addLanguage(
-				"modifier",
+		addDescriptionLang(
 				"divine_demonic_harmony",
-				"Divine-Demonic Harmony",
-				"归一"
+				"§7Allows divine and demonic powers to coexist.\n§cDeals periodic damage based on imbalance.",
+				"§7让神圣与恶魔之力和谐共存"
 		);
-		addLanguage(
-				"modifier",
+	}
+
+	private static void extra() {
+		addModifierLang(
 				"divinization.tooltip.title",
 				"§6§lDivinization Attributes: ",
 				"§6§l神化属性: "
 		);
-		addLanguage(
-				"modifier",
+		addModifierLang(
 				"demonization.tooltip.title",
 				"§4§lDemonization Attributes: ",
 				"§4§l魔化属性: "
 		);
-		addLanguage(
-				"modifier",
+		addModifierLang(
 				"demonization.positive",
 				"§aPositive Effects: ",
 				"§a正面效果: "
 		);
-		addLanguage(
-				"modifier",
+		addModifierLang(
 				"demonization.negative",
 				"§cNegative Effects: ",
 				"§c负面效果: "
 		);
-		addLanguage(
-				"modifier",
+		addModifierLang(
 				"divine_demonic_harmony.tooltip.title",
 				"§5§lDivine-Demonic Harmony: ",
 				"§5§l归一: "
 		);
 	}
 
-	public static class ModifierFlavor extends LanguageGenerate {
-		public static void register() {
-			addLanguage(
-					"modifier",
-					"petramor.flavor",
-					"赤石大王",
-					"Stone is Right"
-			);
-			addLanguage(
-					"modifier",
-					"aquadynamic.flavor",
-					"Water! Cool!",
-					"水! 凉快!"
-			);
-			addLanguage(
-					"modifier",
-					"crude.flavor",
-					"Bullying the unarmed",
-					"欺负手无寸铁"
-			);
-			addLanguage(
-					"modifier",
-					"killing_rhythm.flavor",
-					"Fast Fast Fast！",
-					"快快快！"
-			);
-			addLanguage(
-					"modifier",
-					"capture_king.flavor",
-					"King and King's Fight",
-					"王与王的战斗! "
-			);
-			addLanguage(
-					"modifier",
-					"death_echo.flavor",
-					"Fight to the end!",
-					"战斗到底!"
-			);
-			addLanguage(
-					"modifier",
-					"acupoint.flavor",
-					"You're in the kill zone!",
-					"你已进入斩杀线！"
-			);
-			addLanguage(
-					"modifier",
-					"frenzy.flavor",
-					"Speed is life",
-					"速度即是生命"
-			);
-			addLanguage(
-					"modifier",
-					"clockwork.flavor",
-					"Winding up",
-					"蓄势待发"
-			);
-			addLanguage(
-					"modifier",
-					"causal_truncation.flavor",
-					"Sever the chains of causality",
-					"斩断因果，得证大道"
-			);
-			addLanguage(
-					"modifier",
-					"abuser.flavor",
-					"Kick them when they're down",
-					"趁你病，要你命"
-			);
-			addLanguage(
-					"modifier",
-					"converge.flavor",
-					"Arrows like rain",
-					"箭如雨下"
-			);
-			addLanguage(
-					"modifier",
-					"divinization.flavor",
-					"Infused with divine power",
-					"灌注神圣之力"
-			);
-			addLanguage(
-					"modifier",
-					"demonization.flavor",
-					"Corrupted by demonic power",
-					"被恶魔之力腐蚀"
-			);
-			addLanguage(
-					"modifier",
-					"divine_demonic_harmony.flavor",
-					"The balance between light and darkness...",
-					"光与暗的平衡..."
-			);
-		}
+	private static void addModifierLang(String key, String english, String chinese) {
+		addLanguage("modifier", key, english, chinese);
 	}
 
-	public static class ModifierDescription extends LanguageGenerate {
-		public static void register() {
-			addLanguage(
-					"modifier",
-					"petramor.description",
-					"Mines stone blocks have a chance to restore durability; mining ores restores double durability.",
-					"挖掘石头时有一定概率回复耐久，如果挖掘矿石则会回复两倍的耐久"
-			);
-			addLanguage(
-					"modifier",
-					"aquadynamic.description",
-					"Mining speed increased in water (more when submerged). Negates underwater penalties. Rain bonus stacks",
-					"水中提升挖掘速度（完全浸没时更高），免疫水下惩罚；雨天同样提升，且可叠加"
-			);
-			addLanguage(
-					"modifier",
-					"crude.description",
-					"When the target's defense is less than or equal to 5, the attack will deal additional damage, up to 3 levels",
-					"当目标防御小于或等于5时攻击会造成额外的伤害，最高三级"
-			);
-			addLanguage(
-					"modifier",
-					"killing_rhythm.description",
-					"Quickly kill 2 enemies to gain 25%% crit chance for 6s. Each extra kill: +5%% crit, +1s ruration",
-					"迅速杀死2名敌人后获得25%暴击率，持续6秒。每多杀1个: +5%暴击率, +1秒持续时间"
-			);
-			addLanguage(
-					"modifier",
-					"capture_king.description",
-					"When attacking, the probability will directly cause a critical strike to the BOSS. The higher the level, the higher the critical strike rate.",
-					"攻击时概率对BOSS直接造成暴击, 等级越高暴击率越高"
-			);
-			addLanguage(
-					"modifier",
-					"death_echo.description",
-					"When HP is less than 20%, attacks will be critical directly.",
-					"当血量低于20%时攻击会全部变为暴击"
-			);
-			addLanguage(
-					"modifier",
-					"acupoint.description",
-					"Chance to instantly kill enemies below 50% health (25% for BOSS)",
-					"怪物血量低于50%时有概率直接斩杀 (BOSS为25%)"
-			);
-			addLanguage(
-					"modifier",
-					"frenzy.description",
-					"Heal when attacking with speed effect",
-					"拥有速度效果时，攻击会回复生命值"
-			);
-			addLanguage(
-					"modifier",
-					"clockwork.description",
-					"§7Always critical hit while having speed effect (Higher speed level increases critical damage)",
-					"§7拥有速度效果时，攻击必定暴击 (速度等级越高，暴击伤害越高)"
-			);
-			addLanguage(
-					"modifier",
-					"causal_truncation.description",
-					"Chance to deal 33% of target's current health as damage",
-					"攻击时有概率造成目标33%当前血量的伤害"
-			);
-			addLanguage(
-					"modifier",
-					"abuser.description",
-					"Deal 50% more damage to poisoned, withered or bleeding targets",
-					"如果目标身上有中毒、凋零或流血的效果，攻击时必定造成暴击"
-			);
-			addLanguage(
-					"modifier",
-					"converge.description",
-					"Converging arrow trajectory of bows with Multishot",
-					"使带有\"多重射击\"强化的弓箭矢散布更加密集"
-			);
-			addLanguage(
-					"modifier",
-					"divinization.description",
-					"Grants 3 random divine attributes when applied\n§7• Weapons: Attack, speed, elemental damage\n• Tools: Efficiency, durability, tier\n• Armor: Defense, health, resistance\n§6Total 9 levels, each level enhances effects",
-					"每次应用时随机赋予3种神圣属性"
-			);
-			addLanguage(
-					"modifier",
-					"demonization.description",
-					"Grants 3 powerful attributes with 1 negative effect\n§7• Weapons: High attack boost, but weaker survival\n• Tools: Extreme efficiency, but lower durability\n• Armor: Maximum defense, but weaker offense\n§cSide effect: Periodically takes damage",
-					"赋予3种强力属性，但附带1个负面效果"
-			);
-			addLanguage(
-					"modifier",
-					"divine_demonic_harmony.description",
-					"§7Allows Divine and Demonic powers to coexist in harmony\n§7• Both Divinization and Demonization must be present\n§7• At least one must be level 9 or higher\n§7• Damage scales inversely with level difference\n§7• At level difference 0: Reduces max health by 50%, deals 60% max health damage\n§cWarning: Periodically deals damage based on level difference",
-					"§7让神圣与恶魔之力和谐共存"
-			);
-		}
+	private static void addFlavorLang(String key, String english, String chinese) {
+		addLanguage("modifier", key + ".flavor", english, chinese);
+	}
+
+	private static void addDescriptionLang(String key, String english, String chinese) {
+		addLanguage("modifier", key + ".description", english, chinese);
 	}
 }

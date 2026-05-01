@@ -3,7 +3,7 @@ package dev.celestiacraft.tinker.datagen.language.type;
 import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
 
 public class TooltipLanguage extends LanguageGenerate {
-	public static void register() {
+	public static void addLang() {
 		addLanguage(
 				"tooltip",
 				"demonization.title",
