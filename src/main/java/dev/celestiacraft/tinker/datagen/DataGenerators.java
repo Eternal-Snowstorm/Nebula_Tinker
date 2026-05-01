@@ -41,7 +41,7 @@ public class DataGenerators {
 		ModItemTagsProvider itemTags = new ModItemTagsProvider(output, provider, blockTags, helper);
 		ModFluidTagsProvider fluidTags = new ModFluidTagsProvider(output, provider, helper);
 
-		addTConRecipes(add(event));
+		addTConRecipes(addServer(event));
 
 		generator.addProvider(event.includeServer(), blockTags);
 		generator.addProvider(event.includeServer(), itemTags);
@@ -52,13 +52,23 @@ public class DataGenerators {
 		consumer.accept(ModifierRecipe::new);
 	}
 
-	private static Consumer<Function<PackOutput, ? extends DataProvider>> add(GatherDataEvent event) {
+	private static Consumer<Function<PackOutput, ? extends DataProvider>> addServer(GatherDataEvent event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
 		boolean server = event.includeServer();
 
 		return (function) -> {
 			generator.addProvider(server, function.apply(output));
+		};
+	}
+
+	private static Consumer<Function<PackOutput, ? extends DataProvider>> addClient(GatherDataEvent event) {
+		DataGenerator generator = event.getGenerator();
+		PackOutput output = generator.getPackOutput();
+		boolean client = event.includeClient();
+
+		return (function) -> {
+			generator.addProvider(client, function.apply(output));
 		};
 	}
 }
