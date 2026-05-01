@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.compat.kubejs;
 
+import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.api.attribute.*;
 import dev.celestiacraft.tinker.entity.EAttributeType;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
@@ -11,9 +12,7 @@ import java.util.List;
 
 public class ModKubeJSPlugin extends KubeJSPlugin {
 	public void registerBindings(BindingsEvent event) {
-		super.registerBindings(event);
-
-		List<Class<?>> simpleClassList = List.of(
+		List.of(
 				AttributeApplicator.class,
 				AttributeHelper.class,
 				AttributeLock.class,
@@ -21,9 +20,9 @@ public class ModKubeJSPlugin extends KubeJSPlugin {
 				AttributeOverrideHelper.class,
 				EAttributeType.class,
 				Attributes.class,
-				EntityType.class
-		);
-		simpleClassList.forEach((cls) -> {
+				EntityType.class,
+				NebulaTinker.class
+		).forEach((cls) -> {
 			event.add(cls.getSimpleName(), cls);
 		});
 	}

@@ -133,9 +133,27 @@ public class ModifierLanguage extends LanguageGenerate {
 		public static void register() {
 			addLanguage(
 					"modifier",
+					"petramor.flavor",
+					"赤石大王",
+					"Stone is Right"
+			);
+			addLanguage(
+					"modifier",
+					"aquadynamic.flavor",
+					"Water! Cool!",
+					"水! 凉快!"
+			);
+			addLanguage(
+					"modifier",
+					"crude.flavor",
+					"Bullying the unarmed",
+					"欺负手无寸铁"
+			);
+			addLanguage(
+					"modifier",
 					"killing_rhythm.flavor",
 					"Fast Fast Fast！",
-					"Fast Fast Fast！"
+					"快快快！"
 			);
 			addLanguage(
 					"modifier",
