@@ -4,6 +4,7 @@ import dev.celestiacraft.tinker.common.register.NTModifier;
 import dev.celestiacraft.tinker.datagen.recipes.NTRecipeProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
@@ -31,11 +32,7 @@ public class ModifierRecipe extends NTRecipeProvider {
 		String folder = "upgrades/";
 
 		ModifierRecipeBuilder.modifier(NTModifier.CRUDE)
-				.addInput(Items.FLINT)
-				.addInput(Items.FLINT)
-				.addInput(Items.FLINT)
-				.addInput(Items.FLINT)
-				.addInput(Items.FLINT)
+				.addInput(Items.FLINT, 5)
 				.setMaxLevel(3)
 				.setSlots(SlotType.UPGRADE, 1)
 				.setTools(TinkerTags.Items.MELEE_PRIMARY)
