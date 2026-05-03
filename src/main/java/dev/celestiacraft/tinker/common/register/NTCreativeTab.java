@@ -11,9 +11,8 @@ import dev.celestiacraft.tinker.NebulaTinker;
 import java.util.function.Supplier;
 
 public class NTCreativeTab {
-
-	public static final DeferredRegister<CreativeModeTab> TABS =
-			DeferredRegister.create(Registries.CREATIVE_MODE_TAB, NebulaTinker.MODID);
+	public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister
+			.create(Registries.CREATIVE_MODE_TAB, NebulaTinker.MODID);
 
 	public static final Supplier<CreativeModeTab> NEBULA_TINKER_TAB =
 			TABS.register("nebula_tinker_tab", () -> {

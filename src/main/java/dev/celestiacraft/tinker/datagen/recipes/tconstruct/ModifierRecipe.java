@@ -4,7 +4,6 @@ import dev.celestiacraft.tinker.common.register.NTModifier;
 import dev.celestiacraft.tinker.datagen.recipes.NTRecipeProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
