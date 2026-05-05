@@ -54,7 +54,7 @@ public class Shadow extends BasicModifier implements MeleeHitModifierHook, Launc
 		float extra = 2 + (level - 1);
 
 		target.invulnerableTime = 0;
-		target.hurt(attacker.damageSources().magic(), extra);
+		target.hurt(attacker.damageSources().fellOutOfWorld(), extra);
 	}
 
 	@Override
