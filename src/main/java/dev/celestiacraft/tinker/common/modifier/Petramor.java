@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 import dev.celestiacraft.tinker.tags.ModBlockTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,7 +26,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
  * <p>
  * 如果挖掘的对象是 {@link Tags.Blocks#ORES} 并且成功触发则可以回复双倍的耐久
  */
-public class Petramor extends Modifier implements BlockBreakModifierHook {
+public class Petramor extends BasicModifier implements BlockBreakModifierHook {
 	@Override
 	public void afterBlockBreak(@NotNull IToolStackView view, @NotNull ModifierEntry entry, @NotNull ToolHarvestContext context) {
 		Level level = context.getWorld();

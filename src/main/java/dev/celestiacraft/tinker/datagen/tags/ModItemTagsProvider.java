@@ -1,8 +1,10 @@
 package dev.celestiacraft.tinker.datagen.tags;
 
+import dev.celestiacraft.tinker.tags.ModItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -23,5 +25,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.@NotNull Provider provider) {
+		tag(ModItemTags.FLINTS)
+				.add(Items.FLINT);
 	}
 }

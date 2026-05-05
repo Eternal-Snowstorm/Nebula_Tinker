@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.modifiers.Modifier;
@@ -42,7 +43,7 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
  *   <li>该效果为附加伤害, 与其他伤害加成可正常叠加</li>
  * </ul>
  */
-public class Crude extends Modifier implements MeleeDamageModifierHook {
+public class Crude extends BasicModifier implements MeleeDamageModifierHook {
 	@Override
 	public float getMeleeDamage(@NotNull IToolStackView view, @NotNull ModifierEntry entry, @NotNull ToolAttackContext context, float baseDamage, float damage) {
 		LivingEntity target = context.getLivingTarget();

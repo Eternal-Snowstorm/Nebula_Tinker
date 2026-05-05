@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.api.modifier.BasicModifier;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.player.Player;
@@ -49,7 +50,7 @@ import slimeknights.tconstruct.library.tools.stat.ToolStats;
  *   <li>完全浸没 + 下雨: ~ 5.0 × 1.625 ~ 8.125 倍</li>
  * </ul>
  */
-public class Aquadynamic extends Modifier implements BreakSpeedModifierHook {
+public class Aquadynamic extends BasicModifier implements BreakSpeedModifierHook {
 	@Override
 	public void onBreakSpeed(@NotNull IToolStackView view, @NotNull ModifierEntry entry, PlayerEvent.@NotNull BreakSpeed speed, @NotNull Direction direction, boolean isEffective, float miningSpeedModifier) {
 	}

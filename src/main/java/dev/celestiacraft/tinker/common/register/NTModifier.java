@@ -31,6 +31,7 @@ public class NTModifier {
 	public static final StaticModifier<Petramor> PETRAMOR;
 	public static final StaticModifier<Aquadynamic> AQUADYNAMIC;
 	public static final StaticModifier<Crude> CRUDE;
+	public static final StaticModifier<Shadow> SHADOW;
 
 	public static final DynamicModifier DIVINE_DEMONIC_HARMONY;
 
@@ -52,7 +53,8 @@ public class NTModifier {
 		FORCE_LIBERATION = register("force_liberation", ForceLiberation::new);
 		PETRAMOR = register("petramor", Petramor::new);
 		AQUADYNAMIC = register("aquadynamic", Aquadynamic::new);
-		CRUDE = register("crude",Crude::new);
+		CRUDE = register("crude", Crude::new);
+		SHADOW = register("shadow", Shadow::new);
 
 		// 静态Modifiers
 		DIVINE_DEMONIC_HARMONY = register("divine_demonic_harmony");
