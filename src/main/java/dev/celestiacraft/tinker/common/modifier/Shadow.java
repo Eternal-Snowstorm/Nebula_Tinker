@@ -26,6 +26,15 @@ import slimeknights.tconstruct.library.tools.context.EquipmentContext;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
 
+/**
+ * 暗影
+ * <p>
+ * 进行近战/远程攻击时, 除了原本的攻击伤害
+ * <p>
+ * 还会根据暗影强化等级额外施加固定量的虚空伤害
+ * <p>
+ * 1级附加2点虚空伤害, 以上每一级额外增加1点虚空伤害
+ */
 public class Shadow extends BasicModifier implements MeleeHitModifierHook, LauncherHitModifierHook {
 	@Override
 	public void onLauncherHitEntity(IToolStackView view, ModifierEntry entry, Projectile projectile, LivingEntity living, Entity entity, @Nullable LivingEntity livingTarget, float damageDealt) {
