@@ -1,93 +1,298 @@
 package dev.celestiacraft.tinker.common.modifier;
 
+import dev.celestiacraft.tinker.NebulaTinker;
+import dev.celestiacraft.tinker.api.SimpleTConUtils;
 import dev.celestiacraft.tinker.api.modifier.BasicModifier;
-import net.minecraft.core.Direction;
-import net.minecraft.tags.FluidTags;
+import dev.celestiacraft.tinker.common.register.NTModifier;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import org.jetbrains.annotations.NotNull;
-import slimeknights.tconstruct.library.modifiers.Modifier;
-import slimeknights.tconstruct.library.modifiers.ModifierEntry;
-import slimeknights.tconstruct.library.modifiers.ModifierHooks;
-import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedContext;
-import slimeknights.tconstruct.library.modifiers.hook.mining.BreakSpeedModifierHook;
-import slimeknights.tconstruct.library.module.ModuleHookMap;
-import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
-import slimeknights.tconstruct.library.tools.stat.ToolStats;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 /**
  * 喜水
- * <p>
- * 基于环境(涉水/浸没/降雨)动态提升工具的挖掘速度
  *
- * <p><b>效果说明: </b>
+ * <p><b>类型:</b> 全局环境倍率 Modifier (基于 Forge Event 实现)</p>
+ *
+ * <p><b>适用部位:</b> 护甲 / 工具 / 武器</p>
+ *
+ * <p><b>核心机制:</b></p>
  * <ul>
- *   <li>当玩家处于水中时(身体接触水), 挖掘速度提升至原来的 <b>2.5 倍</b></li>
- *   <li>当玩家完全浸没于水中时(视线位于水中), 挖掘速度提升至原来的 <b>5.0 倍</b></li>
- *   <li>当玩家处于降雨环境中时, 挖掘速度获得额外增幅: </li>
+ *   <li>基于玩家当前环境(水 / 天气)与药水状态动态计算倍率</li>
+ *   <li>所有效果统一通过倍率系统作用于: 挖掘速度 / 伤害 / 减伤</li>
+ *   <li>除"涉水"与"完全浸没"互斥外, 其余效果均可叠加</li>
  * </ul>
  *
- * <p>
- * 雨天增幅计算公式:
- * <br>
- * 最终速度 = 原速度 × (1 + 降雨强度 / 1.6)
+ * <hr>
  *
- * <p>
- * 其中降雨强度范围为 0 ~ 1, 最大约提供 <b>62.5%</b> 的额外速度提升
+ * <p><b>环境效果:</b></p>
  *
- * <p><b>叠加规则: </b>
  * <ul>
- *   <li>"水中"与"完全浸没"互斥, 仅取更高倍率</li>
- *   <li>雨天增幅可与水中效果叠加</li>
+ *   <li>当玩家处于水中(身体接触水):</li>
+ *   <ul>
+ *     <li>挖掘速度 × 2.5</li>
+ *     <li>伤害倍率 × 1.5</li>
+ *   </ul>
+ *
+ *   <li>当玩家完全浸没于水中(视线位于水中):</li>
+ *   <ul>
+ *     <li>挖掘速度 × 5.0</li>
+ *     <li>伤害倍率 × 3.0</li>
+ *     <li>受到伤害 -30%</li>
+ *   </ul>
+ *
+ *   <li>当玩家处于降雨环境中:</li>
+ *   <ul>
+ *     <li>挖掘速度 × 2.0</li>
+ *     <li>伤害倍率 × 1.5</li>
+ *   </ul>
+ *
+ *   <li>当玩家处于雷暴环境中:</li>
+ *   <ul>
+ *     <li>挖掘速度 × 5.0</li>
+ *     <li>伤害倍率 × 3.0</li>
+ *     <li>受到伤害 -30%</li>
+ *   </ul>
  * </ul>
  *
- * <p><b>示例: </b>
+ * <hr>
+ *
+ * <p><b>药水加成:</b></p>
+ *
  * <ul>
- *   <li>仅下雨(最大强度): ~ 1.625 倍</li>
- *   <li>水中 + 下雨: ~ 2.5 × 1.625 ~ 4.06 倍</li>
- *   <li>完全浸没 + 下雨: ~ 5.0 × 1.625 ~ 8.125 倍</li>
+ *   <li>设玩家拥有的药水效果数量为 x</li>
+ *   <li>挖掘速度倍率 × x</li>
+ *   <li>伤害倍率 × (x × 0.75)</li>
+ *   <li>受到伤害额外降低 x × 30%</li>
+ *   <li>减伤上限为 90%</li>
+ * </ul>
+ *
+ * <hr>
+ *
+ * <p><b>叠加规则:</b></p>
+ *
+ * <ul>
+ *   <li>涉水 与 完全浸没 互斥, 仅取更高倍率</li>
+ *   <li>天气效果(雨 / 雷暴)可与水环境叠加</li>
+ *   <li>药水效果与所有环境倍率完全叠加</li>
+ *   <li>最终倍率 = 环境倍率 × 药水倍率</li>
+ * </ul>
+ *
+ * <hr>
+ *
+ * <p><b>实现说明:</b></p>
+ *
+ * <ul>
+ *   <li>使用 Forge Event 统一处理, 而非 TCon Hook</li>
+ *   <li>影响范围为玩家全局, 而非单一工具</li>
+ *   <li>挖掘速度: PlayerEvent.BreakSpeed</li>
+ *   <li>伤害与减伤: LivingHurtEvent</li>
+ * </ul>
+ *
+ * <hr>
+ *
+ * <p><b>注意:</b></p>
+ *
+ * <ul>
+ *   <li>该 Modifier 仅在玩家持有对应装备时生效(需额外判断)</li>
+ *   <li>多来源倍率为乘法叠加, 数值可能快速增长</li>
  * </ul>
  */
-public class Aquadynamic extends BasicModifier implements BreakSpeedModifierHook {
-	@Override
-	public void onBreakSpeed(@NotNull IToolStackView view, @NotNull ModifierEntry entry, PlayerEvent.@NotNull BreakSpeed speed, @NotNull Direction direction, boolean isEffective, float miningSpeedModifier) {
+@Mod.EventBusSubscriber(modid = NebulaTinker.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+public class Aquadynamic extends BasicModifier {
+	/**
+	 * 挖掘速度事件
+	 *
+	 * @param event 事件
+	 */
+	@SubscribeEvent
+	public static void onBreakSpeed(PlayerEvent.BreakSpeed event) {
+		Player player = event.getEntity();
+
+		if (!hasModifier(player)) {
+			return;
+		}
+
+		float multiplier = AquaLogic.getFinalMultiplier(player);
+		event.setNewSpeed(event.getNewSpeed() * multiplier);
 	}
 
-	@Override
-	public float modifyBreakSpeed(@NotNull IToolStackView view, @NotNull ModifierEntry entry, @NotNull BreakSpeedContext context, float speed) {
-		Player player = context.player();
-		Level level = player.level();
-
-		if (!context.isEffective()) {
-			return speed;
+	/**
+	 * 实体受伤事件
+	 *
+	 * @param event 事件
+	 */
+	@SubscribeEvent
+	public static void onLivingHurt(LivingHurtEvent event) {
+		// 攻击者加成
+		if (event.getSource().getEntity() instanceof Player attacker) {
+			if (hasModifier(attacker)) {
+				float multiplier = AquaLogic.getDamageMultiplier(attacker);
+				event.setAmount(event.getAmount() * multiplier);
+			}
 		}
 
-		float env = context.miningSpeedMultiplier();
-
-		// 删除全身入水惩罚
-		float result = env > 0 ? speed / env : speed;
-		float baseBonus = view.getMultiplier(ToolStats.MINING_SPEED);
-		float bonus = 0;
-
-		// 水中加成
-		if (player.isEyeInFluidType(Fluids.WATER.getFluidType())) {
-			bonus += baseBonus * 10.0f;
-		} else if (player.isInWater()) {
-			bonus += baseBonus * 20.5f;
+		// 受击减伤
+		if (event.getEntity() instanceof Player player) {
+			if (hasModifier(player)) {
+				float reduction = AquaLogic.getDamageReduction(player);
+				event.setAmount(event.getAmount() * (1.0f - reduction));
+			}
 		}
-
-		// 雨天加成
-		if (level.isRainingAt(player.blockPosition())) {
-			float rain = level.getRainLevel(1.0F);
-			bonus += baseBonus * (rain / 1.6f);
-		}
-		return result + bonus;
 	}
 
-	@Override
-	protected void registerHooks(ModuleHookMap.@NotNull Builder builder) {
-		builder.addHook(this, ModifierHooks.BREAK_SPEED);
+	/**
+	 * 是否拥有词条
+	 *
+	 * @param player
+	 * @return
+	 */
+	private static boolean hasModifier(Player player) {
+		String modifier = NTModifier.AQUADYNAMIC.getId().toString();
+		// 主手
+		if (!player.getMainHandItem().isEmpty() && SimpleTConUtils.hasModifier(player.getMainHandItem(), modifier)) {
+			return true;
+		}
+
+		// 副手
+		if (!player.getOffhandItem().isEmpty() && SimpleTConUtils.hasModifier(player.getOffhandItem(), modifier)) {
+			return true;
+		}
+
+		// 盔甲
+		for (ItemStack armor : player.getArmorSlots()) {
+			if (!armor.isEmpty() && SimpleTConUtils.hasModifier(armor, modifier)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	public static final class AquaLogic {
+		/**
+		 * 获得最终倍率
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		public static float getFinalMultiplier(Player player) {
+			return getEnvironmentMultiplier(player) * getPotionMultiplier(player);
+		}
+
+		/**
+		 * 获得环境倍率
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		public static float getEnvironmentMultiplier(Player player) {
+			Level level = player.level();
+			float multiplier = 1.0f;
+
+			if (isSubmerged(player)) {
+				multiplier *= 5.0f;
+			} else if (isInWater(player)) {
+				multiplier *= 2.5f;
+			}
+
+			if (isThunder(level, player)) {
+				multiplier *= 5.0f;
+			} else if (isRaining(level, player)) {
+				multiplier *= 2.0f;
+			}
+
+			return multiplier;
+		}
+
+		/**
+		 * 获取药水倍率
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		public static float getPotionMultiplier(Player player) {
+			int x = player.getActiveEffects().size();
+			return x <= 0 ? 1.0f : x;
+		}
+
+		/**
+		 * 获取伤害倍率
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		public static float getDamageMultiplier(Player player) {
+			return getFinalMultiplier(player) * 0.75f;
+		}
+
+		/**
+		 * 获取减伤
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		public static float getDamageReduction(Player player) {
+			Level level = player.level();
+
+			float reduction = 0.0f;
+
+			// 环境减伤
+			if (isSubmerged(player) || isThunder(level, player)) {
+				reduction += 0.3f;
+			}
+
+			// 药水减伤
+			reduction += player.getActiveEffects().size() * 0.3f;
+
+			return Math.min(reduction, 0.9f);
+		}
+
+		/**
+		 * 是否完全泡入水中
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		private static boolean isSubmerged(Player player) {
+			return player.isEyeInFluidType(Fluids.WATER.getFluidType());
+		}
+
+		/**
+		 * 是否半身入水
+		 *
+		 * @param player 玩家
+		 * @return
+		 */
+		private static boolean isInWater(Player player) {
+			return !isSubmerged(player) && player.isInWater();
+		}
+
+		/**
+		 * 是否下雨
+		 *
+		 * @param level  大世界
+		 * @param player 玩家
+		 * @return
+		 */
+		private static boolean isRaining(Level level, Player player) {
+			return level.isRainingAt(player.blockPosition());
+		}
+
+		/**
+		 * 是否雷雨
+		 *
+		 * @param level  大世界
+		 * @param player 玩家
+		 * @return
+		 */
+		private static boolean isThunder(Level level, Player player) {
+			return level.isThundering() && isRaining(level, player);
+		}
 	}
 }

@@ -17,9 +17,7 @@ public class Frenzy extends BasicModifier {
 		}
 
 		// 获取速度等级
-		int speedLevel = Objects.requireNonNull(
-				player.getEffect(MobEffects.MOVEMENT_SPEED)
-		).getAmplifier() + 1;
+		int speedLevel = player.getEffect(MobEffects.MOVEMENT_SPEED).getAmplifier() + 1;
 
 		// 指数成长
 		double exponent = 1.5;

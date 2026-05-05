@@ -23,9 +23,7 @@ public class Clockwork extends BasicModifier {
 		}
 
 		// 获取速度等级
-		int speedLevel = Objects.requireNonNull(
-				player.getEffect(MobEffects.MOVEMENT_SPEED)
-		).getAmplifier() + 1;
+		int speedLevel = player.getEffect(MobEffects.MOVEMENT_SPEED).getAmplifier() + 1;
 
 		// 计算加成
 		float critChanceBonus = speedLevel * CRIT_CHANCE_PER_SPEED_LEVEL;
