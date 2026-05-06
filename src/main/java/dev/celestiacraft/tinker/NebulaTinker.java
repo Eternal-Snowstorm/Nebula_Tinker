@@ -4,6 +4,7 @@ import dev.celestiacraft.tinker.common.register.*;
 import dev.celestiacraft.tinker.config.ClientConfig;
 import dev.celestiacraft.tinker.config.CommonConfig;
 import dev.celestiacraft.tinker.config.ServerConfig;
+import dev.celestiacraft.tinker.datagen.loot.NTLootModifiers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
@@ -27,23 +28,16 @@ public class NebulaTinker {
 	public NebulaTinker(FMLJavaModLoadingContext context) {
 		IEventBus bus = context.getModEventBus();
 
-		// 注册修饰器
 		NTModifier.register(bus);
-		// 注册物品
 		NTItem.register(bus);
-		// 注册自定义属性
 		ModAttributes.register(bus);
-		// 注册全局暴击属性
 		GlobalCritAttributes.register(bus);
-		// 粒子效果
 		NTParticle.register(bus);
-		// 生物状态
 		NTEffect.register(bus);
-		// 标签页注册(一定要在最后)
+		NTLootModifiers.REGISTRY.register(bus);
 		NTCreativeTab.register(bus);
-		// 配置文件
-		registerConfig(context);
 
+		registerConfig(context);
 		LOGGER.info("Nebula Tinker is initialized!");
 	}
 

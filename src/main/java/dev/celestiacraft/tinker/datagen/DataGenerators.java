@@ -1,7 +1,9 @@
 package dev.celestiacraft.tinker.datagen;
 
+import dev.celestiacraft.tinker.datagen.loot.NTLootModifierProvider;
 import dev.celestiacraft.tinker.datagen.models.item.NTItemModelProvider;
 import dev.celestiacraft.tinker.datagen.recipes.tconstruct.ModifierRecipe;
+import dev.celestiacraft.tinker.datagen.tags.ModEntityTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -30,24 +32,28 @@ public class DataGenerators {
 		PackOutput output = generator.getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
-
-		LanguageGenerate.register();
+		boolean server = event.includeServer();
+		boolean client = event.includeClient();
 
 		// Client
-		generator.addProvider(event.includeClient(), new English(output));
-		generator.addProvider(event.includeClient(), new Chinese(output));
-		generator.addProvider(event.includeClient(), new NTItemModelProvider(output, helper));
+		generator.addProvider(client, new English(output));
+		generator.addProvider(client, new Chinese(output));
+		generator.addProvider(client, new NTItemModelProvider(output, helper));
+		LanguageGenerate.register();
 
 		// Server
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, provider, helper);
 		ModItemTagsProvider itemTags = new ModItemTagsProvider(output, provider, blockTags, helper);
 		ModFluidTagsProvider fluidTags = new ModFluidTagsProvider(output, provider, helper);
+		ModEntityTagsProvider entityTags = new ModEntityTagsProvider(output, provider, helper);
 
 		addTConRecipes(addServer(event));
 
-		generator.addProvider(event.includeServer(), blockTags);
-		generator.addProvider(event.includeServer(), itemTags);
-		generator.addProvider(event.includeServer(), fluidTags);
+		generator.addProvider(server, blockTags);
+		generator.addProvider(server, itemTags);
+		generator.addProvider(server, fluidTags);
+		generator.addProvider(server, entityTags);
+		generator.addProvider(server, new NTLootModifierProvider(output));
 	}
 
 	private static void addTConRecipes(Consumer<Function<PackOutput, ? extends DataProvider>> consumer) {
