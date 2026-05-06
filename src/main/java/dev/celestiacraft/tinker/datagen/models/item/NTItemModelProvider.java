@@ -15,13 +15,6 @@ public class NTItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		NTItem.CREATIVE_TAB_ITEMS.forEach((supplier) -> {
-			Item item = supplier.get();
-			String name = ForgeRegistries.ITEMS.getKey(item).getPath();
-
-			basicItem(name);
-		});
-
 		basicItem("demonization_stone");
 		basicItem("divinization_stone");
 		basicItem("spider_fang");
