@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.datagen.recipes.tconstruct;
 
+import dev.celestiacraft.tinker.common.register.NTItem;
 import dev.celestiacraft.tinker.common.register.NTModifier;
 import dev.celestiacraft.tinker.datagen.recipes.NTRecipeProvider;
 import dev.celestiacraft.tinker.tags.ModItemTags;
@@ -10,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.common.TinkerTags;
 import slimeknights.tconstruct.library.recipe.modifiers.adding.ModifierRecipeBuilder;
 import slimeknights.tconstruct.library.tools.SlotType;
+import slimeknights.tconstruct.shared.TinkerMaterials;
 
 import java.util.function.Consumer;
 
@@ -30,6 +32,11 @@ public class ModifierRecipe extends NTRecipeProvider {
 
 	private void addUpgradesRecipes(Consumer<FinishedRecipe> consumer) {
 		String folder = "upgrades/";
+
+		ModifierRecipeBuilder.modifier(NTModifier.ABUSER)
+				.addInput(TinkerMaterials.necroticBone)
+				.addInput(NTItem.SPIDER_FANG.get())
+				.save(consumer, location(folder + "abuser"));
 
 		ModifierRecipeBuilder.modifier(NTModifier.CRUDE)
 				.addInput(ModItemTags.FLINTS)

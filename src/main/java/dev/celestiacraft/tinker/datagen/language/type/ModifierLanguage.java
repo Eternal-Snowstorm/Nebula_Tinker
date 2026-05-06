@@ -23,6 +23,7 @@ public class ModifierLanguage extends LanguageGenerate {
 		addModifierLang("causal_truncation", "Causal Truncation", "因果裁断");
 		addModifierLang("abuser", "Abuser", "虐待者");
 		addModifierLang("converge", "Converge", "收束");
+		addModifierLang("shadow", "Shadow", "暗影");
 		addModifierLang("divinization", "Divinization", "神化");
 		addModifierLang("demonization", "Demonization", "魔化");
 		addModifierLang("divine_demonic_harmony", "Divine-Demonic Harmony", "归一");
@@ -30,7 +31,7 @@ public class ModifierLanguage extends LanguageGenerate {
 
 	private static void flavor() {
 		addFlavorLang("petramor", "Stone is Right", "赤石大王");
-		addFlavorLang("aquadynamic", "Water! Cool!", "水! 凉快!");
+		addFlavorLang("aquadynamic", "Water! Cool!", "如鱼得水");
 		addFlavorLang("crude", "Bullying the unarmed", "欺负手无寸铁");
 		addFlavorLang("killing_rhythm", "Fast Fast Fast!", "快快快！");
 		addFlavorLang("capture_king", "King and King's Fight", "王与王的战斗!");
@@ -41,12 +42,18 @@ public class ModifierLanguage extends LanguageGenerate {
 		addFlavorLang("causal_truncation", "Sever the chains of causality", "斩断因果，得证大道");
 		addFlavorLang("abuser", "Kick them when they're down", "趁你病，要你命");
 		addFlavorLang("converge", "Arrows like rain", "箭如雨下");
+		addFlavorLang("shadow", "A hit from the VOID", "来自虚无的一刀");
 		addFlavorLang("divinization", "Infused with divine power", "灌注神圣之力");
 		addFlavorLang("demonization", "Corrupted by demonic power", "被恶魔之力腐蚀");
 		addFlavorLang("divine_demonic_harmony", "Balance between light and darkness...", "光与暗的平衡...");
 	}
 
 	private static void description() {
+		addDescriptionLang(
+				"shadow",
+				"Melee and ranged attacks deal bonus void damage based on Shadow level.",
+				"进行近战或远程攻击时，除了原本的攻击伤害，还会根据暗影强化等级额外施加固定量的虚空伤害，伤害量随等级提升"
+		);
 		addDescriptionLang(
 				"petramor",
 				"Mines stone blocks have a chance to restore durability; mining ores restores double durability.",

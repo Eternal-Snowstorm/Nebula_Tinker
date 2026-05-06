@@ -16,5 +16,11 @@ public class ItemLanguage extends LanguageGenerate {
 				"Divinization Stone",
 				"神化石"
 		);
+		addLanguage(
+				"item",
+				"spider_fang",
+				"Spider Fang",
+				"蜘蛛牙"
+		);
 	}
 }
