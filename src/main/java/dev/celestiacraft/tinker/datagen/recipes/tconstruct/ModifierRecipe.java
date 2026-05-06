@@ -35,7 +35,8 @@ public class ModifierRecipe extends NTRecipeProvider {
 
 		ModifierRecipeBuilder.modifier(NTModifier.ABUSER)
 				.addInput(TinkerMaterials.necroticBone)
-				.addInput(NTItem.SPIDER_FANG.get())
+				.addInput(TinkerMaterials.venombone)
+				.addInput(NTItem.SPIDER_FANG)
 				.save(consumer, location(folder + "abuser"));
 
 		ModifierRecipeBuilder.modifier(NTModifier.CRUDE)

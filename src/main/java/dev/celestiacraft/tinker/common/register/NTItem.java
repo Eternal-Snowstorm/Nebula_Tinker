@@ -8,6 +8,8 @@ import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.common.item.DemonizationStoneItem;
 import dev.celestiacraft.tinker.common.item.DivinizationStoneItem;
 import dev.celestiacraft.tinker.common.item.InvincibleFrameEgregatorItem;
+import slimeknights.mantle.registration.object.ItemObject;
+import slimeknights.tconstruct.common.registration.ItemDeferredRegisterExtension;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,17 +18,17 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class NTItem {
-	public static final DeferredRegister<Item> ITEMS;
+	public static final ItemDeferredRegisterExtension ITEMS;
 
-	public static final List<Supplier<? extends Item>> CREATIVE_TAB_ITEMS = new ArrayList<>();
+	public static final List<ItemObject<? extends Item>> CREATIVE_TAB_ITEMS = new ArrayList<>();
 
-	public static final Supplier<Item> INVINCIBLE_FRAME_EGREGATOR;
-	public static final Supplier<Item> DEMONIZATION_STONE;
-	public static final Supplier<Item> DIVINIZATION_STONE;
-	public static final Supplier<Item> SPIDER_FANG; // 暂无获取方式
+	public static final ItemObject<Item> INVINCIBLE_FRAME_EGREGATOR;
+	public static final ItemObject<Item> DEMONIZATION_STONE;
+	public static final ItemObject<Item> DIVINIZATION_STONE;
+	public static final ItemObject<Item> SPIDER_FANG; // 暂无获取方式
 
 	static {
-		ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, NebulaTinker.MODID);
+		ITEMS = new ItemDeferredRegisterExtension(NebulaTinker.MODID);
 
 		DEMONIZATION_STONE = addItem("demonization_stone", DemonizationStoneItem::new);
 		DIVINIZATION_STONE = addItem("divinization_stone", DivinizationStoneItem::new);
@@ -34,13 +36,13 @@ public class NTItem {
 		SPIDER_FANG = addItem("spider_fang", Item::new);
 	}
 
-	private static <T extends Item> Supplier<T> addItem(
+	private static <T extends Item> ItemObject<T> addItem(
 			String id,
 			Function<Item.Properties, T> factory,
 			Consumer<Item.Properties> properties,
 			boolean addToCreativeTab
 	) {
-		Supplier<T> item = ITEMS.register(id, () -> {
+		ItemObject<T> item = ITEMS.register(id, () -> {
 			Item.Properties props = new Item.Properties();
 
 			if (properties != null) {
@@ -57,15 +59,15 @@ public class NTItem {
 		return item;
 	}
 
-	private static Supplier<Item> addItem(String id) {
+	private static ItemObject<Item> addItem(String id) {
 		return addItem(id, Item::new, null, true);
 	}
 
-	private static <T extends Item> Supplier<T> addItem(String id, Function<Item.Properties, T> factory) {
+	private static <T extends Item> ItemObject<T> addItem(String id, Function<Item.Properties, T> factory) {
 		return addItem(id, factory, null, true);
 	}
 
-	private static <T extends Item> Supplier<T> addItem(String id, Function<Item.Properties, T> factory, boolean addToCreativeTab) {
+	private static <T extends Item> ItemObject<T> addItem(String id, Function<Item.Properties, T> factory, boolean addToCreativeTab) {
 		return addItem(id, factory, null, addToCreativeTab);
 	}
 

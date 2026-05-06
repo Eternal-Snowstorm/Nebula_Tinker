@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.datagen;
 
+import dev.celestiacraft.tinker.datagen.models.item.NTItemModelProvider;
 import dev.celestiacraft.tinker.datagen.recipes.tconstruct.ModifierRecipe;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -35,6 +36,7 @@ public class DataGenerators {
 		// Client
 		generator.addProvider(event.includeClient(), new English(output));
 		generator.addProvider(event.includeClient(), new Chinese(output));
+		generator.addProvider(event.includeClient(), new NTItemModelProvider(output, helper));
 
 		// Server
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, provider, helper);
