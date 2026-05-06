@@ -11,12 +11,12 @@ import java.util.function.Supplier;
 
 public class NTEffect {
 	public static final DeferredRegister<MobEffect> EFFECTS;
-	public static final Supplier<MobEffect> CURSE_OF_THE_WAR_GOD;
+	public static final Supplier<MobEffect> CURSE_WAR_GOD;
 
 	static {
 		EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, NebulaTinker.MODID);
 
-		CURSE_OF_THE_WAR_GOD = EFFECTS.register("curse_of_war_god", CurseOfTheWarGod::new);
+		CURSE_WAR_GOD = EFFECTS.register("curse_of_war_god", CurseOfTheWarGod::new);
 	}
 
 	public static void register(IEventBus bus) {
