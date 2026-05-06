@@ -25,7 +25,7 @@ public class NTItem {
 	public static final ItemObject<Item> INVINCIBLE_FRAME_EGREGATOR;
 	public static final ItemObject<Item> DEMONIZATION_STONE;
 	public static final ItemObject<Item> DIVINIZATION_STONE;
-	public static final ItemObject<Item> SPIDER_FANG; // 暂无获取方式
+	public static final ItemObject<Item> SPIDER_FANG;
 
 	static {
 		ITEMS = new ItemDeferredRegisterExtension(NebulaTinker.MODID);
