@@ -35,15 +35,10 @@ import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
  * <p>
  * 1级附加2点虚空伤害, 以上每一级额外增加1点虚空伤害
  */
-public class Shadow extends BasicModifier implements MeleeHitModifierHook, LauncherHitModifierHook {
+public class Shadow extends BasicModifier {
 	@Override
-	public void onLauncherHitEntity(IToolStackView view, ModifierEntry entry, Projectile projectile, LivingEntity living, Entity entity, @Nullable LivingEntity livingTarget, float damageDealt) {
-		applyVoidDamage(living, livingTarget, entry.getLevel());
-	}
-
-	@Override
-	public void afterMeleeHit(IToolStackView view, ModifierEntry entry, ToolAttackContext context, float damageDealt) {
-		applyVoidDamage(context.getAttacker(), context.getLivingTarget(), entry.getLevel());
+	protected void onLivingHurt(Player player, LivingEntity target, LivingHurtEvent event, int level) {
+		applyVoidDamage(target, target, level);
 	}
 
 	private void applyVoidDamage(LivingEntity attacker, LivingEntity target, int level) {
@@ -55,10 +50,5 @@ public class Shadow extends BasicModifier implements MeleeHitModifierHook, Launc
 
 		target.invulnerableTime = 0;
 		target.hurt(attacker.damageSources().fellOutOfWorld(), extra);
-	}
-
-	@Override
-	protected void registerHooks(ModuleHookMap.Builder builder) {
-		builder.addHook(this, ModifierHooks.MELEE_HIT, ModifierHooks.LAUNCHER_HIT);
 	}
 }
