@@ -1,9 +1,16 @@
 package dev.celestiacraft.tinker.datagen;
 
+import dev.celestiacraft.tinker.NebulaTinker;
+import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
+import dev.celestiacraft.tinker.datagen.language.locale.Chinese;
+import dev.celestiacraft.tinker.datagen.language.locale.English;
 import dev.celestiacraft.tinker.datagen.loot.NTLootModifierProvider;
 import dev.celestiacraft.tinker.datagen.models.item.NTItemModelProvider;
 import dev.celestiacraft.tinker.datagen.recipes.tconstruct.ModifierRecipe;
+import dev.celestiacraft.tinker.datagen.tags.ModBlockTagsProvider;
 import dev.celestiacraft.tinker.datagen.tags.ModEntityTagsProvider;
+import dev.celestiacraft.tinker.datagen.tags.ModFluidTagsProvider;
+import dev.celestiacraft.tinker.datagen.tags.ModItemTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -12,13 +19,6 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import dev.celestiacraft.tinker.NebulaTinker;
-import dev.celestiacraft.tinker.datagen.language.LanguageGenerate;
-import dev.celestiacraft.tinker.datagen.language.locale.Chinese;
-import dev.celestiacraft.tinker.datagen.language.locale.English;
-import dev.celestiacraft.tinker.datagen.tags.ModBlockTagsProvider;
-import dev.celestiacraft.tinker.datagen.tags.ModFluidTagsProvider;
-import dev.celestiacraft.tinker.datagen.tags.ModItemTagsProvider;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -28,55 +28,73 @@ import java.util.function.Function;
 public class DataGenerators {
 	@SubscribeEvent
 	public static void datagen(GatherDataEvent event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput output = generator.getPackOutput();
+		addClientProviders(event);
+		addServerProviders(event);
+	}
+
+	private static void addClientProviders(GatherDataEvent event) {
+		Consumer<Function<PackOutput, ? extends DataProvider>> client = addProvider(
+				event,
+				event.includeClient()
+		);
+
+		ExistingFileHelper helper = event.getExistingFileHelper();
+
+		client.accept(English::new);
+		client.accept(Chinese::new);
+		client.accept((output) -> {
+			return new NTItemModelProvider(output, helper);
+		});
+
+		LanguageGenerate.register();
+	}
+
+	private static void addServerProviders(GatherDataEvent event) {
+		Consumer<Function<PackOutput, ? extends DataProvider>> server = addProvider(
+				event,
+				event.includeServer()
+		);
+
+		PackOutput output = event.getGenerator().getPackOutput();
 		ExistingFileHelper helper = event.getExistingFileHelper();
 		CompletableFuture<HolderLookup.Provider> provider = event.getLookupProvider();
-		boolean server = event.includeServer();
-		boolean client = event.includeClient();
 
-		// Client
-		generator.addProvider(client, new English(output));
-		generator.addProvider(client, new Chinese(output));
-		generator.addProvider(client, new NTItemModelProvider(output, helper));
-		LanguageGenerate.register();
-
-		// Server
 		ModBlockTagsProvider blockTags = new ModBlockTagsProvider(output, provider, helper);
 		ModItemTagsProvider itemTags = new ModItemTagsProvider(output, provider, blockTags, helper);
-		ModFluidTagsProvider fluidTags = new ModFluidTagsProvider(output, provider, helper);
-		ModEntityTagsProvider entityTags = new ModEntityTagsProvider(output, provider, helper);
 
-		addTConRecipes(addServer(event));
+		server.accept((packOutput) -> {
+			return blockTags;
+		});
+		server.accept((packOutput) -> {
+			return itemTags;
+		});
 
-		generator.addProvider(server, blockTags);
-		generator.addProvider(server, itemTags);
-		generator.addProvider(server, fluidTags);
-		generator.addProvider(server, entityTags);
-		generator.addProvider(server, new NTLootModifierProvider(output));
+		server.accept((packOutput) -> {
+			return new ModFluidTagsProvider(packOutput, provider, helper);
+		});
+
+		server.accept((packOutput) -> {
+			return new ModEntityTagsProvider(packOutput, provider, helper);
+		});
+
+		server.accept(NTLootModifierProvider::new);
+
+		addTConRecipes(server);
 	}
 
 	private static void addTConRecipes(Consumer<Function<PackOutput, ? extends DataProvider>> consumer) {
 		consumer.accept(ModifierRecipe::new);
 	}
 
-	private static Consumer<Function<PackOutput, ? extends DataProvider>> addServer(GatherDataEvent event) {
+	private static Consumer<Function<PackOutput, ? extends DataProvider>> addProvider(
+			GatherDataEvent event,
+			boolean include
+	) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput output = generator.getPackOutput();
-		boolean server = event.includeServer();
 
 		return (function) -> {
-			generator.addProvider(server, function.apply(output));
-		};
-	}
-
-	private static Consumer<Function<PackOutput, ? extends DataProvider>> addClient(GatherDataEvent event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput output = generator.getPackOutput();
-		boolean client = event.includeClient();
-
-		return (function) -> {
-			generator.addProvider(client, function.apply(output));
+			generator.addProvider(include, function.apply(output));
 		};
 	}
 }
