@@ -10,6 +10,13 @@ import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 
 public class AddItemModifier extends LootModifier {
+	private final ItemStack stack;
+
+	protected AddItemModifier(LootItemCondition[] conditions, ItemStack stack) {
+		super(conditions);
+		this.stack = stack;
+	}
+
 	public static final Codec<AddItemModifier> CODEC = RecordCodecBuilder.create((instance) -> {
 		return codecStart(instance)
 				.and(ItemStack.CODEC.fieldOf("item").forGetter((modifier) -> {
@@ -17,13 +24,6 @@ public class AddItemModifier extends LootModifier {
 				}))
 				.apply(instance, AddItemModifier::new);
 	});
-
-	private final ItemStack stack;
-
-	protected AddItemModifier(LootItemCondition[] conditions, ItemStack stack) {
-		super(conditions);
-		this.stack = stack;
-	}
 
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
