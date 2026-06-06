@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.compat.jei.category;
 
+import dev.celestiacraft.tinker.compat.jei.NTJeiPlugin;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,14 +18,10 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.common.recipe.TConFuelMessageRecipe;
-import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.fluids.TinkerFluids;
 
 import java.util.List;
@@ -154,8 +151,8 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	private record TextPair(Component title, Component value, int valueColor) {
 		static TextPair of(String key, Object value, int color) {
 			return new TextPair(
-					setTranKey(String.format("%s.title", key)),
-					setTranKey(key, value),
+					NTJeiPlugin.setTranKey(String.format("%s.title", key)),
+					NTJeiPlugin.setTranKey(key, value),
 					color
 			);
 		}
@@ -175,10 +172,5 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 		static TextLayout defaultLayout() {
 			return new TextLayout();
 		}
-	}
-
-	private static Component setTranKey(String key, Object... args) {
-		String tranKey = String.format("jei.category.%s.%s", NebulaTinker.MODID, key);
-		return Component.translatable(tranKey, args);
 	}
 }

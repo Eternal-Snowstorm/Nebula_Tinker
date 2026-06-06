@@ -7,6 +7,7 @@ import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 @JeiPlugin
-public class NebulaTinkerJeiPlugin implements IModPlugin {
+public class NTJeiPlugin implements IModPlugin {
 	@Override
 	public @NotNull ResourceLocation getPluginUid() {
 		return NebulaTinker.loadResource("jei_plugin");
@@ -62,5 +63,10 @@ public class NebulaTinkerJeiPlugin implements IModPlugin {
 		if (!ICheckModLoaded.hasMod("justenoughfuels")) {
 			registration.addRecipes(TConFuelMessageCategory.RECIPE_TYPE, tconFuelRecipe);
 		}
+	}
+
+	public static Component setTranKey(String key, Object... args) {
+		String tranKey = String.format("jei.category.%s.%s", NebulaTinker.MODID, key);
+		return Component.translatable(tranKey, args);
 	}
 }
