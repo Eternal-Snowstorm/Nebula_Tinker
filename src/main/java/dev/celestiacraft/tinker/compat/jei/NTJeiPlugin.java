@@ -33,8 +33,7 @@ public class NTJeiPlugin implements IModPlugin {
 
 	@Override
 	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
-		IJeiHelpers helpers = registration.getJeiHelpers();
-		IGuiHelper helper = helpers.getGuiHelper();
+		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 
 		registration.addRecipeCategories(new TConFuelMessageCategory(helper));
 	}
