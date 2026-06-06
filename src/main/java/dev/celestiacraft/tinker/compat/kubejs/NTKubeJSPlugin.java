@@ -10,7 +10,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 
 import java.util.List;
 
-public class ModKubeJSPlugin extends KubeJSPlugin {
+public class NTKubeJSPlugin extends KubeJSPlugin {
+	@Override
 	public void registerBindings(BindingsEvent event) {
 		List.of(
 				AttributeApplicator.class,

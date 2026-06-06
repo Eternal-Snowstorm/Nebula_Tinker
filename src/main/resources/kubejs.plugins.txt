@@ -1,1 +1,1 @@
-dev.celestiacraft.tinker.compat.kubejs.ModKubeJSPlugin
+dev.celestiacraft.tinker.compat.kubejs.NTKubeJSPlugin
