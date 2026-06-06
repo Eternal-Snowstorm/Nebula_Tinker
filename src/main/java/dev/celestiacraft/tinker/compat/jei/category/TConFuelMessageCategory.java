@@ -3,6 +3,7 @@ package dev.celestiacraft.tinker.compat.jei.category;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.drawable.IDrawableStatic;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.gui.placement.HorizontalAlignment;
 import mezz.jei.api.gui.placement.VerticalAlignment;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -23,17 +25,17 @@ import org.jetbrains.annotations.NotNull;
 import dev.celestiacraft.tinker.NebulaTinker;
 import dev.celestiacraft.tinker.common.recipe.TConFuelMessageRecipe;
 import slimeknights.tconstruct.TConstruct;
+import slimeknights.tconstruct.fluids.TinkerFluids;
 
 import java.util.List;
 
 public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageRecipe> {
 	private final IDrawable icon;
+	private final IDrawableStatic fuelTankOverlay;
+
 	private static final int WIDTH = 192;
 	private static final int HEIGHT = 24;
-
-	private static final Lazy<Item> ICON_ITEM = Lazy.of(() -> {
-		return ForgeRegistries.ITEMS.getValue(TConstruct.getResource("blazing_blood_bucket"));
-	});
+	private static final int TANK_SIZE = 16;
 
 	public static final RecipeType<TConFuelMessageRecipe> RECIPE_TYPE = RecipeType.create(
 			NebulaTinker.MODID,
@@ -42,7 +44,21 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	);
 
 	public TConFuelMessageCategory(IGuiHelper helper) {
-		this.icon = helper.createDrawableItemStack(ICON_ITEM.get().getDefaultInstance());
+		Item blazingBloodBucket = TinkerFluids.blazingBlood.getBucket();
+		ResourceLocation tankTexture = NebulaTinker.loadResource(
+				"textures/gui/jei/category/tcon_fuel_message/fuel_tank.png"
+		);
+
+		this.icon = helper.createDrawableItemStack(blazingBloodBucket.getDefaultInstance());
+		this.fuelTankOverlay = helper.drawableBuilder(
+						tankTexture,
+						0,
+						0,
+						TANK_SIZE,
+						TANK_SIZE
+				)
+				.setTextureSize(TANK_SIZE, TANK_SIZE)
+				.build();
 	}
 
 	@Override
@@ -71,19 +87,26 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	}
 
 	@Override
-	public void setRecipe(@NotNull IRecipeLayoutBuilder builder,
-	                      @NotNull TConFuelMessageRecipe recipe, @NotNull IFocusGroup group) {
+	public void setRecipe(@NotNull IRecipeLayoutBuilder builder, @NotNull TConFuelMessageRecipe recipe, @NotNull IFocusGroup group) {
 		FluidStack fuel = recipe.fuel();
 
 		IRecipeSlotBuilder slot = builder.addInputSlot();
-		slot.setPosition(0, 0, WIDTH, HEIGHT, HorizontalAlignment.CENTER, VerticalAlignment.CENTER);
+		slot.setPosition(
+				0,
+				0,
+				WIDTH,
+				HEIGHT,
+				HorizontalAlignment.CENTER,
+				VerticalAlignment.CENTER
+		);
+
 		slot.addFluidStack(fuel.getFluid(), 1000, fuel.getTag());
+		slot.setOverlay(fuelTankOverlay, 0, 0);
 	}
 
 	@Override
-	public void draw(@NotNull TConFuelMessageRecipe recipe, @NotNull IRecipeSlotsView recipeSlotsView, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
+	public void draw(@NotNull TConFuelMessageRecipe recipe, @NotNull IRecipeSlotsView view, @NotNull GuiGraphics graphics, double mouseX, double mouseY) {
 		Font font = Minecraft.getInstance().font;
-
 		TextLayout layout = TextLayout.defaultLayout();
 
 		List<TextPair> leftTexts = List.of(
