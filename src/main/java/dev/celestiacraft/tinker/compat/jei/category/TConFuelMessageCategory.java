@@ -162,11 +162,11 @@ public class TConFuelMessageCategory implements IRecipeCategory<TConFuelMessageR
 	}
 
 	private static class TextLayout {
-		final int colorTitle = 0xffffffff;
-		final int colorTemp = 0xffff1100;
-		final int colorRate = 0xffee33ff;
-		final int colorAmount = 0xffff7700;
-		final int colorDuration = 0xff00ffaa;
+		final int colorTitle = 0xFFFFFFFF;
+		final int colorTemp = 0xFFFF1100;
+		final int colorRate = 0xFFEE33FF;
+		final int colorAmount = 0xFFFF7700;
+		final int colorDuration = 0xFF00FFAA;
 
 		final int spacing = 14;
 		final int baseY = 1;
