@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.common.item;
 
+import dev.celestiacraft.tinker.api.ICheckModLoaded;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -23,6 +24,10 @@ public class InvincibleFrameEgregatorItem extends Item {
 	public static void onLivingHurt(LivingHurtEvent event) {
 		LivingEntity target = event.getEntity();
 		DamageSource source = event.getSource();
+
+		if (!ICheckModLoaded.hasCurios()) {
+			return;
+		}
 
 		// 伤害来源实体
 		Entity srcEntity = source.getEntity();

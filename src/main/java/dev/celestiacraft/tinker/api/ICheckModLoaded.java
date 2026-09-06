@@ -14,4 +14,8 @@ public interface ICheckModLoaded {
 	static boolean hasTCon() {
 		return hasMod("tconstruct");
 	}
+
+	static boolean hasCurios() {
+		return hasMod("curios");
+	}
 }
