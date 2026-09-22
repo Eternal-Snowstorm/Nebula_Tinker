@@ -1,5 +1,6 @@
 package dev.celestiacraft.tinker.compat.jei;
 
+import dev.celestiacraft.tinker.config.ClientConfig;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IGuiHelper;
@@ -35,7 +36,9 @@ public class NTJeiPlugin implements IModPlugin {
 	public void registerCategories(@NotNull IRecipeCategoryRegistration registration) {
 		IGuiHelper helper = registration.getJeiHelpers().getGuiHelper();
 
-		registration.addRecipeCategories(new TConFuelMessageCategory(helper));
+		if (ClientConfig.CritSystem.FUEL_JEI_DISPLAY.get()) {
+			registration.addRecipeCategories(new TConFuelMessageCategory(helper));
+		}
 	}
 
 	@Override
