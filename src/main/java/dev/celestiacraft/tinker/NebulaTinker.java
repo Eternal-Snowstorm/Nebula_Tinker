@@ -1,6 +1,7 @@
 package dev.celestiacraft.tinker;
 
 import dev.celestiacraft.tinker.common.register.*;
+import dev.celestiacraft.tinker.common.tools.NTTools;
 import dev.celestiacraft.tinker.config.ClientConfig;
 import dev.celestiacraft.tinker.config.CommonConfig;
 import dev.celestiacraft.tinker.config.ServerConfig;
@@ -36,6 +37,7 @@ public class NebulaTinker {
 		NTEffect.register(bus);
 		NTLootModifiers.REGISTRY.register(bus);
 		NTCreativeTab.register(bus);
+		NTTools.register(bus);
 
 		registerConfig(context);
 		LOGGER.info("Nebula Tinker is initialized!");

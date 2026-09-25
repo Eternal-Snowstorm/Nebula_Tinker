@@ -6,7 +6,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+		classpath 'org.spongepowered:mixingradle:0.7.38'
 	}
 }
 
@@ -133,9 +133,9 @@ dependencies {
 	// KubeJS
 	compileOnly fg.deobf("curse.maven:kubejs-238086:5853326")
 	// Jei
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:15.20.0.103")
-	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:15.20.0.103")
-	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.20.0.103")
+	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:15.57.0.208")
+	compileOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:15.57.0.208")
+	runtimeOnly fg.deobf("mezz.jei:jei-${minecraft_version}-forge:15.57.0.208")
 	// Lombok
 	compileOnly 'org.projectlombok:lombok:1.18.28'
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
