@@ -1,7 +1,6 @@
 package dev.celestiacraft.tinker;
 
 import dev.celestiacraft.tinker.common.register.*;
-import dev.celestiacraft.tinker.common.tools.NTTools;
 import dev.celestiacraft.tinker.config.ClientConfig;
 import dev.celestiacraft.tinker.config.CommonConfig;
 import dev.celestiacraft.tinker.config.ServerConfig;

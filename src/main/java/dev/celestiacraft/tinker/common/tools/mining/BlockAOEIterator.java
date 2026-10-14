@@ -44,10 +44,14 @@ import java.util.Set;
  * 作为数据包词条的用法: {@code {"type": "nebula_tinker:block_aoe", "max_blocks": 16}}
  */
 public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Loadable {
-	/** 基础硬上限: JSON 里的 max_blocks 最多只会取到这个值 */
+	/**
+	 * 基础硬上限: JSON 里的 max_blocks 最多只会取到这个值
+	 */
 	public static final int HARD_LIMIT = 16;
 
-	/** {@code tconstruct:expanded} 每一级额外增加的连锁上限 */
+	/**
+	 * {@code tconstruct:expanded} 每一级额外增加的连锁上限
+	 */
 	public static final int EXPANDED_BONUS = 8;
 
 	public static final RecordLoadable<BlockAOEIterator> LOADER = RecordLoadable.create(
@@ -97,24 +101,23 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 		int expanded = getExpandedLevel(tool);
 		int limit = getLimit(expanded);
 
-		// 结果包含被点击的方块本身: ToolHarvestLogic 会先破坏它, 再由 isAir 检查跳过重复项,
-		// 所以最终破坏数量正好是 limit
 		Iterable<BlockPos> blocks = calculate(context.getLevel(), context.getClickedPos(), state.getBlock(), limit);
-
-		// ---- 诊断日志 (排查完成后可以删除这几行) ----
-		// 客户端描边是 DISPLAY, 每帧都会调用, 所以这里只对非 DISPLAY (实际破坏/转换) 打印。
-		// 挖方块后若看不到这条日志, 说明服务端根本没走到 AOE 迭代器, 问题在 tool definition 配置上
-		// (最常见: 缺少 tconstruct:is_effective 模块, 使 ToolHarvestContext#isEffective 为 false)。
 		if (matchType != AOEMatchType.DISPLAY) {
 			List<BlockPos> materialized = new ArrayList<>();
 			for (BlockPos pos : blocks) {
 				materialized.add(pos);
 			}
-			NebulaTinker.LOGGER.debug("[block_aoe] matchType={}, origin={}, limit={} (base={}, expanded={}), chained={}",
-					matchType, context.getClickedPos(), limit, maxBlocks, expanded, materialized.size());
+			NebulaTinker.LOGGER.debug(
+					"[block_aoe] matchType={}, origin={}, limit={} (base={}, expanded={}), chained={}",
+					matchType,
+					context.getClickedPos(),
+					limit,
+					maxBlocks,
+					expanded,
+					materialized.size()
+			);
 			return materialized;
 		}
-		// ---- 诊断日志结束 ----
 
 		return blocks;
 	}
@@ -128,7 +131,9 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 	 * @param limit  结果数量上限
 	 */
 	public static Iterable<BlockPos> calculate(Level world, BlockPos origin, Block target, int limit) {
-		return () -> new ChainingIterator(world, origin, target, limit);
+		return () -> {
+			return new ChainingIterator(world, origin, target, limit);
+		};
 	}
 
 	private static final Direction[] DIRECTIONS = Direction.values();
@@ -140,9 +145,15 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 	private static class ChainingIterator extends AbstractIterator<BlockPos> {
 		private static final Comparator<DistancePos> ORDER = Comparator
 				.comparingInt(DistancePos::distance)
-				.thenComparingInt(entry -> entry.pos().getX())
-				.thenComparingInt(entry -> entry.pos().getY())
-				.thenComparingInt(entry -> entry.pos().getZ());
+				.thenComparingInt((entry) -> {
+					return entry.pos().getX();
+				})
+				.thenComparingInt((entry) -> {
+					return entry.pos().getY();
+				})
+				.thenComparingInt((entry) -> {
+					return entry.pos().getZ();
+				});
 
 		private final Set<BlockPos> visited = new HashSet<>();
 		private final Queue<DistancePos> queue = new PriorityQueue<>(ORDER);
@@ -157,7 +168,6 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 			this.target = target;
 			this.limit = limit;
 			if (limit > 0) {
-				// 起点以距离 0 入队, 它就是第一个被返回的方块
 				this.visited.add(origin);
 				this.queue.add(new DistancePos(origin, 0));
 			}
@@ -184,7 +194,6 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 			while (found < limit && !queue.isEmpty()) {
 				DistancePos next = queue.poll();
 				BlockPos pos = next.pos();
-				// 只有同种方块才会被挖掉, 也才会继续向外扩散
 				if (world.getBlockState(pos).is(target)) {
 					found++;
 					enqueueNeighbors(pos, next.distance() + 1);
@@ -195,7 +204,9 @@ public record BlockAOEIterator(int maxBlocks) implements AreaOfEffectIterator.Lo
 		}
 	}
 
-	/** 辅助数据: 位置 + 曼哈顿距离 */
+	/**
+	 * 辅助数据: 位置 + 曼哈顿距离
+	 */
 	private record DistancePos(BlockPos pos, int distance) {
 	}
 }

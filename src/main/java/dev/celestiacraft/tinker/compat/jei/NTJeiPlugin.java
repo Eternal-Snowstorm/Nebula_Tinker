@@ -62,7 +62,7 @@ public class NTJeiPlugin implements IModPlugin {
 				.sorted(Comparator.comparingInt(TConFuelMessageRecipe::temperature))
 				.toList();
 
-		if (!ICheckModLoaded.hasMod("justenoughfuels")) {
+		if (!ICheckModLoaded.hasMod("justenoughfuels") && ClientConfig.CritSystem.FUEL_JEI_DISPLAY.get()) {
 			registration.addRecipes(TConFuelMessageCategory.RECIPE_TYPE, tconFuelRecipe);
 		}
 	}
